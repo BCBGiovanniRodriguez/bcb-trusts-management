@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:fragment="head">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BCB Fiduciario</title>
+        <link rel="icon" th:href="@{/public/img/favicon.ico}">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css" integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" />
+        <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
+        <script>
+            const baseUrl = '/';
+        </script>
+    </head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <nav th:fragment="nav" class="app-header navbar navbar-expand bg-primary-subtle" data-bs-theme="dark">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-lte-toggle="sidebar" role="button">
+                            <i class="bi bi-list"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-md-block">
+                        <a href="#" class="nav-link">Inicio</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <aside th:fragment="aside" class="app-sidebar bg-primary-subtle shadow" data-bs-theme="dark">
+            <!-- Sidebar Brand-->
+             <div class="sidebar-brand">
+                <a th:href="@{/}" class="brand-link">
+                    <img th:src="@{/public/img/BCB-logo.png}" alt="Logo Admin" class="brand-image opacity-75 shadow" style="width: 100%; height: 100%;" />
+                </a>
+             </div>
+            <!-- Sidebar Brand -->
+            <!-- Sidebar Wrapper -->
+             <div class="sidebar-wrapper">
+                <div class="mt-2">
+                    <!-- Sidebar Menu -->
+                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>
+                                    Dashboard
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-file-earmark-ruled"></i>
+                                <p>
+                                    Estados de Cuenta
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-search"></i>
+                                        <p>
+                                            Masivos
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a th:href="@{/balance}" class="nav-link">
+                                                <i class="nav-icon bi bi-search"></i>
+                                                <p>
+                                                    Trimestral por rangos
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/balance}" class="nav-link">
+                                                <i class="nav-icon bi bi-search"></i>
+                                                <p>
+                                                    Histórico Trimestral
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Sidebar Menu -->
+                </div>
+             </div>
+            <!-- Sidebar Wrapper-->
+        </aside>
+
+        <footer th:fragment="footer" class="app-footer">
+            <span>
+                Entorno: <b>Development</b>
+            </span>
+
+            <div class="float-end d-none d-sm-inline">
+                <strong>
+                    Copyright &copy; 2025 &nbsp;
+                    BCB CASA DE BOLSA TODOS LOS DERECHOS RESERVADOS
+                </strong>
+            </div>
+        </footer>
+
+        <div th:fragment="jsDependencies">
+            <script th:src="@{/public/adminlte/plugins/jquery/jquery-3.7.1.min.js}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+            <script th:src="@{/public/adminlte/js/adminlte.min.js}"></script>
+        </div>
+        
+    </body>
+</html>

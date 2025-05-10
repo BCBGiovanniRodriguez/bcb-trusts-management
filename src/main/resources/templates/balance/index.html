@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Consulta de Estados de Cuenta</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Procesos Realizados</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="" method="post" enctype="application/x-www-form-urlencoded">
+                                            <div class="form-group row">
+                                                <label for="" class="col-1">Proceso:</label>
+                                                <div class="col-5">
+                                                    <select name="processId" id="processId" class="form-control">
+                                                        <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+        </div>
+
+        <div th:replace="~{fragments/common :: jsDependencies}"></div>
+    </body>
+</html>

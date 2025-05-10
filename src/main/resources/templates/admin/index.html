@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-10">
+                                <h4>Bienvenido!</h4>
+                                <h3 ></h3>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <h5>Fecha y Hora de Consulta</h5>
+                                            <span>fecha</span>
+                                        </div>
+                                        <div class="col-8">
+                                            <h5>Fecha y Hora de Última Consulta</h5>
+                                            <span>fecha Anterior</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        NÚMERO DE CONTRATO(S)
+                                    </div>
+                                    <ul class="list-group-flush">
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        RESUMEN SALDO
+                                    </div>
+                                    <ul class="list-group-flush">
+                                        <li class="list-group-item">
+                                            <span>MERCADO DE DINERO</span>
+                                            <span th:text="${positionDetail.subtotalDin}"></span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>MERCADO DE CAPITALES</span>
+                                            <span th:text="${positionDetail.subtotalCap}"></span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>FONDOS DE INVERSIÓN</span>
+                                            <span th:text="${positionDetail.subtotalFon}"></span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>EFECTIVO</span>
+                                            <span></span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>TOTAL INVERSIÓN</span>
+                                            <span th:text="${customerMovementPositionResponse.total}"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+        </div>
+
+        <div th:replace="~{fragments/common :: jsDependencies}"></div>
+    </body>
+</html>
