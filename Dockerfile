@@ -1,5 +1,5 @@
 # Etapa 1: Construccion del JAR
-FROM maven:3.8.5-openjdk-21 AS build
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 
 # Crear directorio de la aplicación
 RUN mkdir /app
@@ -17,7 +17,7 @@ RUN mvn clean package -DskipTests
 RUN ls -la /app/target
 
 # Etapa2: Ejecución del JAR
-FROM eclipse-temurin:21.0.1_12-jdk
+FROM eclipse-temurin:21.0.7_6-jdk
 
 # Parámetros configurables
 ARG APP_NAME
