@@ -11,7 +11,7 @@
 	<groupId>com.bcb.trust</groupId>
 	<artifactId>front</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BCB Trusts Management</name>
+	<name>BCB_Trusts_Management</name>
 	<description>Front Application for BCB Trusts Management</description>
 	<url/>
 	<licenses>

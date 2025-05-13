@@ -1,25 +1,18 @@
-# Etapa 1: Construccion del JAR
-FROM maven:3.8.5-openjdk-21 AS build
+FROM openjdk:17-jdk-slim
 
-WORKDIR /app
-
-COPY pom.xml /
-
-RUN mvn dependency:go-offline
-
-COPY src ./src
-
-RUN mvn clean package -DskipTests
-
-RUN ls -la /app/target
-
-# Etapa2: Ejecución del JAR
-FROM openjdk:21-jdk-bookworm
-
-WORKDIR /app
-
-COPY --from=build /app/target/front-0.0.1-SNAPSHOT.jar /app/front.jar
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+#COPY src/main/resources/application.properties application.properties
+#COPY src/main/resources/application-dev.properties application-dev.properties   
+#COPY src/main/resources/application-prod.properties application-prod.properties
+#COPY src/main/resources/application-test.properties application-test.properties
+#COPY src/main/resources/application-local.properties application-local.properties
+#COPY src/main/resources/application-test.properties application-test.properties
+#COPY src/main/resources/application-prod.properties application-prod.properties
+#COPY src/main/resources/application-dev.properties application-dev.properties
+#COPY src/main/resources/application.properties application.properties
+#COPY src/main/resources/application-test.properties application-test.properties
+#COPY src/main/resources/application-prod.properties application-prod.properties
 
 EXPOSE 8080
-
-ENTRYPOINT [ "java", "-jar", "/app/mijar.jar" ]
+ENTRYPOINT ["java", "-jar", "/app.jar"]

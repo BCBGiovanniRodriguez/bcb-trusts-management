@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.bcb.trust.front.model.bmtkfweb.service.PartialBalanceService;
 import com.bcb.trust.front.service.LegacyService;
 import com.bcb.trust.front.service.MassiveReportService;
 import com.bcb.trust.front.service.ReportService;
@@ -23,6 +24,9 @@ public class DashboardController {
     @Autowired
     MassiveReportService massiveReportService;
 
+    @Autowired
+    PartialBalanceService partialBalanceService;
+
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         model.addAttribute("user", "Usuario Fiduciario");
@@ -35,6 +39,7 @@ public class DashboardController {
         try {
             //reportService.generateReport();
             massiveReportService.process(1045);
+            //partialBalanceService.calculatePartialBalance(1045);
         } catch (Exception e) {
             System.out.println("DashboardControllerMessage: " + e.getMessage());
         }

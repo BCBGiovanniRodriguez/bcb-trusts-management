@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  BCB_Trusts_Management:
     build: .
     ports:
       -"8080:8080"
@@ -11,8 +11,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:53306/trusts
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+    volumes:
+      - ./src/main/resources:/app/src/main/resources
   db:
-    image: mysql:8.0
+    image: mysql:latest
     ports:
       - "53306:53306"
     environment:
