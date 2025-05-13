@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
-  BCB_Trusts_Management:
+  app:
     build: .
     ports:
-      -"8080:8080"
+      - 8080:8080
     depends_on:
       - db
     environment:
@@ -18,7 +16,7 @@ services:
   db:
     image: mysql:latest
     ports:
-      - "53306:53306"
+      - 53306:53306
     environment:
       - MYSQL_ROOT_PASSWORD: root
       - MYSQL_DATABASE: trust
@@ -26,5 +24,5 @@ services:
       - MYSQL_PASSWORD: root
     volumes:
       - db-data: /var/lib/mysql
-  volumes:
-    db-data: 
+volumes:
+  db-data: 
