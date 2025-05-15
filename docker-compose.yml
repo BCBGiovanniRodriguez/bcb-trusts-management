@@ -2,27 +2,22 @@ services:
   app:
     build: .
     ports:
-      - 8080:8080
+      - 10100:10100
     depends_on:
       - db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:53306/trusts
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_JPA_SHOW_SQL=true
     volumes:
       - ./src/main/resources:/app/src/main/resources
+      - ./trusts:/app/trusts
   db:
     image: mysql:latest
     ports:
-      - 53306:53306
+      - 53306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD: root
-      - MYSQL_DATABASE: trust
-      - MYSQL_USER: root
-      - MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: trust
+      MYSQL_USER: spring
+      MYSQL_PASSWORD: spring
     volumes:
-      - db-data: /var/lib/mysql
+      - db-data:/var/lib/mysql
 volumes:
   db-data: 

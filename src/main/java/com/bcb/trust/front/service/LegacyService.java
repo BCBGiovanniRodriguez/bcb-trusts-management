@@ -27,7 +27,7 @@ public class LegacyService {
 
     DateTimeFormatter mexFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private String tableName = "fid_datos_est_ctas";
+    private String tableName = "FID_DATOS_EST_CTAS";
 
     private String workerMovementsTableName = "REPCTAIND";
 
@@ -108,7 +108,7 @@ public class LegacyService {
         totalDepositsWorker = totalDepositsWorker != null ? totalDepositsWorker : 0D;
         
         nomInvers = "DEPOSITO H. AYUNTAMIENTO";
-        sql = "SELECT SUM(RCI_DEPOSITOS) AS TOTAL_DEPOSITS_TOWNSHIP FROM trusts.repctaind WHERE RCI_NOM_INVERS = :nomInvers AND RCI_NUM_N2 = :subaccount";
+        sql = "SELECT SUM(RCI_DEPOSITOS) AS TOTAL_DEPOSITS_TOWNSHIP FROM REPCTAIND WHERE RCI_NOM_INVERS = :nomInvers AND RCI_NUM_N2 = :subaccount";
         totalDepositsTownship = (Double) namedParameterJdbcTemplate.queryForObject(sql, new MapSqlParameterSource().addValue("subaccount", subaccount).addValue("nomInvers", nomInvers), Double.class);
         totalDepositsTownship = totalDepositsTownship != null ? totalDepositsTownship : 0D;
 

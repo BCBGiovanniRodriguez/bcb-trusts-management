@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -76,8 +77,11 @@ public class MassiveReportService {
         
         try {
             periodList = legacyService.getPeriodList(trustNumber);
-            File reportTemplate = ResourceUtils.getFile("classpath:TemplateJson.jrxml");
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportTemplate.getAbsolutePath());
+            ClassPathResource resource = new ClassPathResource("TemplateJson.jrxml");
+            //File reportTemplate = ResourceUtils.getFile("classpath:TemplateJson.jrxml");
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
+            //JasperReport jasperReport = JasperCompileManager.compileReport(reportTemplate.getAbsolutePath());
             
             //totalWorkers = legacyService.getTotalWorkers(trustNumber); // Uncomment
             System.out.println("Workers for process: " + totalWorkers);

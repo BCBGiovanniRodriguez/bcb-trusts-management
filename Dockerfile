@@ -6,13 +6,17 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY pom.xml /
+COPY pom.xml /app
+COPY jars /app/jars
 
+RUN mvn clean 
+RUN mvn install:install-file -Dfile=./jars/nunito-extension.jar -DgroupId=com.example -DartifactId=example -Dversion=0.0.1-SNAPSHOT -Dpackaging=pom
 RUN mvn dependency:go-offline
 
 COPY src ./src
 
-RUN mvn clean package -DskipTests
+RUN mvn install package -DskipTests 
+#RUN mvn package -DskipTests
 
 RUN ls -la /app/target
 
@@ -43,21 +47,3 @@ COPY --from=build /app/target/front-0.0.1-SNAPSHOT.jar /app/front.jar
 EXPOSE 8080
 
 ENTRYPOINT [ "java", "-jar", "/app/front.jar" ]
-#FROM openjdk:17-jdk-slim
-
-#ARG JAR_FILE=target/*.jar
-#COPY ${JAR_FILE} app.jar
-#COPY src/main/resources/application.properties application.properties
-#COPY src/main/resources/application-dev.properties application-dev.properties   
-#COPY src/main/resources/application-prod.properties application-prod.properties
-#COPY src/main/resources/application-test.properties application-test.properties
-#COPY src/main/resources/application-local.properties application-local.properties
-#COPY src/main/resources/application-test.properties application-test.properties
-#COPY src/main/resources/application-prod.properties application-prod.properties
-#COPY src/main/resources/application-dev.properties application-dev.properties
-#COPY src/main/resources/application.properties application.properties
-#COPY src/main/resources/application-test.properties application-test.properties
-#COPY src/main/resources/application-prod.properties application-prod.properties
-
-#EXPOSE 8080
-#ENTRYPOINT ["java", "-jar", "/app.jar"]

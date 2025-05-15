@@ -57,7 +57,7 @@ public class PartialBalanceService {
                     for (WorkerDetail workerDetail : workerList) {
                         System.out.println("Processing worker: " + workerDetail.getDatDato());
                         
-                        sql = "SELECT * FROM transitionBalance WHERE TrustNumber = :trustNumber AND WorkerAccount = :workerAccount";
+                        sql = "SELECT * FROM TransitionBalance WHERE TrustNumber = :trustNumber AND WorkerAccount = :workerAccount";
                         SqlParameterSource parameters = new MapSqlParameterSource()
                             .addValue("trustNumber", trustNumber, Types.NUMERIC)
                             .addValue("workerAccount", workerDetail.getDatClave(), Types.VARCHAR);
@@ -99,7 +99,7 @@ public class PartialBalanceService {
                             parametersThree.put("negativeTownshipInterest", workerBalanceList.get(7));
 
                             // Process each worker
-                            sql = "INSERT INTO intermediatebalance (TrustNumber, WorkerAccount, StartDate, EndDate, WorkerDeposits, WorkerInterest, TownshipDeposits, TownshipInterest, WithdrawWorker, NegativeWorkerInterest, WithdrawTownship, NegativeTownshipInterest) ";
+                            sql = "INSERT INTO IntermediateBalance (TrustNumber, WorkerAccount, StartDate, EndDate, WorkerDeposits, WorkerInterest, TownshipDeposits, TownshipInterest, WithdrawWorker, NegativeWorkerInterest, WithdrawTownship, NegativeTownshipInterest) ";
                             sql += "VALUES (:trustNumber, :workerAccount, :startDate, :endDate, :workerDeposits, :workerInterest, :townshipDeposits, :townshipInterest, :widthdrawWorker, :negativeWorkerInterest, :withdrawTownship, :negativeTownshipInterest) ";
                             
                             namedParameterJdbcTemplate.update(sql, parametersThree);

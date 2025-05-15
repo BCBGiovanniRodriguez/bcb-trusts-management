@@ -101,6 +101,18 @@
 			<artifactId>jasperreports-functions</artifactId>
 			<version>7.0.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports-jdt -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-jdt</artifactId>
+			<version>7.0.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jdt/ecj -->
+		<dependency>
+			<groupId>org.eclipse.jdt</groupId>
+			<artifactId>ecj</artifactId>
+			<version>3.41.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
@@ -113,14 +125,16 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.18.3</version>
 		</dependency>
-
+		<!-- Font from GoogleFonts -->
+		<!--
 		<dependency>
-			<groupId>local.jasperFontOverrides</groupId>
-			<artifactId>local.jasperFontOverrides</artifactId>
+			<groupId>com.sample</groupId>
+			<artifactId>sample</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/nunito-extension.jar</systemPath>
+			<systemPath>${project.basedir}/jars/nunito-extension.jar</systemPath>
 		</dependency>
+		-->
 	</dependencies>
 
 	<build>
