@@ -1,4 +1,4 @@
-package com.bcb.trust.front.model.trusts.entity.trust;
+package com.bcb.trust.front.model.trusts.entity.request;
 
 import com.bcb.trust.front.model.trusts.entity.system.SystemUser;
 

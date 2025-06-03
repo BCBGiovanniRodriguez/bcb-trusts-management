@@ -45,11 +45,16 @@ public class TrustsDBConfiguration {
         @Qualifier("trustsDatasource") DataSource trustDataSource) {
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", "update");
-        properties.put("hibernate.connection.username", "root");
-        properties.put("hibernate.connection.password", "root");
-        properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://db:3306/trust");
         properties.put("jakarta.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
+        
+        //properties.put("hibernate.connection.username", "root");
+        //properties.put("hibernate.connection.password", "root");
+        //properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://db:3306/trust");
 
+        properties.put("hibernate.connection.username", "gralrodriguez");
+        properties.put("hibernate.connection.password", "Hrodriguezr0800/+");
+        properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/trusts");
+        
         return builder.dataSource(trustDataSource)
                 .properties(properties)
                 .packages("com.bcb.trust.front.model.trusts.entity")

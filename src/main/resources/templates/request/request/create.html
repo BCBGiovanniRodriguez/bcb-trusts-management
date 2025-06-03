@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Solicitudes a Fideicomiso</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Registrar Nueva Solicitud</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form th:action="@{/request/request/create}" method="post" enctype="application/x-www-form-urlencoded" class="needs-validation" novalidate></form>
+                                            <div class="row g-3">
+                                                <div class="col-4">
+                                                    <label for="RequestTypeId" class="form-label">Tipo de Solicitante:</label>
+                                                    <select name="RequestTypeId" id="RequestTypeId" class="form-control">
+                                                        <!--
+                                                        <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
+                                                        -->
+                                                        <option value="1">Persona Física</option>
+                                                        <option value="2">Persona Moral</option>
+                                                        <option value="3">Persona Institucional</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <label for="RequestTypeId" class="form-label">Tipo de Solicitud:</label>
+                                                    <select name="RequestTypeId" id="RequestTypeId" class="form-control">
+                                                        <!--
+                                                        <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
+                                                        -->
+                                                        <option value="1">Patrimonial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+        </div>
+
+        <div th:replace="~{fragments/common :: jsDependencies}"></div>
+    </body>
+</html>

@@ -19,97 +19,97 @@ public class SystemUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long UserId;
+    private Long userId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ProfileId", referencedColumnName = "ProfileId")
-    private SystemProfile Profile;
+    private SystemProfile profile;
 
-    private String Nickname;
+    private String nickname;
 
-    private String Access;
+    private String access;
 
-    private String Email;
+    private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PersonId", referencedColumnName = "PersonId")
-    private CatalogPerson Person;
+    private CatalogPerson person;
 
-    private Integer Status;
+    private Integer status;
 
-    private LocalDateTime Created;
+    private LocalDateTime created;
 
     public SystemUser() {
     }
 
     public Long getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(Long userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public SystemProfile getProfile() {
-        return Profile;
+        return profile;
     }
 
     public void setProfile(SystemProfile profile) {
-        Profile = profile;
+        this.profile = profile;
     }
 
     public String getNickname() {
-        return Nickname;
+        return nickname;
     }
 
     public void setNickname(String nickname) {
-        Nickname = nickname;
+        this.nickname = nickname;
     }
 
     public String getAccess() {
-        return Access;
+        return access;
     }
 
     public void setAccess(String access) {
-        Access = access;
+        this.access = access;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public CatalogPerson getPerson() {
-        return Person;
+        return person;
     }
 
     public void setPerson(CatalogPerson person) {
-        Person = person;
+        this.person = person;
     }
 
     public Integer getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(Integer status) {
-        Status = status;
+        this.status = status;
     }
 
     public LocalDateTime getCreated() {
-        return Created;
+        return created;
     }
 
     public void setCreated(LocalDateTime created) {
-        Created = created;
+        this.created = created;
     }
 
     @Override
     public String toString() {
-        return "User [UserId=" + UserId + ", Profile=" + Profile + ", Nickname=" + Nickname + ", Access=" + Access
-                + ", Email=" + Email + ", Person=" + Person + ", Status=" + Status + ", Created=" + Created + "]";
+        return "SystemUser [userId=" + userId + ", profile=" + profile + ", nickname=" + nickname + ", access=" + access
+                + ", email=" + email + ", person=" + person + ", status=" + status + ", created=" + created + "]";
     }
     
 }
