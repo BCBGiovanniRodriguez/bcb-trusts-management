@@ -67,3 +67,13 @@ mvnw
 mvnw.cmd
 src/main/resources/static/public/bootstrap-5.3.6/*
 src/main/resources/static/public/img/*
+src/main/resources/static/public/*.tar
+src/main/resources/static/public/*.zip
+src/main/resources/static/public/*.tar.gz
+src/main/resources/static/public/*.rar
+src/main/resources/static/public/*.gz
+src/main/resources/static/public/*.7z
+src/main/resources/static/public/*.7zip
+src/main/resources/static/public/*.7z.*
+src/main/resources/static/public/*.7zip.*
+src/main/resources/static/public/*.tar.*

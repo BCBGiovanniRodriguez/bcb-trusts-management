@@ -2,7 +2,7 @@ services:
   app:
     build: .
     ports:
-      - 10100:10100
+      - 10101:10101
     depends_on:
       - db
     volumes:

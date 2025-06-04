@@ -1,0 +1,12 @@
+# Modify according your configuration!!
+
+# Copy assets tar file to environtment
+scp src/main/resources/static/public/assets.tar grodriguez@10.20.50.132:/home/grodriguez/projects/fiduciario/repositories/bcb-trusts-management/src/main/resources/static/public/assets.tar 
+# Uncompress on dest host :: LogIn to host machine!!
+cd /home/grodriguez/projects/fiduciario/repositories/bcb-trusts-management/src/main/resources/static/public/
+tar -xvf assets.tar
+
+# Create properties file (Must be created from Dockerfile)
+# Switch to the directory
+cd /home/grodriguez/projects/fiduciario/repositories/bcb-trusts-management/src/main/resources
+cp application.properties.dist application.properties

@@ -1,17 +1,20 @@
 spring.application.name=BCB Trusts Management
-server.port=8100
+spring.profiles.active=dev
+
+server.port=10101
 server.error.whitelabel.enabled=false
 spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration
 server.error.path=/error
 
 #spring.datasource.first.driverClassName=com.mysql.cj.jdbc.Driver
-trusts.datasource.jdbc-url=jdbc:mysql://127.0.0.1:3306/trusts?createDatabaseIfNotExists=true&serverTimezone=UTC
+trusts.datasource.jdbc-url=jdbc:mysql://db:53306/trusts?createDatabaseIfNotExists=true&serverTimezone=UTC
 trusts.datasource.username=
 trusts.datasource.password=
 trusts.datasource.driverClassName=com.mysql.cj.jdbc.Driver
 trusts.datasource.hikari.connectionTimeout=30000
 trusts.datasource.hikari.idleTimeout=30000
 trusts.datasource.hikari.maxLifetime=1800000
+
 
 # BMTKFWEB PROD
 #bmtkfweb.datasource.jdbc-url=jdbc:oracle:thin:@10.10.50.16:1527:BMTKFWEB
@@ -25,5 +28,6 @@ bmtkfweb.datasource.hikari.connectionTimeout=30000
 bmtkfweb.datasource.hikari.idleTimeout=30000
 bmtkfweb.datasource.hikari.maxLifetime=1800000
 
+spring.jpa.open-in-view=false
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true

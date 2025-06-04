@@ -56,7 +56,7 @@ public class TrustsDBConfiguration {
         properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/trusts");
         
         return builder.dataSource(trustDataSource)
-                .properties(properties)
+                //.properties(properties)
                 .packages("com.bcb.trust.front.model.trusts.entity")
                 .persistenceUnit("trusts")
                 .build();

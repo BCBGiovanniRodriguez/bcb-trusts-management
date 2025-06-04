@@ -7,18 +7,18 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY pom.xml /app
-COPY jars /app/jars
+COPY jars/ /app/jars
 
 RUN mvn clean 
-RUN mvn install:install-file -Dfile=./jars/nunito-extension.jar -DgroupId=com.example -DartifactId=example -Dversion=0.0.1-SNAPSHOT -Dpackaging=pom
+#RUN mvn install:install-file -Dfile=./jars/nunito-extension.jar -DgroupId=com.example -DartifactId=example -Dversion=0.0.1-SNAPSHOT -Dpackaging=pom
 RUN mvn dependency:go-offline
 
 COPY src ./src
 
-RUN mvn install package -DskipTests 
-#RUN mvn package -DskipTests
+#RUN mvn install package -DskipTests 
+RUN mvn package -DskipTests
 
-RUN ls -la /app/target
+#RUN ls -la /app/target
 
 # Etapa2: Ejecución del JAR
 FROM eclipse-temurin:21.0.7_6-jdk
@@ -44,6 +44,6 @@ WORKDIR /app
 
 COPY --from=build /app/target/front-0.0.1-SNAPSHOT.jar /app/front.jar
 
-EXPOSE 8080
+EXPOSE 10101
 
 ENTRYPOINT [ "java", "-jar", "/app/front.jar" ]
