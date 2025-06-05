@@ -23,4 +23,5 @@ docker ps -a
 docker exec -it 13fcd1c2ad1a /bin/sh -c 'mysql -u root -proot trust < legacy.sql'
 docker exec -i bcb-trusts-management-db-1 mysql -uroot -proot trust < ./legacy.sql
 
-
+# Massive pdf download
+scp grodriguez@10.20.50.132:/home/grodriguez/projects/fiduciario/repositories/bcb-trusts-management/trusts/trust1045/reports/massive/20250604225517/*.pdf .

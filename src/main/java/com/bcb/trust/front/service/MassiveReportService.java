@@ -70,7 +70,7 @@ public class MassiveReportService {
         String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + now.format(filedateFormatter);
         String fileName;
         Integer workersProcessed = 0;
-        Integer totalWorkers = 4;
+        Integer totalWorkers = 0;
         individualReportService.setTrustNumber(trustNumber);
         List<LocalDate> periodList;
         double processPercentage = 0D;
@@ -83,7 +83,7 @@ public class MassiveReportService {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
             //JasperReport jasperReport = JasperCompileManager.compileReport(reportTemplate.getAbsolutePath());
             
-            //totalWorkers = legacyService.getTotalWorkers(trustNumber); // Uncomment
+            totalWorkers = legacyService.getTotalWorkers(trustNumber); // Uncomment
             System.out.println("Workers for process: " + totalWorkers);
             String account = ""; // null or empty on first iteration
             List<WorkerDetail> workerList = legacyService.getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
