@@ -164,7 +164,7 @@ public class MassiveReportService {
                     process.setElementsProcessed(workersProcessed);
                     processRepository.saveAndFlush(process);
 
-                    break; // Validar que se obtienen los siguientes trabajadores
+                    //break; // Validar que se obtienen los siguientes trabajadores
                 }
 
                 // End of process
@@ -176,6 +176,7 @@ public class MassiveReportService {
         } catch (Exception e) {
             System.out.println("Error on MassiveReportService::process " + e.getLocalizedMessage());
         }
+        System.out.println("MassiveReportService::process finished!!!");
     }
 
     public static String convertListToJson(List<?> list) throws Exception {
