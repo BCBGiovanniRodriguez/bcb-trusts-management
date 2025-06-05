@@ -10,3 +10,17 @@ tar -xvf assets.tar
 # Switch to the directory
 cd /home/grodriguez/projects/fiduciario/repositories/bcb-trusts-management/src/main/resources
 cp application.properties.dist application.properties
+
+# Migrate compressed file to host
+scp legacy.tar.gz grodriguez@10.20.50.132:/home/grodriguez/projects/fiduciario/data
+
+# Uncompress *.tar.gz file
+tar -xvf *.tar.gz
+
+# Get container id (mysql container)
+docker ps -a
+# Execute file to container
+docker exec -it 13fcd1c2ad1a /bin/sh -c 'mysql -u root -proot trust < legacy.sql'
+docker exec -i bcb-trusts-management-db-1 mysql -uroot -proot trust < ./legacy.sql
+
+
