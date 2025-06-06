@@ -53,7 +53,7 @@ public class MassiveReportService {
     @Autowired
     private IndividualReportService individualReportService;
 
-    private int RECORDS_PER_CYCLE = 4;
+    private int RECORDS_PER_CYCLE = 500;
 
     private String primaryOutputPath = "./trusts/trust";
 

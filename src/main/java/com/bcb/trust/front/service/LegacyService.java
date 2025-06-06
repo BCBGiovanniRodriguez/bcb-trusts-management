@@ -68,7 +68,7 @@ public class LegacyService {
         
         if (account != null && !account.equals("")) {
             parameters.addValue("account", account);
-            sqlQuery += " AND DAT_CLAVE >= :account";
+            sqlQuery += " AND DAT_CLAVE > :account";
         }
 
         sqlQuery += " ORDER BY DAT_CLAVE LIMIT :limit";
