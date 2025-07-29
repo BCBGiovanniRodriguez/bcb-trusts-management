@@ -1,28 +1,31 @@
 package com.bcb.trust.front.service;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
-import com.bcb.trust.front.entity.IndividualReportAcount;
 import com.bcb.trust.front.entity.enums.ProcessDetailStateEnum;
 import com.bcb.trust.front.model.bmtkfweb.dto.PercentageRightsAcquired;
+import com.bcb.trust.front.model.bmtkfweb.mapper.PercentageRightsAcquiredMapper;
 import com.bcb.trust.front.model.dto.WorkerDetail;
+import com.bcb.trust.front.model.dto.WorkerForProcess;
+import com.bcb.trust.front.model.mapper.WorkerDetailRowMapper;
+import com.bcb.trust.front.model.mapper.WorkersForProcessMapper;
 import com.bcb.trust.front.model.trusts.entity.ProcessDetailEntity;
 import com.bcb.trust.front.model.trusts.entity.ProcessEntity;
 import com.bcb.trust.front.model.trusts.enums.ProcessStateEnum;
@@ -39,7 +42,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.json.data.JsonDataSource;
 
 @Service
-public class MassiveReportService {
+public class UnprocessedWorkersService {
 
     @Autowired
     private ProcessRepository processRepository;
@@ -48,12 +51,12 @@ public class MassiveReportService {
     private ProcessDetailRepository processDetailRepository;
 
     @Autowired
-    private LegacyService legacyService;
-
-    @Autowired
     private IndividualReportService individualReportService;
 
-    private int RECORDS_PER_CYCLE = 500;
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private int RECORDS_PER_CYCLE = 100;
 
     private String primaryOutputPath = "./trusts/trust";
 
@@ -61,34 +64,130 @@ public class MassiveReportService {
 
     DateTimeFormatter filedateFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
+    DateTimeFormatter mexFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    private String tableName = "FID_DATOS_EST_CTAS";
+
+    public List<LocalDate> getPeriodList(Integer trustNumber) {
+        String sql = "SELECT RCI_PERIODO FROM REPCTAIND LIMIT 1";
+        List<LocalDate> periodList = new ArrayList<>();
+
+        try {
+            String rawValues = namedParameterJdbcTemplate.getJdbcTemplate().queryForObject(sql, String.class);
+
+            LocalDate dateStartWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[0], mexFormatter);
+            LocalDate dateEndWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[1], mexFormatter);
+
+            periodList.add(dateStartWork);
+            periodList.add(dateEndWork);
+        } catch (Exception e) {
+            System.out.println("Error en LegacyService:: getPeriod " + e.getLocalizedMessage());
+        }
+
+        return periodList;
+    }
+
+    @SuppressWarnings("null")
+    private int getTotalWorkers() {
+        int totalWorkers = 0;
+        String sqlQuery = "SELECT COUNT(*) AS TOTAL_WORKERS FROM WorkersForProcess";
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("nivel", 2);
+        parameters.addValue("status", "INACTIVO");
+
+        totalWorkers = (int) namedParameterJdbcTemplate.getJdbcTemplate()
+            .queryForObject(sqlQuery, Integer.class);
+
+        return totalWorkers;
+    }
+
+    public List<PercentageRightsAcquired> getRightsPercentageList() {
+        String sql = "SELECT * FROM FID_DER_ADQ";
+        List<PercentageRightsAcquired> percentageRightsAcquiredList = new ArrayList<>();
+        
+        try {
+            percentageRightsAcquiredList = namedParameterJdbcTemplate.getJdbcTemplate().query(sql, new PercentageRightsAcquiredMapper());
+        } catch (Exception e) {
+            System.out.println("Error en LegacyService:: getRightsPercentageList" + e.getLocalizedMessage());
+        }
+        
+        return percentageRightsAcquiredList;
+    }
+
     /**
      * 
-     * @param trustNumber
+     * @param contractNumber
+     * @param subaccount
+     * @param limit
      */
-    public void process(Integer trustNumber) {
+    public List<WorkerDetail> getWorkerList(int contractNumber, String subaccount, int limit) {
+        List<WorkerDetail> workerList = new ArrayList<>();
+        List<WorkerForProcess> workerForProcessList = new ArrayList<>();
+        String sqlQuery = "SELECT * FROM WorkersForProcess ";
+        MapSqlParameterSource parametersOne = new MapSqlParameterSource();
+
+        try {
+            if (subaccount != null && !subaccount.equals("")) {
+                parametersOne.addValue("subaccount", subaccount);
+                sqlQuery += " WHERE subaccount > :subaccount ";
+            }
+
+            parametersOne.addValue("limit", limit);
+            sqlQuery += " LIMIT :limit";
+            
+            workerForProcessList = namedParameterJdbcTemplate.query(sqlQuery, parametersOne, new WorkersForProcessMapper());
+            System.out.println("Workers: " + workerForProcessList.size());
+            
+
+            StringBuilder subaccountsStringBuilder = new StringBuilder();
+            for (WorkerForProcess workerForProcess : workerForProcessList) {
+                subaccountsStringBuilder.append(workerForProcess.getSubaccount()).append(", ");
+            }
+            subaccountsStringBuilder.append("0");
+            System.out.println(subaccountsStringBuilder.toString());
+
+            sqlQuery = "SELECT * FROM FID_DATOS_EST_CTAS WHERE ";
+            sqlQuery += "DAT_CONTRATO = :contract AND DAT_NIVEL = :level AND DAT_CLAVE IN (";
+            sqlQuery += subaccountsStringBuilder.toString() + ")";
+
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("contract", contractNumber);
+            parameters.addValue("level", 2);
+            //parameters.addValue("status", "INACTIVO");
+            //parameters.addValue("limit", limit);
+            //parameters.addValue("subaccounts", subaccountsStringBuilder.toString());
+
+            workerList = namedParameterJdbcTemplate.query(sqlQuery, parameters, new WorkerDetailRowMapper());
+        } catch (Exception e) {
+            System.out.println("Error on UnprocessedWorkersService::getWorkerList: " + e.getLocalizedMessage());
+        }
+
+        return workerList;
+    }
+
+    public void process(int trustNumber) {
         LocalDateTime now = LocalDateTime.now();
-        String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + now.format(filedateFormatter);
+        //String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + now.format(filedateFormatter);
+        String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + "20250604233255/pending/pendientes";
         String fileName;
         Integer workersProcessed = 0;
         Integer totalWorkers = 0;
         individualReportService.setTrustNumber(trustNumber);
         List<LocalDate> periodList;
         double processPercentage = 0D;
-        
-        try {
-            periodList = legacyService.getPeriodList(trustNumber);
-            ClassPathResource resource = new ClassPathResource("TemplateJson.jrxml");
-            //File reportTemplate = ResourceUtils.getFile("classpath:TemplateJson.jrxml");
 
+        try {
+            periodList = getPeriodList(trustNumber);
+            ClassPathResource resource = new ClassPathResource("TemplateJson.jrxml");
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
-            //JasperReport jasperReport = JasperCompileManager.compileReport(reportTemplate.getAbsolutePath());
-            
-            totalWorkers = legacyService.getTotalWorkers(trustNumber); // Uncomment
+
+            totalWorkers = getTotalWorkers();
             System.out.println("Workers for process: " + totalWorkers);
-            String account = ""; // null or empty on first iteration
-            List<WorkerDetail> workerList = legacyService.getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
-            individualReportService.setPercentageRightsAcquiredList(legacyService.getRightsPercentageList());
-            
+            //String account = ""; // null or empty on first iteration
+            String account = "1000201650"; // null or empty on first iteration
+            List<WorkerDetail> workerList = getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
+            individualReportService.setPercentageRightsAcquiredList(getRightsPercentageList());
+
             Path path = Paths.get(outputPath);
             Files.createDirectories(path);
 
@@ -104,7 +203,7 @@ public class MassiveReportService {
             processRepository.saveAndFlush(process);
 
             if (!workerList.isEmpty()) {
-                
+
                 while (workersProcessed < totalWorkers) {
                     for (WorkerDetail workerDetail : workerList) {
                         JSONObject jsonObject = new JSONObject();
@@ -115,14 +214,14 @@ public class MassiveReportService {
                         processDetail.setProcess(process);
 
                         try {
-                            // Prepare the service
+                            // 
                             individualReportService.setSubaccountWorker(workerDetail.getDatClave());
                             individualReportService.setStartDate(periodList.get(0));
                             individualReportService.setEndDate(periodList.get(1));
                             individualReportService.setWorkerDetail(workerDetail);
                             
                             individualReportService.generate();
-                            
+
                             Map<String, Object> parameters = individualReportService.getParameters();
                             String jsonData = convertListToJson(individualReportService.getWorkerMovementList());
                             ByteArrayInputStream jsonDataInputStream = new ByteArrayInputStream(jsonData.getBytes());
@@ -138,7 +237,7 @@ public class MassiveReportService {
                             processDetail.setFileName(fileName);
                             jsonObject.put("status", 1);
                         } catch (Exception e) {
-                            System.out.println("MassiveReportService:: " + e.getLocalizedMessage());
+                            System.out.println("UnprocessedWorkersService:: " + e.getLocalizedMessage());
                             // Get worker detail and save result
                             processDetail.setProcessDetailState(ProcessDetailStateEnum.ERROR);
                             jsonObject.put("status", 2);
@@ -155,7 +254,7 @@ public class MassiveReportService {
 
                     // Get the next list of workers
                     account = workerList.getLast().getDatClave();
-                    workerList = legacyService.getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
+                    workerList = getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
 
                     // Update the main process
                     processPercentage = (workersProcessed * 100) / totalWorkers;
@@ -165,19 +264,20 @@ public class MassiveReportService {
 
                     //break; // Validar que se obtienen los siguientes trabajadores
                 }
-
+                
                 // End of process
                 process.setProcessState(ProcessStateEnum.FINISHED);
                 processRepository.saveAndFlush(process);
 
             }
-
+            
         } catch (Exception e) {
-            System.out.println("Error on MassiveReportService::process " + e.getLocalizedMessage());
+            System.out.println("UnprocessedWorkersService::process" + e.getLocalizedMessage());
         }
 
-        System.out.println("MassiveReportService::process finished!!!");
+        System.out.println("UnprocessedWorkersService::process finished!!!");
     }
+
 
     public static String convertListToJson(List<?> list) throws Exception {
         ObjectMapper mapper = new ObjectMapper();

@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bcb.trust.front.model.trusts.dto.UserAuthenticated;
-import com.bcb.trust.front.model.trusts.entity.system.SystemUser;
 import com.bcb.trust.front.model.trusts.service.SystemUserRepository;
+import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 
 @Service
 public class DatabaseUserDetailsService implements UserDetailsService {
@@ -19,7 +19,8 @@ public class DatabaseUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("DatabaseUserDetailsService::loadUserByUsername()");
-        SystemUser systemUser = null;
+        SystemUserEntity systemUser = null;
+        System.out.println("Username: " + username);
         try {
             // Fetch the user from the database
             systemUser = systemUserRepository.findByNickname(username);
@@ -29,7 +30,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
                 throw new UsernameNotFoundException("User not found with username: " + username);
             }
 
-            System.out.println(systemUser.toString());
+            //System.out.println(systemUser.toString());
         } catch (Exception e) {
             System.out.println("Error in DatabaseUserDetailsService::loadUserByUsername()" + e.getMessage());
         }

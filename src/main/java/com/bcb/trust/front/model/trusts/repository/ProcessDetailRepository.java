@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.bcb.trust.front.model.trusts.entity.ProcessDetailEntity;
 
 @Repository
-public interface ProcessDetailRepository  extends JpaRepository<ProcessDetailEntity, Integer>{
+public interface ProcessDetailRepository  extends JpaRepository<ProcessDetailEntity, Integer> {
 
     
 }

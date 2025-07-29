@@ -7,17 +7,17 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.bcb.trust.front.model.trusts.entity.system.SystemUser;
+import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 
 
 public class UserAuthenticated implements UserDetails {
 
-    private SystemUser systemUser;
+    private SystemUserEntity systemUser;
 
     public UserAuthenticated() {
     }
 
-    public UserAuthenticated(SystemUser systemUser) {
+    public UserAuthenticated(SystemUserEntity systemUser) {
         this.systemUser = systemUser;
     }
 

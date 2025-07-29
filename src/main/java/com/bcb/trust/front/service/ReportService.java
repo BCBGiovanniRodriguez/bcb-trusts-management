@@ -263,7 +263,7 @@ public class ReportService {
 
         Integer yearsWorked;
         String rangeYearsWorked;
-        Double percentageRightsAcquired;
+        Double percentageRightsAcquired = 0D;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
