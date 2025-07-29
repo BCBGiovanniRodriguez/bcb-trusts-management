@@ -1,7 +1,8 @@
-package com.bcb.trust.front.model.trusts.entity.system;
+package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,11 +10,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "SystemPermission")
-public class SystemPermission {
+@Table(name = "system_permissions")
+public class SystemPermissionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long permissionId;
 
     private String name;
@@ -22,15 +23,15 @@ public class SystemPermission {
 
     private String route;
 
+    @Column(name = "path_params", nullable = true)
     private String pathParams;
 
+    @Column(name = "query_params", nullable = true)
     private String queryParams;
-
-    private Integer status;
 
     private LocalDateTime created;
 
-    public SystemPermission() {
+    public SystemPermissionEntity() {
     }
 
     public Long getPermissionId() {
@@ -81,14 +82,6 @@ public class SystemPermission {
         this.queryParams = queryParams;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public LocalDateTime getCreated() {
         return created;
     }
@@ -99,9 +92,8 @@ public class SystemPermission {
 
     @Override
     public String toString() {
-        return "Permission [PermissionId=" + permissionId + ", Name=" + name + ", Code=" + code + ", Route=" + route
-                + ", PathParams=" + pathParams + ", QueryParams=" + queryParams + ", Status=" + status + ", Created="
-                + created + "]";
+        return "SystemPermissionEntity [permissionId=" + permissionId + ", name=" + name + ", code=" + code + ", route="
+                + route + ", pathParams=" + pathParams + ", queryParams=" + queryParams + ", created=" + created + "]";
     }
-    
+
 }
