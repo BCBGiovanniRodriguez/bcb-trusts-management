@@ -2,7 +2,7 @@ package com.bcb.trust.front.model.trusts.entity.trust;
 
 import java.time.LocalDateTime;
 
-import com.bcb.trust.front.model.trusts.entity.catalog.CatalogPerson;
+import com.bcb.trust.front.model.trusts.entity.catalog.Person;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -23,7 +23,7 @@ public class TrustTrusters {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PersonId", referencedColumnName = "PersonId")
-    private CatalogPerson Person;
+    private Person Person;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TrustId", referencedColumnName = "TrustId")
@@ -44,11 +44,11 @@ public class TrustTrusters {
         TrusterId = trusterId;
     }
 
-    public CatalogPerson getPerson() {
+    public Person getPerson() {
         return Person;
     }
 
-    public void setPerson(CatalogPerson person) {
+    public void setPerson(Person person) {
         Person = person;
     }
 

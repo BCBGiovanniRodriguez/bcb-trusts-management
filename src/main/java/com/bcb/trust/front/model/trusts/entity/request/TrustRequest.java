@@ -1,6 +1,6 @@
 package com.bcb.trust.front.model.trusts.entity.request;
 
-import com.bcb.trust.front.model.trusts.entity.system.SystemUser;
+import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ public class TrustRequest {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "RegisteredBy", referencedColumnName = "UserId")
-    private SystemUser RegisteredBy;
+    private SystemUserEntity RegisteredBy;
 
     
 }

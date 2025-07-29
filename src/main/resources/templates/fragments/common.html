@@ -46,9 +46,85 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-speedometer"></i>
+                                <i class="nav-icon fa fa-cogs"></i>
                                 <p>
-                                    Dashboard
+                                    Configuración
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a th:href="@{/request/request}" class="nav-link">
+                                        <i class="nav-icon bi bi-search"></i>
+                                        <p>
+                                            Solicitantes
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a th:href="@{/trust}" class="nav-link">
+                                        <i class="nav-icon bi bi-search"></i>
+                                        <p>
+                                            Fideicomisos
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-cogs"></i>
+                                <p>
+                                    Catálogos
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a th:href="@{/catalog/trust-type/}" class="nav-link">
+                                        <i class="nav-icon bi bi-search"></i>
+                                        <p>
+                                            Tipos de Fideicomiso
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a th:href="@{/catalog/person-type/}" class="nav-link">
+                                        <i class="nav-icon bi bi-search"></i>
+                                        <p>
+                                            Tipos de Personas
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a th:href="@{/catalog/consultant/}" class="nav-link">
+                                        <i class="nav-icon bi bi-search"></i>
+                                        <p>
+                                            Asesores
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a th:href="@{/catalog/sponsor/}" class="nav-link">
+                                        <i class="nav-icon bi bi-search"></i>
+                                        <p>
+                                            Promotores
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-cogs"></i>
+                                <p>
+                                    Administración
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
