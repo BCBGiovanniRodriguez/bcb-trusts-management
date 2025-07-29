@@ -39,7 +39,7 @@
                                             <table class="table table-striped table-bordered table-hover" id="requestTable">
                                                 <thead>
                                                     <tr>
-                                                        <th>Id</th>
+                                                        <th>#</th>
                                                         <th>Nombre</th>
                                                         <th>Tipo de Solicitud</th>
                                                         <th>Estado</th>
@@ -72,6 +72,8 @@
             </main>
 
             <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
         </div>
     </body>
 </html>
