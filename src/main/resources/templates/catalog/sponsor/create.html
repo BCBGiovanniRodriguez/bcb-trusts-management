@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Asesores</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <form th:action="@{/catalog/sponsor/create}" enctype="application/x-www-form-urlencoded">
+                                    <div class="card card-outline card-success mb-4">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Registo Nuevo Promotor al Sistema</strong></h3>
+
+                                            <div class="card-tools">
+                                                <a th:href="@{/catalog/sponsor/}" class="btn btn-info btn-sm">
+                                                    <i class="fa fa-arrow-circle-left"></i> Regresar
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="container-fluid">
+                                                <fieldset>
+                                                    <legend>Datos Personales</legend>
+
+                                                    <div class="row g-3">
+                                                        <div class="col-3">
+                                                            <label for="first_name" class="form-label">Primer Nombre</label>
+                                                            <input type="text" name="first_name" class="form-control" />
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            <label for="second_name" class="form-label">Segundo Nombre</label>
+                                                            <input type="text" name="second_name" class="form-control" placeholder="Opcional" />
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            <label for="last_name" class="form-label">Apellido Paterno</label>
+                                                            <input type="text" name="last_name" class="form-control" />
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="second_last_name" class="form-label">Apellido Materno</label>
+                                                            <input type="text" name="second_last_name" class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row g-3">
+                                                        <div class="col-3">
+                                                            <label for="gender" class="form-label">Género</label>
+                                                            <select name="gender" id="gender" class="form-select">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <option value="1">Femenino</option>
+                                                                <option value="2">Masculino</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            <label for="birth_date" class="form-label">Fecha de Nacimiento</label>
+                                                            <input type="date" name="birth_date" class="form-control" required />
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            <label for="curp" class="form-label">CURP</label>
+                                                            <input type="text" name="curp" class="form-control" />
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="rfc" class="form-label">RFC</label>
+                                                            <input type="text" name="rfc" class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                </fieldset>
+                                                <hr>
+                                                <fieldset>
+                                                    <legend>Domicilio</legend>
+
+                                                    <div class="row g-3">
+                                                        <div class="col-3">
+                                                            <label for="zipcode" class="form-label">Código Postal</label>
+                                                            <input type="text" name="zipcode" id="zipcode" class="form-control" maxlength="5" />
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="colony" class="form-label">Colonia</label>
+                                                            <select name="colony" id="colony" class="form-select" readonly aria-readonly="true">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            <label for="state" class="form-label">Estado</label>
+                                                            <select name="state" id="state" class="form-select" readonly aria-readonly="true">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="township" class="form-label">Municipio</label>
+                                                            <select name="township" id="township" class="form-select" readonly aria-readonly="true">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            <label for="external_number" class="form-label">Número Exterior</label>
+                                                            <input type="text" name="external_number" class="form-control" />
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="internal_number" class="form-label">Número Interior</label>
+                                                            <input type="text" name="internal_number" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="street" class="col-2 form-label">Calle</label>
+                                                            <input type="text" name="street" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button class="btn btn-success" type="submit" role="button">
+                                                        <i class="fa fa-save"></i> Guardar Elemento
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+
+            <script th:src="@{/public/js/module/catalog/consultant/create.js}"></script>
+        </div>
+    </body>
+</html>
