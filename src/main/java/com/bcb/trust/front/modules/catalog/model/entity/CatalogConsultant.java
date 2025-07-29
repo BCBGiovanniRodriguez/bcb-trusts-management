@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "catalog_consultants")
-public class Consultant {
+public class CatalogConsultant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Consultant {
 
     private LocalDateTime created;
 
-    public Consultant() {
+    public CatalogConsultant() {
     }
 
     public Long getConsultantId() {
