@@ -3,6 +3,12 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+typescript/node_modules/
+typescript/package-lock.json
+# Client dependencies
+src/main/resources/static/public/adminlte/
+# Database files
+schema/
 
 ### STS ###
 .apt_generated

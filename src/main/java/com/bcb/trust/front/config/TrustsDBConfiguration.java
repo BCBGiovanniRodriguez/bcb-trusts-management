@@ -27,7 +27,9 @@ import jakarta.persistence.EntityManagerFactory;
     entityManagerFactoryRef = "trustsEntityManagerFactory",
     transactionManagerRef = "trustsTransactionManager",
     basePackages = {
-        "com.bcb.trust.front.model.trusts.*"
+        "com.bcb.trust.front.model.trusts.*",
+        "com.bcb.trust.front.modules.catalog.model.*",
+        "com.bcb.trust.front.modules.system.model.*",
     }
 )
 public class TrustsDBConfiguration {
@@ -57,7 +59,10 @@ public class TrustsDBConfiguration {
         
         return builder.dataSource(trustDataSource)
                 //.properties(properties)
-                .packages("com.bcb.trust.front.model.trusts.entity")
+                .packages(
+                    "com.bcb.trust.front.model.trusts.entity", 
+                    "com.bcb.trust.front.modules.catalog.model.entity",
+                    "com.bcb.trust.front.modules.system.model.entity")
                 .persistenceUnit("trusts")
                 .build();
     }
