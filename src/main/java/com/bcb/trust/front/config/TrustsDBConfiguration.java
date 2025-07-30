@@ -29,7 +29,9 @@ import jakarta.persistence.EntityManagerFactory;
     basePackages = {
         "com.bcb.trust.front.model.trusts.*",
         "com.bcb.trust.front.modules.catalog.model.*",
+        "com.bcb.trust.front.modules.request.model.*",
         "com.bcb.trust.front.modules.system.model.*",
+        "com.bcb.trust.front.modules.trust.model.*",
     }
 )
 public class TrustsDBConfiguration {
@@ -45,25 +47,25 @@ public class TrustsDBConfiguration {
     @Bean(name = "trustsEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
         @Qualifier("trustsDatasource") DataSource trustDataSource) {
-        HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "update");
-        properties.put("jakarta.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
-        
+        //HashMap<String, Object> properties = new HashMap<>();
+        //properties.put("hibernate.hbm2ddl.auto", "update");
+        //properties.put("jakarta.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
         //properties.put("hibernate.connection.username", "root");
         //properties.put("hibernate.connection.password", "root");
         //properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://db:3306/trust");
-
-        properties.put("hibernate.connection.username", "gralrodriguez");
-        properties.put("hibernate.connection.password", "Hrodriguezr0800/+");
-        properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/trusts");
+        //properties.put("hibernate.connection.username", "gralrodriguez");
+        //properties.put("hibernate.connection.password", "Hrodriguezr0800/+");
+        //properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/trusts");
         
         return builder.dataSource(trustDataSource)
                 //.properties(properties)
                 .packages(
                     "com.bcb.trust.front.model.trusts.entity", 
                     "com.bcb.trust.front.modules.catalog.model.entity",
-                    "com.bcb.trust.front.modules.system.model.entity")
-                .persistenceUnit("trusts")
+                    "com.bcb.trust.front.modules.request.model.entity",
+                    "com.bcb.trust.front.modules.system.model.entity",
+                    "com.bcb.trust.front.modules.trust.model.entity"
+                ).persistenceUnit("trusts")
                 .build();
     }
 

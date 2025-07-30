@@ -14,7 +14,6 @@ import com.bcb.trust.front.service.ReportService;
 @Controller
 public class DashboardController {
 
-
     @Autowired
     ReportService reportService;
 
@@ -31,10 +30,6 @@ public class DashboardController {
     public String dashboard(Model model) {
         model.addAttribute("user", "Usuario Fiduciario");
         model.addAttribute("workersForProcess", "Usuario Fiduciario");
-
-        //reportService.exportPDF("Example");
-
-        //int totalWorkers = legacyService.getTotalWorkers(1045);
 
         try {
             //reportService.generateReport();
