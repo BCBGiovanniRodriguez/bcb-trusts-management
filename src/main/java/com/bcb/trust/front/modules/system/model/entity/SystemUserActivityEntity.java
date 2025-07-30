@@ -2,8 +2,6 @@ package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
 
-import com.bcb.trust.front.model.trusts.entity.system.SystemPermission;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,16 +12,16 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "system_user_activites")
+@Table(name = "system_user_activities")
 public class SystemUserActivityEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userActivityId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PermissionId", referencedColumnName = "PermissionId")
-    private SystemPermission permission;
+    @JoinColumn(name = "permissionId", referencedColumnName = "permissionId")
+    private SystemPermissionEntity permissionEntity;
 
     private Integer status;
 
@@ -40,12 +38,12 @@ public class SystemUserActivityEntity {
         this.userActivityId = userActivityId;
     }
 
-    public SystemPermission getPermission() {
-        return permission;
+    public SystemPermissionEntity getPermissionEntity() {
+        return permissionEntity;
     }
 
-    public void setPermission(SystemPermission permission) {
-        this.permission = permission;
+    public void setPermissionEntity(SystemPermissionEntity permissionEntity) {
+        this.permissionEntity = permissionEntity;
     }
 
     public Integer getStatus() {
@@ -66,8 +64,8 @@ public class SystemUserActivityEntity {
 
     @Override
     public String toString() {
-        return "SystemUserActivity [userActivityId=" + userActivityId + ", permission=" + permission + ", status="
-                + status + ", created=" + created + "]";
+        return "SystemUserActivityEntity [userActivityId=" + userActivityId + ", permissionEntity=" + permissionEntity
+                + ", status=" + status + ", created=" + created + "]";
     }
 
 }

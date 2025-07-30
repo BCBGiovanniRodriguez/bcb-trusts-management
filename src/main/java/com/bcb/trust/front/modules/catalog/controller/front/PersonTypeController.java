@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bcb.trust.front.model.trusts.enums.StatusEnum;
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonType;
+import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonTypeEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonTypeRepository;
 
 @Controller
@@ -21,7 +21,7 @@ public class PersonTypeController {
 
     @RequestMapping("/")
     public String index(Model model) {
-        List<CatalogPersonType> personTypeList = new ArrayList<>();
+        List<CatalogPersonTypeEntity> personTypeList = new ArrayList<>();
 
         try {
             StatusEnum status = StatusEnum.ENABLED;

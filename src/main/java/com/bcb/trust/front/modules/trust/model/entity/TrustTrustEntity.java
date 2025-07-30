@@ -24,8 +24,8 @@ public class TrustTrustEntity {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "type", referencedColumnName = "trustTypeId")
-    private TrustTrustTypeEntity typeEntity;
+    @JoinColumn(name = "trustTypeId", referencedColumnName = "trustTypeId")
+    private TrustTrustTypeEntity trustTypeEntity;
 
     private Integer state;
 

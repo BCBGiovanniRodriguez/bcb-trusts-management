@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogConsultant;
+import com.bcb.trust.front.modules.catalog.model.entity.CatalogConsultantEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogConsultantRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +26,7 @@ public class CatalogConsultantController {
     private CatalogConsultantRepository consultantRepository;
 
     @PostMapping("/consultant")
-    public String create(@RequestBody CatalogConsultant consultant) throws JsonProcessingException {
+    public String create(@RequestBody CatalogConsultantEntity consultant) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
@@ -53,14 +53,14 @@ public class CatalogConsultantController {
     }
 
     @PutMapping("/consultant/{id}")
-    public String putMethodName(@PathVariable String id, @RequestBody CatalogConsultant consultant) throws JsonProcessingException {
+    public String putMethodName(@PathVariable String id, @RequestBody CatalogConsultantEntity consultant) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
         Map<String, Object> resultMap = new HashMap<>();
         
         try {
-            Optional<CatalogConsultant> optional = consultantRepository.findById(Long.parseLong(id));
+            Optional<CatalogConsultantEntity> optional = consultantRepository.findById(Long.parseLong(id));
 
             if (optional.isPresent()) {
                 optional.get()

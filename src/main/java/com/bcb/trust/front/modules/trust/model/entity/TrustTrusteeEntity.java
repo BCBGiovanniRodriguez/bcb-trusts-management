@@ -4,17 +4,29 @@ import java.time.LocalDateTime;
 
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "trust_trustees")
 public class TrustTrusteeEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trusteeId;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personId", referencedColumnName = "personId")
     private CatalogPersonEntity personEntity;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trustId", referencedColumnName = "trustId")
     private TrustTrustEntity trustEntity;
 
     private Integer status;

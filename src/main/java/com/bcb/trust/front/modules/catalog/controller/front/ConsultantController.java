@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddress;
+import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddressEntity;
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogConsultantRepository;
 
@@ -27,7 +27,7 @@ public class ConsultantController {
     @GetMapping("/create")
     public String create(Model model) {
         CatalogPersonEntity person = new CatalogPersonEntity();
-        CatalogAddress address = new CatalogAddress();
+        CatalogAddressEntity address = new CatalogAddressEntity();
 
         model.addAttribute("person", person);
         model.addAttribute("address", address);
