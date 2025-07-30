@@ -1,4 +1,4 @@
-package com.bcb.trust.front.model.trusts.entity.catalog;
+package com.bcb.trust.front.modules.catalog.model.entity;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "catalog_person_type")
-public class PersonType {
+public class CatalogPersonType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class PersonType {
 
     private LocalDateTime created;
 
-    public PersonType() {
+    public CatalogPersonType() {
     }
 
     public Long getPersonTypeId() {

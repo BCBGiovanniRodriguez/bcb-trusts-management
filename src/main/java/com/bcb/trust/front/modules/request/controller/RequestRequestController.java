@@ -1,4 +1,4 @@
-package com.bcb.trust.front.modules.request.controller.api;
+package com.bcb.trust.front.modules.request.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

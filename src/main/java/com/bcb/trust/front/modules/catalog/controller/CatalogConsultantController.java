@@ -1,62 +1,90 @@
 package com.bcb.trust.front.modules.catalog.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.bcb.trust.front.model.ResultResponse;
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogConsultant;
-import com.bcb.trust.front.modules.catalog.model.repository.CatalogConsultantRepository;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bcb.trust.front.modules.catalog.model.entity.CatalogConsultant;
+import com.bcb.trust.front.modules.catalog.model.repository.CatalogConsultantRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @RestController
 @RequestMapping("/api/catalog")
 public class CatalogConsultantController {
 
     @Autowired
-    private CatalogConsultantRepository catalogConsultantRepository;
+    private CatalogConsultantRepository consultantRepository;
 
     @PostMapping("/consultant")
-    public ResultResponse<CatalogConsultant> create(@RequestBody CatalogConsultant consultant) {
-        ResultResponse<CatalogConsultant> result = null;
+    public String create(@RequestBody CatalogConsultant consultant) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String jsonResponse = null;
+        Map<String, Object> resultMap = new HashMap<>();
 
         try {
-            catalogConsultantRepository.saveAndFlush(consultant);
-            result = ResultResponse.success(consultant);
+
+            consultantRepository.saveAndFlush(consultant);
+            
+            resultMap.put("status", 1);
+            resultMap.put("message", "Petición Correcta");
+            resultMap.put("data", consultant);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
         } catch (Exception e) {
-            result = ResultResponse.failure("Error on: CatalogConsultantController::create[" + e.getLocalizedMessage()+"]");
+            resultMap.put("status", 0);
+            resultMap.put("message", "Error en: CatalogConsultantController::post[" + e.getLocalizedMessage() + "]");
+            resultMap.put("data", null);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
         }
         
-        return result;
+        return jsonResponse;
     }
 
     @PutMapping("/consultant/{id}")
-    public ResultResponse<CatalogConsultant> putMethodName(@PathVariable String id, @RequestBody CatalogConsultant consultant) {
-        ResultResponse<CatalogConsultant> result = null;
+    public String putMethodName(@PathVariable String id, @RequestBody CatalogConsultant consultant) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String jsonResponse = null;
+        Map<String, Object> resultMap = new HashMap<>();
         
         try {
-            Optional<CatalogConsultant> optional = catalogConsultantRepository.findById(Long.parseLong(id));
+            Optional<CatalogConsultant> optional = consultantRepository.findById(Long.parseLong(id));
 
             if (optional.isPresent()) {
                 optional.get()
                     .setStatus(consultant.getStatus());
                 
-                result = ResultResponse.success(consultant);
+                consultantRepository.flush();
             } else {
-                result = ResultResponse.failure("Registro con identificador '" + id + "'' no encontrado");
+                throw new Exception("Registro con identificador '" + id + "'' no encontrado");
             }
 
+            resultMap.put("status", 1);
+            resultMap.put("message", "Petición Correcta");
+            resultMap.put("data", consultant);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
         } catch (Exception e) {
-            result = ResultResponse.failure("Error on: CatalogConsultantController::create[" + e.getLocalizedMessage()+"]");
+            resultMap.put("status", 0);
+            resultMap.put("message", "Error en: CatalogConsultantController::post[" + e.getLocalizedMessage() + "]");
+            resultMap.put("data", null);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
         }
         
-        return result;
+        return jsonResponse;
     }
     
 }

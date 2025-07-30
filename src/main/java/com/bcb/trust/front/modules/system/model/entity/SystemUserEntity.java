@@ -2,7 +2,7 @@ package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
 
-import com.bcb.trust.front.model.trusts.entity.catalog.Person;
+import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -33,7 +33,7 @@ public class SystemUserEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PersonId", referencedColumnName = "PersonId")
-    private Person person;
+    private CatalogPersonEntity person;
 
     private Integer status;
 
@@ -82,11 +82,11 @@ public class SystemUserEntity {
         this.email = email;
     }
 
-    public Person getPerson() {
+    public CatalogPersonEntity getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(CatalogPersonEntity person) {
         this.person = person;
     }
 

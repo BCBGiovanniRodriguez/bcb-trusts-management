@@ -1,4 +1,4 @@
-package com.bcb.trust.front.controllers.request;
+package com.bcb.trust.front.modules.request.controller.front;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

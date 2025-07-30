@@ -1,4 +1,4 @@
-package com.bcb.trust.front.controllers.catalog;
+package com.bcb.trust.front.modules.catalog.controller.front;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bcb.trust.front.model.trusts.entity.catalog.Person;
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddress;
+import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogConsultantRepository;
 
 @Controller
@@ -26,7 +26,7 @@ public class ConsultantController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        Person person = new Person();
+        CatalogPersonEntity person = new CatalogPersonEntity();
         CatalogAddress address = new CatalogAddress();
 
         model.addAttribute("person", person);

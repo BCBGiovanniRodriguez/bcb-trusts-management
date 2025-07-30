@@ -1,4 +1,4 @@
-package com.bcb.trust.front.controllers.catalog;
+package com.bcb.trust.front.modules.trust.controller.front;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bcb.trust.front.model.trusts.entity.catalog.TrustType;
 import com.bcb.trust.front.model.trusts.enums.StatusEnum;
-import com.bcb.trust.front.model.trusts.repository.catalog.TrustTypeRepository;
+import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.repository.TrustTrustTypeRepository;
 
 @Controller
 @RequestMapping("/catalog/trust-type")
 public class TrustTypeController {
 
     @Autowired
-    private TrustTypeRepository trustTypeRepository;
+    private TrustTrustTypeRepository trustTypeRepository;
 
     @GetMapping("/")
     public String index(Model model) {
 
-        List<TrustType> trustTypeList = new ArrayList<>();
+        List<TrustTrustTypeEntity> trustTypeList = new ArrayList<>();
 
         try {
             StatusEnum status = StatusEnum.ENABLED;
@@ -43,13 +43,13 @@ public class TrustTypeController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("trustType", new TrustType());
+        model.addAttribute("trustType", new TrustTrustTypeEntity());
 
         return "catalog/trust-type/create";
     }
 
     @PostMapping("/create")
-    public String createSubmit(@ModelAttribute TrustType trustType) {
+    public String createSubmit(@ModelAttribute TrustTrustTypeEntity trustType) {
         LocalDateTime now = LocalDateTime.now();
 
         try {

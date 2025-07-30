@@ -1,4 +1,4 @@
-package com.bcb.trust.front.model.trusts.entity.catalog;
+package com.bcb.trust.front.modules.trust.model.entity;
 
 import java.time.LocalDateTime;
 
@@ -13,27 +13,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "catalog_trust_type")
-public class TrustType {
+@Table(name = "trust_trust_types")
+public class TrustTrustTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long trustTypeId;
+    private Long trustTypeId;
 
     private String name;
+
+    private String description;
 
     @Enumerated(EnumType.ORDINAL)
     private StatusEnum status;
 
     private LocalDateTime created;
 
-    public TrustType() {
+    public TrustTrustTypeEntity() {
     }
 
-    public long getTrustTypeId() {
+    public Long getTrustTypeId() {
         return trustTypeId;
     }
 
-    public void setTrustTypeId(long trustTypeId) {
+    public void setTrustTypeId(Long trustTypeId) {
         this.trustTypeId = trustTypeId;
     }
 
@@ -43,6 +45,14 @@ public class TrustType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public StatusEnum getStatus() {
@@ -63,8 +73,8 @@ public class TrustType {
 
     @Override
     public String toString() {
-        return "TrustType [trustTypeId=" + trustTypeId + ", name=" + name + ", status=" + status + ", created="
-                + created + "]";
-    }
+        return "TrustTrustTypeEntity [trustTypeId=" + trustTypeId + ", name=" + name + ", description=" + description
+                + ", status=" + status + ", created=" + created + "]";
+    }    
 
 }

@@ -1,4 +1,6 @@
-package com.bcb.trust.front.model.trusts.entity.request;
+package com.bcb.trust.front.modules.request.model.entity;
+
+import java.time.LocalDateTime;
 
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 
@@ -11,17 +13,21 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-//@Entity
-//@Table(name = "TrustRequest")
-public class TrustRequest {
+@Entity
+@Table(name = "request_requests")
+public class RequestRequestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long RequestId;
+    private Long requestId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "RegisteredBy", referencedColumnName = "UserId")
-    private SystemUserEntity RegisteredBy;
+    @JoinColumn(name = "registeredBy", referencedColumnName = "userId")
+    private SystemUserEntity registeredBy;
 
+    private Integer type;
+
+    private Integer state;
     
+    private LocalDateTime created;
 }

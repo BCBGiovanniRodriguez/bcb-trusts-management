@@ -2,7 +2,6 @@ package com.bcb.trust.front.modules.catalog.model.entity;
 
 import java.time.LocalDateTime;
 
-import com.bcb.trust.front.model.trusts.entity.catalog.Person;
 import com.bcb.trust.front.model.trusts.enums.StatusEnum;
 
 import jakarta.persistence.CascadeType;
@@ -24,7 +23,7 @@ public class CatalogConsultant {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PersonId", referencedColumnName = "PersonId")
-    private Person person;
+    private CatalogPersonEntity person;
 
     private StatusEnum status;
 
@@ -41,11 +40,11 @@ public class CatalogConsultant {
         this.consultantId = consultantId;
     }
 
-    public Person getPerson() {
+    public CatalogPersonEntity getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(CatalogPersonEntity person) {
         this.person = person;
     }
 

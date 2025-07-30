@@ -1,4 +1,4 @@
-package com.bcb.trust.front.controllers.catalog;
+package com.bcb.trust.front.modules.catalog.controller.front;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

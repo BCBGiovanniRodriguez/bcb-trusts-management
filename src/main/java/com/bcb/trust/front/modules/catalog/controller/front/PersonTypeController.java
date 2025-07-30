@@ -1,4 +1,4 @@
-package com.bcb.trust.front.controllers.catalog;
+package com.bcb.trust.front.modules.catalog.controller.front;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,19 +9,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bcb.trust.front.model.trusts.enums.StatusEnum;
-import com.bcb.trust.front.model.trusts.entity.catalog.PersonType;
-import com.bcb.trust.front.model.trusts.repository.catalog.PersonTypeRepository;
+import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonType;
+import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonTypeRepository;
 
 @Controller
 @RequestMapping("/catalog/person-type")
 public class PersonTypeController {
 
     @Autowired
-    private PersonTypeRepository personTypeRepository;
+    private CatalogPersonTypeRepository personTypeRepository;
 
     @RequestMapping("/")
     public String index(Model model) {
-        List<PersonType> personTypeList = new ArrayList<>();
+        List<CatalogPersonType> personTypeList = new ArrayList<>();
 
         try {
             StatusEnum status = StatusEnum.ENABLED;
