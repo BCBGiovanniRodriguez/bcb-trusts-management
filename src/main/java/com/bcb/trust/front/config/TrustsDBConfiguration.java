@@ -32,6 +32,7 @@ import jakarta.persistence.EntityManagerFactory;
         "com.bcb.trust.front.modules.request.model.*",
         "com.bcb.trust.front.modules.system.model.*",
         "com.bcb.trust.front.modules.trust.model.*",
+        "com.bcb.trust.front.modules.configuration.model.*",
     }
 )
 public class TrustsDBConfiguration {
@@ -64,7 +65,8 @@ public class TrustsDBConfiguration {
                     "com.bcb.trust.front.modules.catalog.model.entity",
                     "com.bcb.trust.front.modules.request.model.entity",
                     "com.bcb.trust.front.modules.system.model.entity",
-                    "com.bcb.trust.front.modules.trust.model.entity"
+                    "com.bcb.trust.front.modules.trust.model.entity",
+                    "com.bcb.trust.front.modules.configuration.model.entity"
                 ).persistenceUnit("trusts")
                 .build();
     }
