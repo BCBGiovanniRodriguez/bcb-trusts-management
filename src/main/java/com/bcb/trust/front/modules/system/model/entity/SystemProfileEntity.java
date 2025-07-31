@@ -25,7 +25,7 @@ public class SystemProfileEntity {
     @Column(nullable = false)
     private Integer status;
 
-    @Column(nullable = false, columnDefinition = "current_timestamp()")
+    @Column(nullable = false)
     private Date created;
 
     public SystemProfileEntity() {

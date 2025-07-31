@@ -124,5 +124,27 @@ public class CatalogPersonEntity {
                 + ", lastName=" + lastName + ", secondLastName=" + secondLastName + ", gender=" + gender
                 + ", birthDate=" + birthDate + ", curp=" + curp + ", rfc=" + rfc + ", created=" + created + "]";
     }
+
+    public String getFullName() {
+        String fullName = "";
+
+        if (this.lastName != null) {
+            fullName += this.lastName + " ";
+        }
+
+        if (this.secondLastName != null) {
+            fullName += this.secondLastName + " ";
+        }
+
+        if (this.firstName != null) {
+            fullName += ", " + this.firstName + " ";
+        }
+
+        if (this.secondName != null) {
+            fullName += this.secondName;
+        }
+
+        return fullName;
+    }
     
 }

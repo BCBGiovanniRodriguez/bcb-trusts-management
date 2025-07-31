@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Mi perfil</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <img th:src="@{/public/img/fideicomiso-fisica-0.svg}" alt="Imagen de Usuario" width="200" height="200">
+                                            </div>
+                                        </div>
+                                        <div class="row text-center">
+                                            <span th:if="${systemUserEntity != null}" th:text="${systemUserEntity.person.fullName} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                            <span th:unless="${systemUserEntity != null}"></span>
+                                        </div>
+                                        <div class="row text-center">
+                                            <span th:if="${systemProfileEntity != null}" th:text="${systemProfileEntity.name} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                            <span th:unless="${systemProfileEntity != null}" th:text="VALOR_NO_PRESENTE"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Correo Electrónico</strong></td>
+                                                <td>
+                                                    <span th:if="${systemUserEntity != null}" th:text="${systemUserEntity.email} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                                    <span th:unless="${systemUserEntity != null}">VALOR_NO_PRESENTE</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Fecha Alta</strong></td>
+                                                <td>
+                                                    <span th:if="${systemUserEntity != null}" th:text="${systemUserEntity.created} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                                    <span th:unless="${systemUserEntity != null}">VALOR_NO_PRESENTE</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Número Móvil</strong></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Estado</strong></td>
+                                                <td></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Métricas</strong></h3>
+                                        <div class="card-tools">
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

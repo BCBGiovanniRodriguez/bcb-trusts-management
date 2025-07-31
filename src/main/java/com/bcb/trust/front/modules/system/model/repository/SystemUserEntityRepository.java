@@ -8,4 +8,5 @@ import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 @Repository
 public interface SystemUserEntityRepository extends JpaRepository<SystemUserEntity, Long> {
 
+    SystemUserEntity findByNickname(String nickname);
 }

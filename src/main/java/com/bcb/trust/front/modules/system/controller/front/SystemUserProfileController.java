@@ -1,56 +1,29 @@
-package com.bcb.trust.front.controllers;
+package com.bcb.trust.front.modules.system.controller.front;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bcb.trust.front.model.bmtkfweb.service.PartialBalanceService;
 import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
-import com.bcb.trust.front.service.LegacyService;
-import com.bcb.trust.front.service.MassiveReportService;
-import com.bcb.trust.front.service.ReportService;
-
 
 @Controller
-public class DashboardController {
+public class SystemUserProfileController {
 
     @Autowired
     private SystemUserEntityRepository systemUserEntityRepository;
 
-    @Autowired
-    ReportService reportService;
+    @GetMapping("/profile")
+    public String getProfile() {
 
-    @Autowired
-    LegacyService legacyService;
-
-    @Autowired
-    MassiveReportService massiveReportService;
-
-    @Autowired
-    PartialBalanceService partialBalanceService;
-
-    @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        model.addAttribute("user", "Usuario Fiduciario");
-        model.addAttribute("workersForProcess", "Usuario Fiduciario");
-
-        try {
-            //reportService.generateReport();
-            massiveReportService.process(1045);
-            //partialBalanceService.calculatePartialBalance(1045);
-        } catch (Exception e) {
-            System.out.println("DashboardControllerMessage: " + e.getMessage());
-        }
-
-        return "dashboard/index";
+        return "user/index";
     }
-    
+
     @ModelAttribute("systemUserEntity")
     public SystemUserEntity systemUserEntity(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

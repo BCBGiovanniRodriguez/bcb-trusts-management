@@ -5,11 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BCB Fiduciario</title>
         <link rel="icon" th:href="@{/public/img/favicon.ico}">
-        <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/plugins/fontawesome/css/all.min.css}" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.11.0/styles/overlayscrollbars.min.css" integrity="sha512-PBzouFB1XtDMHX9kVQ3rh7MDwvHFyD5FflRNcuMk7Q9BR9v8DgwjZWu++yrIxOjsdW3j+sj9KnnY59Jjzx5hWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/bootstrap-5.3.6/css/bootstrap.min.css}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/plugins/fontawesome/css/all.min.css}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.11.0/styles/overlayscrollbars.min.css" integrity="sha512-PBzouFB1XtDMHX9kVQ3rh7MDwvHFyD5FflRNcuMk7Q9BR9v8DgwjZWu++yrIxOjsdW3j+sj9KnnY59Jjzx5hWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script>
             const baseUrl = '/';
         </script>
@@ -25,7 +25,49 @@
                         </a>
                     </li>
                     <li class="nav-item d-none d-md-block">
-                        <a href="#" class="nav-link">Inicio</a>
+                        <a th:href="@{/dashboard}" class="nav-link">Inicio</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item d-none d-md-block hidden" hidden>
+                        <a href="#" class="nav-link" hidden>Fecha Contable: NA</a>
+                    </li>
+
+                    <li class="nav-item dropdown user-menu">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img th:src="@{/public/img/fideicomiso-fisica-0.svg}" class="user-image rounded-circle shadow" alt="User Image">
+                            <span th:if="${systemUserEntity != null}" class="d-none d-md-inline" th:text="${systemUserEntity.nickname} ?: 'VALOR_NO_PRESENTE'"></span>
+                            <span th:unless="${systemUserEntity != null}" class="d-none d-md-inline" th:text="VALOR_NO_PRESENTE"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                            <!--begin::User Image-->
+                            <li class="user-header text-bg-primary-subtle">
+                                <img th:src="@{/public/img/fideicomiso-fisica-0.svg}" class="rounded-circle shadow" alt="User Image">
+                                <p>
+                                    <span th:if="${systemUserEntity != null}" th:text="${systemUserEntity.nickname} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                    <span th:unless="${systemUserEntity != null}"></span>
+                                    <br>
+                                    <span th:if="${systemProfileEntity != null}" th:text="${systemProfileEntity.name} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                    <span th:unless="${systemProfileEntity != null}" th:text="VALOR_NO_PRESENTE"></span>
+                                    <small>Miembro desde 
+                                        <span th:if="${systemProfileEntity != null}" th:text="${#dates.format(systemProfileEntity.created, 'MMM yyyy')} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                    </small>
+                                </p>
+                            </li>
+                            <!--end::User Image-->
+                            <!--begin::Menu Footer-->
+                            <li class="user-footer">
+                                <a th:href="@{/profile}" class="btn btn-default btn-flat">
+                                    <i class="bi bi-person-circle"></i> Mi Perfil
+                                </a>
+
+                                <a th:href="@{/logout}" class="btn btn-default btn-flat float-end">
+                                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                                </a>
+                            </li>
+                            <!--end::Menu Footer-->
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -54,28 +96,20 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a th:href="@{/request/request}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
+                                    <a th:href="@{/configuration/endpoint}" class="nav-link">
+                                        <i class="nav-icon fa fa-hexagon-nodes"></i>
                                         <p>
-                                            Solicitantes
+                                            Endpoints
                                         </p>
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a th:href="@{/trust}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
-                                        <p>
-                                            Fideicomisos
-                                        </p>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-cogs"></i>
+                                <i class="nav-icon fa fa-clipboard-list"></i>
                                 <p>
                                     Catálogos
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -93,7 +127,7 @@
 
                                 <li class="nav-item">
                                     <a th:href="@{/catalog/person-type/}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
+                                        <i class="nav-icon bi bi-person-bounding-box"></i>
                                         <p>
                                             Tipos de Personas
                                         </p>
@@ -102,7 +136,7 @@
 
                                 <li class="nav-item">
                                     <a th:href="@{/catalog/consultant/}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
+                                        <i class="nav-icon bi bi-person-fill-check"></i>
                                         <p>
                                             Asesores
                                         </p>
@@ -111,7 +145,7 @@
 
                                 <li class="nav-item">
                                     <a th:href="@{/catalog/sponsor/}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
+                                        <i class="nav-icon bi bi-person-fill-up"></i>
                                         <p>
                                             Promotores
                                         </p>
@@ -122,7 +156,7 @@
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-cogs"></i>
+                                <i class="nav-icon fa fa-user-tie"></i>
                                 <p>
                                     Administración
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -131,16 +165,16 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a th:href="@{/request/request}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
+                                        <i class="nav-icon bi bi-person-plus-fill"></i>
                                         <p>
-                                            Solicitantes
+                                            Solicitudes
                                         </p>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a th:href="@{/trust}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
+                                        <i class="nav-icon bi bi-person-vcard-fill"></i>
                                         <p>
                                             Fideicomisos
                                         </p>
@@ -153,38 +187,85 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-file-earmark-ruled"></i>
                                 <p>
-                                    Estados de Cuenta
+                                    Reportes
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                <li class="nav-item" hidden>
+                                    <a th:href="@{/report/statement}" class="nav-link">
+                                        <i class="nav-icon bi bi-person-plus-fill"></i>
+                                        <p>
+                                            Elemento
+                                        </p>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
+                                        <i class="nav-icon bi bi-file-earmark-ruled-fill"></i>
                                         <p>
-                                            Masivos
+                                            Estados de Cuenta
                                             <i class="nav-arrow bi bi-chevron-right"></i>
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview">
-                                        <li class="nav-item">
+                                        <li class="nav-item" hidden>
                                             <a th:href="@{/balance}" class="nav-link">
-                                                <i class="nav-icon bi bi-search"></i>
+                                                <i class="nav-icon bi bi-view-list"></i>
                                                 <p>
                                                     Trimestral por rangos
                                                 </p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a th:href="@{/balance}" class="nav-link">
-                                                <i class="nav-icon bi bi-search"></i>
+                                            <a th:href="@{/report/statement}" class="nav-link">
+                                                <i class="nav-icon bi bi-filetype-pdf"></i>
                                                 <p>
-                                                    Histórico Trimestral
+                                                    Individual
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a th:href="@{/report/statement-massive}" class="nav-link">
+                                                <i class="nav-icon bi bi-view-list"></i>
+                                                <p>
+                                                    Masivo
                                                 </p>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-cpu"></i>
+                                <p>
+                                    Sistema
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a th:href="@{/system/permission}" class="nav-link">
+                                        <i class="nav-icon bi bi-card-checklist"></i>
+                                        <p>
+                                            Permisos
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a th:href="@{/system/profile}" class="nav-link">
+                                        <i class="nav-icon bi bi-people"></i>
+                                        <p>
+                                            Perfiles
+                                        </p>
+                                    </a>
+                                </li>
+
                             </ul>
                         </li>
                     </ul>
