@@ -21,7 +21,11 @@ public class SystemPermissionEntity {
 
     private String code;
 
+    private Integer module;
+
     private String route;
+
+    private static String[] moduleNames = {"No definido", "Configuración", "Catálogo", "Solicitud", "Fideicomiso", "Reporte", "Terceros", "Sistema"};
 
     @Column(name = "path_params", nullable = true)
     private String pathParams;
@@ -90,10 +94,26 @@ public class SystemPermissionEntity {
         this.created = created;
     }
 
-    @Override
-    public String toString() {
-        return "SystemPermissionEntity [permissionId=" + permissionId + ", name=" + name + ", code=" + code + ", route="
-                + route + ", pathParams=" + pathParams + ", queryParams=" + queryParams + ", created=" + created + "]";
+    public Integer getModule() {
+        return module;
     }
 
+    public void setModule(Integer module) {
+        this.module = module;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemPermissionEntity [permissionId=" + permissionId + ", name=" + name + ", code=" + code
+                + ", module=" + module + ", route=" + route + ", pathParams=" + pathParams + ", queryParams="
+                + queryParams + ", created=" + created + "]";
+    }
+
+    public String getModuleAsString() throws Exception {
+        if (this.module < 0 || (this.module > moduleNames.length)) {
+            throw new Exception("SystemPermissionEntity::getModuleAsString::Valor de modulo fuera del rango");
+        }
+
+        return SystemPermissionEntity.moduleNames[this.module];
+    }
 }
