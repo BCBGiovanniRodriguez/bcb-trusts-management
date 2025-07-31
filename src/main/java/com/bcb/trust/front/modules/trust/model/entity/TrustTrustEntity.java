@@ -60,12 +60,12 @@ public class TrustTrustEntity {
         this.name = name;
     }
 
-    public TrustTrustTypeEntity getTypeEntity() {
-        return typeEntity;
+    public TrustTrustTypeEntity getTrustTypeEntity() {
+        return trustTypeEntity;
     }
 
-    public void setTypeEntity(TrustTrustTypeEntity typeEntity) {
-        this.typeEntity = typeEntity;
+    public void setTrustTypeEntity(TrustTrustTypeEntity trustTypeEntity) {
+        this.trustTypeEntity = trustTypeEntity;
     }
 
     public Integer getState() {
@@ -94,8 +94,7 @@ public class TrustTrustEntity {
 
     @Override
     public String toString() {
-        return "TrustTrustEntity [trustId=" + trustId + ", number=" + number + ", name=" + name + ", typeEntity="
-                + typeEntity + ", state=" + state + ", status=" + status + ", created=" + created + "]";
+        return "TrustTrustEntity [trustId=" + trustId + ", number=" + number + ", name=" + name + ", trustTypeEntity="
+                + trustTypeEntity + ", state=" + state + ", status=" + status + ", created=" + created + "]";
     }
-    
 }
