@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "CommonJS",
+        //"module": "ES6",
         "sourceMap": false,
         "rootDir": "./",
         "outDir": "../src/main/resources/static/public/js",

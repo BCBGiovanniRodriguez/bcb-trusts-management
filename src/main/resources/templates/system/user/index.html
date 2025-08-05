@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Usuarios del Sistema</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <form th:action="@{/system/user}" method="get">
+                                    <div class="card card-outline card-info mb-4">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Consulta de Usuarios Registrados en el Sistema</strong></h3>
+
+                                            <div class="card-tools">
+                                                <a class="btn btn-sm btn-success" th:href="@{/system/user/create}">
+                                                    <i class="fa fa-plus"></i> Registrar Usuario
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-3">
+                                                    <label for="status" class="form-label">Estado</label>
+                                                    <select name="status" id="status" class="form-select">
+                                                        <option th:each="status, iteration : ${statuses}" th:value="${iteration.index}" th:text="${status}"
+                                                            th:selected="${statusQueryParam == iteration.index}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <button class="btn btn-info" type="submit">
+                                                <i class="fa fa-search"></i> Búsqueda
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Usuarios Registrados en el Sistema</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped table-bordered" id="userTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Perfil</th>
+                                                        <th>Acceso</th>
+                                                        <th>Nombre Completo</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha de Registro</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody th:each="user : ${userEntityList}">
+                                                    <tr>
+                                                        <td th:text="${user.userId}"></td>
+                                                        <td th:text="${user.profile.name}"></td>
+                                                        <td th:text="${user.nickname}"></td>
+                                                        <td th:text="${user.person.fullName}"></td>
+                                                        <td th:text="${user.statusAsString}"></td>
+                                                        <td th:text="${user.created}"></td>
+                                                        <td>
+                                                            <a th:href="@{/system/user/{id}(id=${user.userId})}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

@@ -51,7 +51,7 @@
                                     <span th:if="${systemProfileEntity != null}" th:text="${systemProfileEntity.name} ?: 'VALOR_NO_PRESENTE'" ></span>
                                     <span th:unless="${systemProfileEntity != null}" th:text="VALOR_NO_PRESENTE"></span>
                                     <small>Miembro desde 
-                                        <span th:if="${systemProfileEntity != null}" th:text="${#dates.format(systemProfileEntity.created, 'MMM yyyy')} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                        <span th:if="${systemProfileEntity != null}" th:text="${#temporals.format(systemProfileEntity.created, 'dd-MM-yyyy HH:mm-ss')} ?: 'VALOR_NO_PRESENTE'" ></span>
                                     </small>
                                 </p>
                             </li>
@@ -266,6 +266,15 @@
                                     </a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a th:href="@{/system/user}" class="nav-link">
+                                        <i class="nav-icon bi bi-people-fill"></i>
+                                        <p>
+                                            Usuarios
+                                        </p>
+                                    </a>
+                                </li>
+
                             </ul>
                         </li>
                     </ul>
@@ -274,6 +283,23 @@
              </div>
             <!-- Sidebar Wrapper-->
         </aside>
+
+        <!-- Common Modals -->
+        <div th:fragment="commonModals">
+            <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="confirmOperationModalLabel">Operación realizada exitosamente</h5>
+                        </div>
+                        <div class="modal-body">
+                            La información se ha actualizado exitosamente <br>
+                            Redireccionando en 5 segundos... <span id="redirectionSpan"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <footer th:fragment="footer" class="app-footer">
             <span>
@@ -289,6 +315,7 @@
         </footer>
 
         <div th:fragment="jsDependencies">
+            <script>var exports = {};</script>
             <script th:src="@{/public/adminlte/plugins/jquery/jquery-3.7.1.min.js}"></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script th:src="@{/public/bootstrap-5.3.6/js/bootstrap.min.js}"></script>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Perfiles del Sistema</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-success mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Registrar Perfil en el Sistema</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form">
+                                            <div class="row g-3">
+                                                <div class="col-3">
+                                                    <label for="name" class="form-label"><strong>Nombre</strong></label>
+                                                    <input type="text" id="name" name="name" class="form-control" />
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label for="members" class="form-label"><strong>Miembros</strong></label>
+                                                    <input name="members" id="members" type="number" min="0"  class="form-control" placeholder="Opcional" />
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <button id="btnSaveProfile" class="btn btn-success" role="button">
+                                                        <i class="fa fa-save"></i> 
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+
+            <script th:src="@{/public/js/module/system/profile/create.js}"></script>
+        </div>
+    </body>
+</html>

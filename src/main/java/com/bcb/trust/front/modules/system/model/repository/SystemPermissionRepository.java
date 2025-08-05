@@ -1,5 +1,7 @@
 package com.bcb.trust.front.modules.system.model.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,10 @@ public interface SystemPermissionRepository extends JpaRepository<SystemPermissi
     SystemPermissionEntity findOneByName(String name);
 
     SystemPermissionEntity findOneByCode(String code);
+
+    List<SystemPermissionEntity> findByModuleAndStatus(Integer module, Integer status);
+
+    List<SystemPermissionEntity> findByStatus(Integer status);
+
+    List<SystemPermissionEntity> findByModule(Integer module);
 }

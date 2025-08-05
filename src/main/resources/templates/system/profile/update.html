@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Perfiles del Sistema</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-warning mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Actualizar Perfil en el Sistema</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form">
+                                            <div class="row g-3">
+                                                <div class="col-3" hidden>
+                                                    <label for="name" class="form-label"><strong>Nombre</strong></label>
+                                                    <input type="text" id="profileId" name="profileId" class="form-control" th:value="${systemProfileEntity.profileId}" />
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label for="name" class="form-label"><strong>Nombre</strong></label>
+                                                    <input type="text" id="name" name="name" class="form-control" th:value="${systemProfileEntity.name}" />
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label for="members" class="form-label"><strong>Miembros</strong></label>
+                                                    <input name="members" id="members" type="number" min="0"  class="form-control" placeholder="Opcional" th:value="${systemProfileEntity.members}" />
+                                                </div>
+
+                                                
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="table-responsive">
+                                            <table id="permissionTable" class="table table-sm table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Asignar</th>
+                                                        <th>Módulo</th>
+                                                        <th>Código</th>
+                                                        <th>Permiso</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="permission: ${systemPermissionList}">
+                                                        <td>
+                                                            <input type="checkbox" class="form-checkbox permission" th:with="checked=${systemProfilePermissionEntityList.contains(permission)} ? true: false"
+                                                            th:attr="checked=${checked} == true ? 'checked' : null, permission=${permission.permissionId}">
+                                                        </td>
+                                                        <td>
+                                                            <span th:text="${permission.moduleAsString}"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span th:text="${permission.code}"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span th:text="${permission.name}"></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row g-3 text-center">
+                                            <div class="col-3">
+                                                <button id="btnSaveProfile" class="btn btn-warning" role="button">
+                                                    <i class="fa fa-sync"></i> Actualizar Perfil de Sistema
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+
+            <script th:src="@{/public/js/module/system/profile/update.js}"></script>
+        </div>
+    </body>
+</html>

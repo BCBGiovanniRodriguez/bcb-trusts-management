@@ -1,19 +1,26 @@
 package com.bcb.trust.front.modules.system.model.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import com.bcb.trust.front.modules.common.model.CommonEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-
 @Entity
 @Table(name = "system_profiles")
-public class SystemProfileEntity {
+public class SystemProfileEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +29,25 @@ public class SystemProfileEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = true)
+    private Integer members;
+
     @Column(nullable = false)
     private Integer status;
 
     @Column(nullable = false)
-    private Date created;
+    private LocalDateTime created;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "system_profile_permissions",
+        joinColumns = @JoinColumn(name = "profileId"),
+        inverseJoinColumns = @JoinColumn(name = "permissionId")
+    )
+    private Set<SystemPermissionEntity> permissions;
 
     public SystemProfileEntity() {
+        this.permissions = new HashSet<>();
     }
 
     public Long getProfileId() {
@@ -47,6 +66,14 @@ public class SystemProfileEntity {
         this.name = name;
     }
 
+    public Integer getMembers() {
+        return members;
+    }
+
+    public void setMembers(Integer members) {
+        this.members = members;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -55,11 +82,11 @@ public class SystemProfileEntity {
         this.status = status;
     }
 
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
@@ -78,5 +105,22 @@ public class SystemProfileEntity {
 
         return map;
     }
-    
+
+    @Override
+    public String getStatusAsString() throws Exception {
+        if (this.status < 0 || (this.status > CommonEntity.statuses.length)) {
+            throw new Exception("SystemProfileEntity::getStatusAsString::Valor de estatus fuera del rango");
+        }
+
+        return CommonEntity.statuses[this.status];
+    }
+
+    public Set<SystemPermissionEntity> getPermissions() {
+        return this.permissions;
+    }
+
+    public void setPermissions(Set<SystemPermissionEntity> permissions) {
+        this.permissions = permissions;
+    }
+
 }

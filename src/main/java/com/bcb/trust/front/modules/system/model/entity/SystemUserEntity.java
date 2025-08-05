@@ -3,6 +3,7 @@ package com.bcb.trust.front.modules.system.model.entity;
 import java.time.LocalDateTime;
 
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
+import com.bcb.trust.front.modules.common.model.CommonEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -15,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "system_users")
-public class SystemUserEntity {
+public class SystemUserEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -110,6 +111,15 @@ public class SystemUserEntity {
     public String toString() {
         return "SystemUser [userId=" + userId + ", profile=" + profile + ", nickname=" + nickname + ", access=" + access
                 + ", email=" + email + ", person=" + person + ", status=" + status + ", created=" + created + "]";
+    }
+
+    @Override
+    public String getStatusAsString() throws Exception {
+        if (this.status < 0 || (this.status > CommonEntity.statuses.length)) {
+            throw new Exception("SystemUserEntity::getStatusAsString::Valor de estatus fuera del rango");
+        }
+
+        return CommonEntity.statuses[this.status];
     }
     
 }

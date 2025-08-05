@@ -12,12 +12,14 @@
                 <div class="app-content-header">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-2"></div>
-                            <div class="col-10">
-                                <h4>Bienvenido!</h4>
-                                <h3 th:text="${user}"></h3>
+                            <div class="col-12">
+                                <h3>Bienvenid@,
+                                    <span th:if="${systemUserEntity != null}" th:text="${systemUserEntity.person.fullName} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                    <span th:unless="${systemUserEntity != null}"></span> !
+                                </h3>
+
                                 <div class="container-fluid">
-                                    <div class="row">
+                                    <div class="row" hidden>
                                         <div class="col-4">
                                             <h5>Fecha y Hora de Consulta</h5>
                                             <span>fecha</span>
@@ -35,7 +37,7 @@
 
                 <div class="app-content">
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="row" hidden>
                             <div class="col-6">
                                 <div class="card">
                                     <div class="card-header">
@@ -61,6 +63,8 @@
 
             <footer th:replace="~{fragments/common :: footer}"></footer>
         </div>
+
+        <div th:replace="~{fragments/common :: commonModals}"></div>
 
         <div th:replace="~{fragments/common :: jsDependencies}"></div>
     </body>

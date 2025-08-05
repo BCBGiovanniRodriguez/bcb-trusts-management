@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Permisos del Sistema</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <form th:action="@{/system/permission}" method="get">
+                                    <div class="card card-outline card-info mb-4">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Consulta de Permisos Registrados en el Sistema</strong></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-3">
+                                                    <label for="module" class="form-label">Módulo</label>
+                                                    <select name="module" id="module" class="form-select">
+                                                        <option th:each="moduleName, iteration : ${moduleNames}"
+                                                            th:value="${iteration.index}" th:text="${moduleName}"
+                                                            th:selected="${moduleQueryParam == iteration.index}"></option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label for="status" class="form-label">Estado</label>
+                                                    <select name="status" id="status" class="form-select">
+                                                        <option th:each="status, iteration : ${statuses}" th:value="${iteration.index}" th:text="${status}"
+                                                            th:selected="${statusQueryParam == iteration.index}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <button class="btn btn-info" type="submit">
+                                                <i class="fa fa-search"></i> Búsqueda
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Permisos Registrados en el Sistema</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped table-bordered" id="permissionTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Módulo</th>
+                                                        <th>Código</th>
+                                                        <th>Permiso</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha de Registro</th>
+                                                        <th hidden>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody th:each="permission : ${permissionList}">
+                                                    <tr>
+                                                        <td th:text="${permission.permissionId}"></td>
+                                                        <td th:text="${permission.moduleAsString}"></td>
+                                                        <td th:text="${permission.code}"></td>
+                                                        <td th:text="${permission.name}"></td>
+                                                        <td th:text="${permission.statusAsString}"></td>                                                        
+                                                        <td th:text="${permission.created}"></td>
+                                                        <td hidden>
+                                                            <a th:href="@{/system/permission/{id}(id=${permission.permissionId})}" class="btn btn-sm btn-info" hidden>
+                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

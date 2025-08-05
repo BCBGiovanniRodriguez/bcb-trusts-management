@@ -3,8 +3,11 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@types/jquery": "^3.5.32",
+    "bootstrap": "^5.3.7",
     "jquery": "^3.7.1",
-    "node": "^23.9.0"
+    "node": "^23.9.0",
+    "sweetalert2": "^11.22.2"
   }
 }
