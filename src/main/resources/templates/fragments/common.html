@@ -134,7 +134,7 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
+                                <li class="nav-item" hidden>
                                     <a th:href="@{/catalog/consultant/}" class="nav-link">
                                         <i class="nav-icon bi bi-person-fill-check"></i>
                                         <p>
@@ -143,7 +143,7 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
+                                <li class="nav-item" hidden>
                                     <a th:href="@{/catalog/sponsor/}" class="nav-link">
                                         <i class="nav-icon bi bi-person-fill-up"></i>
                                         <p>
@@ -295,6 +295,19 @@
                         <div class="modal-body">
                             La información se ha actualizado exitosamente <br>
                             Redireccionando en 5 segundos... <span id="redirectionSpan"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="resultNotFoundModal" tabindex="-1" role="dialog" aria-labelledby="resultNotFoundModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-danger text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="resultNotFoundModalLabel">Sin resultados</h5>
+                        </div>
+                        <div class="modal-body">
+                            La consulta no encontró resultados <br>
                         </div>
                     </div>
                 </div>

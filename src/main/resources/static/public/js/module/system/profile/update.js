@@ -1,6 +1,6 @@
 "use strict";
 $(() => {
-    const btnUpdateProfileJQuery = $("#btnSaveProfile"), profileIdJQuery = $("#profileId"), nameJQuery = $("#name"), membersJQuery = $("#members"), localApiSystem = "/api/system", permissionIds = [], permissionListJQuery = $("#permissionTable"), permissionTable = $("#permissionTable"), confirmOperationModal = $("#confirmOperationModal"), redirectionSpanJquery = $("#reditectionSpan");
+    const btnUpdateProfileJQuery = $("#btnSaveProfile"), profileIdJQuery = $("#profileId"), nameJQuery = $("#name"), membersJQuery = $("#members"), localApiSystem = "/api/system", permissionIds = [], permissionTable = $("#permissionTable"), confirmOperationModal = $("#confirmOperationModal");
     btnUpdateProfileJQuery.on('click', function () {
         var _a, _b;
         let self = $(this), endpointProfile = localApiSystem + "/profile/" + profileIdJQuery.val(), profileObject = {};

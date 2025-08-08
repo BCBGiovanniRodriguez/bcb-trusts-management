@@ -13,7 +13,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <h4>Asesores</h4>
+                                <h4>Asesores > Registrar Nuevo Asesor</h4>
                                 <hr>
                             </div>
                         </div>
@@ -24,41 +24,47 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <form th:action="@{/catalog/consultant/create}" enctype="application/x-www-form-urlencoded">
-                                    <div class="card card-outline card-success mb-4">
-                                        <div class="card-header">
-                                            <h3 class="card-title"><strong>Registo Nuevo Asesor al Sistema</strong></h3>
+                                <div class="card card-outline card-success mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Registo Nuevo Asesor al Sistema</strong></h3>
 
-                                            <div class="card-tools">
-                                                <a th:href="@{/catalog/consultant/}" class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-arrow-circle-left"></i> Regresar
-                                                </a>
-                                            </div>
+                                        <div class="card-tools">
+                                            <a th:href="@{/catalog/consultant/}" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-arrow-circle-left"></i> Regresar
+                                            </a>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="container-fluid">
-                                                <fieldset>
-                                                    <legend>Datos Personales</legend>
-
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form">
+                                            <ul class="nav nav-tabs mb-3" id="personTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="person-tab" data-bs-toggle="tab" data-bs-target="#person-tab-pane" 
+                                                    type="button" role="tab" aria-controls="person-tab-pane" aria-selected="true" tabindex="0">
+                                                        <i class="fa fa-person"></i> <strong>Datos Personales</strong>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade active show" id="person-tab-pane" role="tabpanel" aria-labelledby="person-tab" tabindex="0">
                                                     <div class="row g-3">
                                                         <div class="col-3">
-                                                            <label for="first_name" class="form-label"><strong>Primer Nombre</strong></label>
-                                                            <input type="text" name="first_name" class="form-control" />
+                                                            <label for="firstName" class="form-label"><strong>Primer Nombre</strong></label>
+                                                            <input type="text" name="firstName" id="firstName" class="form-control" />
                                                         </div>
                                                         
                                                         <div class="col-3">
-                                                            <label for="second_name" class="form-label">Segundo Nombre</label>
-                                                            <input type="text" name="second_name" class="form-control" placeholder="Opcional" />
+                                                            <label for="secondName" class="form-label">Segundo Nombre</label>
+                                                            <input type="text" name="secondName" id="secondName" class="form-control" placeholder="Opcional" />
                                                         </div>
                                                         
                                                         <div class="col-3">
-                                                            <label for="last_name" class="form-label">Apellido Paterno</label>
-                                                            <input type="text" name="last_name" class="form-control" />
+                                                            <label for="lastName" class="form-label">Apellido Paterno</label>
+                                                            <input type="text" name="lastName" id="lastName" class="form-control" />
                                                         </div>
 
                                                         <div class="col-3">
-                                                            <label for="second_last_name" class="form-label">Apellido Materno</label>
-                                                            <input type="text" name="second_last_name" class="form-control" />
+                                                            <label for="secondLastName" class="form-label">Apellido Materno</label>
+                                                            <input type="text" name="secondLastName" id="secondLastName" class="form-control" />
                                                         </div>
                                                     </div>
 
@@ -73,88 +79,85 @@
                                                         </div>
                                                         
                                                         <div class="col-3">
-                                                            <label for="birth_date" class="form-label">Fecha de Nacimiento</label>
-                                                            <input type="date" name="birth_date" class="form-control" required />
+                                                            <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+                                                            <input type="date" name="birth_date" class="form-control" />
                                                         </div>
                                                         
                                                         <div class="col-3">
                                                             <label for="curp" class="form-label">CURP</label>
-                                                            <input type="text" name="curp" class="form-control" />
+                                                            <input type="text" name="curp" class="form-control" maxlength="18" value="XAXX000000XXXXXX00" />
                                                         </div>
 
                                                         <div class="col-3">
                                                             <label for="rfc" class="form-label">RFC</label>
-                                                            <input type="text" name="rfc" class="form-control" />
+                                                            <input type="text" name="rfc" class="form-control" maxlength="13" value="XAXX000000XX0" />
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <fieldset>
+                                                <legend>Domicilio</legend>
 
-                                                </fieldset>
-                                                <hr>
-                                                <fieldset>
-                                                    <legend>Domicilio</legend>
-
-                                                    <div class="row g-3">
-                                                        <div class="col-3">
-                                                            <label for="zipcode" class="form-label">Código Postal</label>
-                                                            <input type="text" name="zipcode" id="zipcode" class="form-control" maxlength="5" />
-                                                        </div>
-
-                                                        <div class="col-3">
-                                                            <label for="colony" class="form-label">Colonia</label>
-                                                            <select name="colony" id="colony" class="form-select" readonly aria-readonly="true">
-                                                                <option value="0" selected disabled>Selecione Opción</option>
-                                                            </select>
-                                                        </div>
-                                                        
-                                                        <div class="col-3">
-                                                            <label for="state" class="form-label">Estado</label>
-                                                            <select name="state" id="state" class="form-select" readonly aria-readonly="true">
-                                                                <option value="0" selected disabled>Selecione Opción</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="col-3">
-                                                            <label for="township" class="form-label">Municipio</label>
-                                                            <select name="township" id="township" class="form-select" readonly aria-readonly="true">
-                                                                <option value="0" selected disabled>Selecione Opción</option>
-                                                            </select>
-                                                        </div>
+                                                <div class="row g-3">
+                                                    <div class="col-3">
+                                                        <label for="zipcode" class="form-label"><strong>Código Postal</strong></label>
+                                                        <input type="text" name="zipcode" id="zipcode" class="form-control" maxlength="5" />
                                                     </div>
 
-                                                    <div class="row">
-                                                        <div class="col-3">
-                                                            <label for="external_number" class="form-label">Número Exterior</label>
-                                                            <input type="text" name="external_number" class="form-control" />
-                                                        </div>
-
-                                                        <div class="col-3">
-                                                            <label for="internal_number" class="form-label">Número Interior</label>
-                                                            <input type="text" name="internal_number" class="form-control" />
-                                                        </div>
+                                                    <div class="col-3">
+                                                        <label for="colony" class="form-label"><strong>Colonia</strong></label>
+                                                        <select name="colony" id="colony" class="form-select" readonly aria-readonly="true">
+                                                            <option value="0" selected disabled>Selecione Opción</option>
+                                                        </select>
                                                     </div>
                                                     
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <label for="street" class="col-2 form-label">Calle</label>
-                                                            <input type="text" name="street" class="form-control" />
-                                                        </div>
+                                                    <div class="col-3">
+                                                        <label for="state" class="form-label"><strong>Estado</strong></label>
+                                                        <select name="state" id="state" class="form-select" readonly aria-readonly="true">
+                                                            <option value="0" selected disabled>Selecione Opción</option>
+                                                        </select>
                                                     </div>
-                                                </fieldset>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="row">
-                                                <div class="col-12 text-center">
-                                                    <button class="btn btn-success" type="submit" role="button">
-                                                        <i class="fa fa-save"></i> Guardar Elemento
-                                                    </button>
+
+                                                    <div class="col-3">
+                                                        <label for="township" class="form-label"><strong>Municipio</strong></label>
+                                                        <select name="township" id="township" class="form-select" readonly aria-readonly="true">
+                                                            <option value="0" selected disabled>Selecione Opción</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
+
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <label for="external_number" class="form-label"><strong>Número Exterior</strong></label>
+                                                        <input type="text" name="external_number" class="form-control" maxlength="250" />
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <label for="internal_number" class="form-label"><strong>Número Interior</strong></label>
+                                                        <input type="text" name="internal_number" class="form-control" maxlength="250" />
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="street" class="col-2 form-label"><strong>Calle</strong></label>
+                                                        <input type="text" name="street" class="form-control" maxlength="250" />
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <button id="btnSaveConsultant" class="btn btn-success" type="submit" role="button">
+                                                    <i class="fa fa-save"></i> Guardar Elemento
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                                
-                                
+                                </div>
                             </div>
                         </div>
                     </div>

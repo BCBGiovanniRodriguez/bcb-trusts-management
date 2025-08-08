@@ -2,15 +2,27 @@
  * @author Giovanni Rodriguez <grodriguez@bcbcasadebolsa.com>
  */
 $(() => {
-    const btnSaveConsultantJQuery: JQuery = $("#btnSaveConsultant"),
-    zipcodeJQuery: JQuery = $("#zipcode"),
+    const btnSaveRequestJQuery: JQuery = $("#btnSaveRequest"),
+        personTypeIdJQuery: JQuery = $("#personTypeId"),   
+        zipcodeJQuery: JQuery = $("#zipcode"),
         apiLocation: string = "http://10.20.50.132:9002",
         stateJQuery: JQuery = $("#state"),
         townshipJQuery: JQuery = $("#township"),
-        colonyJQuery: JQuery = $("#colony");
-    
-    
+        colonyJQuery: JQuery = $("#colony"),
+        resultNotFoundModal: JQuery = $("#resultNotFoundModal");
 
+    personTypeIdJQuery.on('change', function(this: any){
+        let self: JQuery = $(this),
+            personTypeId = Number(self.val());
+
+            if(personTypeId == 1) {
+                $("#personType").removeAttr("hidden");
+                $("#enterpriseType").attr("hidden", "hidden");
+            } else {
+                $("#personType").attr("hidden", "hidden");
+                $("#enterpriseType").removeAttr("hidden");
+            }
+    });
 
     zipcodeJQuery.on('change', function(this: any) {
         let self: JQuery = $(this),
@@ -43,6 +55,7 @@ $(() => {
                     }
                     stateJQuery.append(option);
                 });
+                stateJQuery.attr("disabled", "disabled");
 
                 let emptyOptionTwo = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
                 townshipJQuery.append(emptyOptionTwo);
@@ -53,6 +66,7 @@ $(() => {
                     }
                     townshipJQuery.append(option);
                 });
+                townshipJQuery.attr("disabled", "disabled");
 
                 let emptyOptionThree = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
                 colonyJQuery.append(emptyOptionThree);
@@ -60,12 +74,12 @@ $(() => {
                     let option = $("<option>", {"value": item.colonyId, "text": item.name});
                     colonyJQuery.append(option);
                 });
+            } else {
+                // @ts-ignore
+                resultNotFoundModal.modal('show');
             }
         });
     });
 
 
-    btnSaveConsultantJQuery.on('click', function(){
-        console.log("");
-    });
 });

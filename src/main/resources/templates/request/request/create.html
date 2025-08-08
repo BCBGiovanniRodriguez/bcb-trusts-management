@@ -13,7 +13,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <h4>Solicitudes a Fideicomiso</h4>
+                                <h4>Prospectos :: Registrar Nuevo Prospecto</h4>
                             </div>
                         </div>
                     </div>
@@ -25,98 +25,171 @@
                             <div class="col-12">
                                 <div class="card card-outline card-success mb-4">
                                     <div class="card-header">
-                                        <h3 class="card-title"><strong>Registrar Nueva Solicitud</strong></h3>
+                                        <h3 class="card-title"><strong>Registrar Nuevo Prospecto</strong></h3>
                                     </div>
                                     <div class="card-body">
-                                        <form th:action="@{/request/request/create}" method="post" enctype="application/x-www-form-urlencoded" class="needs-validation" novalidate></form>
-                                            <div class="row g-3">
-                                                <div class="col-4">
-                                                    <label for="RequestTypeId" class="form-label">Tipo de Solicitante:</label>
-                                                    <select name="RequestTypeId" id="RequestTypeId" class="form-select">
-                                                        <option value="0" selected disabled>Seleccione Opción</option>
-                                                        <!--
-                                                        <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
-                                                        -->
-                                                        <option value="1">Persona Física</option>
-                                                        <option value="2">Persona Moral</option>
-                                                        <option value="3">Persona Institucional</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <label for="RequestTypeId" class="form-label">Tipo de Solicitud:</label>
-                                                    <select name="RequestTypeId" id="RequestTypeId" class="form-select">
-                                                        <option value="0" selected disabled>Seleccione Opción</option>
-                                                        <!--
-                                                        <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
-                                                        -->
-                                                        <option value="1">Patrimonial</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="row g-3">
-                                                <div class="col-8">
-                                                    <label for="name" class="form-label">Razón Social:</label>
-                                                    <input name="name" type="text" class="form-control">
-                                                </div>
-                                            </div>
-
-                                            <div class="row g-3">
-
-                                            </div>
-
-                                            <fieldset>
-                                                <legend>Domicilio</legend>
-
-                                                <div class="row g-3">
-                                                    <div class="col-3">
-                                                        <label for="zipcode" class="form-label">Código Postal</label>
-                                                        <input type="text" name="zipcode" id="zipcode" class="form-control" maxlength="5" />
+                                        <div class="form">
+                                            <ul class="nav nav-tabs mb-3" id="requestTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="general-data-tab" data-bs-toggle="tab" data-bs-target="#general-data-tab-pane" 
+                                                    type="button" role="tab" aria-controls="general-data-tab-pane" aria-selected="true" tabindex="0">
+                                                        <i class="fa fa-person"></i> <strong>Datos Generales</strong>
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane" 
+                                                    type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false" tabindex="-1">
+                                                        <i class="bi bi-globe-americas"></i> <strong>Domicilio</strong>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade active show" id="general-data-tab-pane" role="tabpanel" aria-labelledby="general-data-tab" tabindex="0">
+                                                    <div class="row g-3">
+                                                        <div class="col-4">
+                                                            <label for="requestTypeId" class="form-label"><strong>Tipo de Fideicomiso</strong></label>
+                                                            <select name="RequestTypeId" id="RequestTypeId" class="form-select">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <!--
+                                                                <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
+                                                                -->
+                                                                <option value="1">Patrimonial</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
 
-                                                    <div class="col-3">
-                                                        <label for="colony" class="form-label">Colonia</label>
-                                                        <select name="colony" id="colony" class="form-select" readonly aria-readonly="true">
-                                                            <option value="0" selected disabled>Selecione Opción</option>
-                                                        </select>
+                                                    
+
+                                                    <hr>
+                                                    <div class="row g-3">
+                                                        <div class="col-4">
+                                                            <label for="personTypeId" class="form-label"><strong>Tipo de Solicitante</strong></label>
+                                                            <select id="personTypeId" name="personTypeId" class="form-select">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <!--
+                                                                <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
+                                                                -->
+                                                                <option value="1">Persona Física</option>
+                                                                <option value="2">Persona Moral</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div id="personType" hidden>
+                                                        <div class="row g-3">
+                                                            <div class="col-3">
+                                                                <label for="firstName" class="form-label"><strong>Primer Nombre</strong></label>
+                                                                <input type="text" name="firstName" id="firstName" class="form-control" maxlength="200" />
+                                                            </div>
+                                                            
+                                                            <div class="col-3">
+                                                                <label for="secondName" class="form-label"><strong>Segundo Nombre</strong></label>
+                                                                <input id="secondName" name="secondName" type="text" class="form-control" placeholder="Opcional" />
+                                                            </div>
+                                                            
+                                                            <div class="col-3">
+                                                                <label for="lastName" class="form-label"><strong>Apellido Paterno</strong></label>
+                                                                <input id="lastName" name="lastName" type="text" class="form-control" />
+                                                            </div>
+
+                                                            <div class="col-3">
+                                                                <label for="secondLastName" class="form-label"><strong>Apellido Materno</strong></label>
+                                                                <input id="secondLastName" name="secondLastName" type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row g-3">
+                                                            <div class="col-3">
+                                                                <label for="gender" class="form-label"><strong>Género</strong></label>
+                                                                <select id="gender" name="gender" class="form-select">
+                                                                    <option value="0" selected disabled>Seleccione Opción</option>
+                                                                    <option value="1">Femenino</option>
+                                                                    <option value="2">Masculino</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            <div class="col-3">
+                                                                <label for="birthDate" class="form-label"><strong>Fecha de Nacimiento</strong></label>
+                                                                <input id="birthDate" name="birthDate" type="date" class="form-control" />
+                                                            </div>
+                                                            
+                                                            <div class="col-3">
+                                                                <label for="curp" class="form-label"><strong>CURP</strong></label>
+                                                                <input id="curp" name="curp" type="text" class="form-control" maxlength="18" minlength="18" value="XAXX000000XXXXXX00" />
+                                                            </div>
+
+                                                            <div class="col-3">
+                                                                <label for="rfc" class="form-label"><strong>RFC</strong></label>
+                                                                <input id="rfc" name="rfc" type="text" class="form-control" maxlength="13" minlength="13" value="XAXX000000XX0" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="enterpriseType" hidden>
+                                                        <div class="row g-3">
+                                                            <div class="col-3">
+                                                                <label for="rfc" class="form-label"><strong>RFC</strong></label>
+                                                                <input id="rfc" name="rfc" type="text" class="form-control" maxlength="12" minlength="12" value="XAXX000000XX0" />
+                                                            </div>
+
+                                                            <div class="col-8">
+                                                                <label for="name" class="form-label"><strong>Razón Social</strong></label>
+                                                                <input id="name" name="name" type="text" class="form-control"  maxlength="200">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="1">
+                                                    <div class="row g-3">
+                                                        <div class="col-3">
+                                                            <label for="zipcode" class="form-label"><strong>Código Postal</strong></label>
+                                                            <input id="zipcode" name="zipcode" type="text" class="form-control" maxlength="5" minlength="5" />
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="colony" class="form-label"><strong>Colonia</strong></label>
+                                                            <select id="colony" name="colony" class="form-select" readonly aria-readonly="true">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="township" class="form-label"><strong>Municipio</strong></label>
+                                                            <select id="township" name="township" class="form-select" readonly aria-readonly="true">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            <label for="state" class="form-label"><strong>Estado</strong></label>
+                                                            <select id="state" name="state" class="form-select" readonly aria-readonly="true">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            <label for="externalNumber" class="form-label"><strong>Número Exterior</strong></label>
+                                                            <input id="externalNumber" name="externalNumber" type="text" class="form-control" maxlength="200" />
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="internalNumber" class="form-label"><strong>Número Interior</strong></label>
+                                                            <input id="internalNumber" name="internalNumber" type="text" class="form-control" maxlength="200" />
+                                                        </div>
                                                     </div>
                                                     
-                                                    <div class="col-3">
-                                                        <label for="state" class="form-label">Estado</label>
-                                                        <select name="state" id="state" class="form-select" readonly aria-readonly="true">
-                                                            <option value="0" selected disabled>Selecione Opción</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-3">
-                                                        <label for="township" class="form-label">Municipio</label>
-                                                        <select name="township" id="township" class="form-select" readonly aria-readonly="true">
-                                                            <option value="0" selected disabled>Selecione Opción</option>
-                                                        </select>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="street" class="col-2 form-label"><strong>Calle</strong></label>
+                                                            <input id="street" name="street" type="text" class="form-control" maxlength="200" />
+                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="row">
-                                                    <div class="col-3">
-                                                        <label for="external_number" class="form-label">Número Exterior</label>
-                                                        <input type="text" name="external_number" class="form-control" />
-                                                    </div>
-
-                                                    <div class="col-3">
-                                                        <label for="internal_number" class="form-label">Número Interior</label>
-                                                        <input type="text" name="internal_number" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <label for="street" class="col-2 form-label">Calle</label>
-                                                        <input type="text" name="street" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -132,5 +205,7 @@
         <div th:replace="~{fragments/common :: commonModals}"></div>
 
         <div th:replace="~{fragments/common :: jsDependencies}"></div>
+
+        <script th:src="@{/public/js/module/request/request/create.js}"></script>
     </body>
 </html>

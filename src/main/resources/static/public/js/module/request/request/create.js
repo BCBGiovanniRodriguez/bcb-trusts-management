@@ -1,6 +1,17 @@
 "use strict";
 $(() => {
-    const btnSaveConsultantJQuery = $("#btnSaveConsultant"), zipcodeJQuery = $("#zipcode"), apiLocation = "http://10.20.50.132:9002", stateJQuery = $("#state"), townshipJQuery = $("#township"), colonyJQuery = $("#colony");
+    const btnSaveRequestJQuery = $("#btnSaveRequest"), personTypeIdJQuery = $("#personTypeId"), zipcodeJQuery = $("#zipcode"), apiLocation = "http://10.20.50.132:9002", stateJQuery = $("#state"), townshipJQuery = $("#township"), colonyJQuery = $("#colony"), resultNotFoundModal = $("#resultNotFoundModal");
+    personTypeIdJQuery.on('change', function () {
+        let self = $(this), personTypeId = Number(self.val());
+        if (personTypeId == 1) {
+            $("#personType").removeAttr("hidden");
+            $("#enterpriseType").attr("hidden", "hidden");
+        }
+        else {
+            $("#personType").attr("hidden", "hidden");
+            $("#enterpriseType").removeAttr("hidden");
+        }
+    });
     zipcodeJQuery.on('change', function () {
         let self = $(this), zipcode = Number(self.val()), locationUrl = `${apiLocation}/api/location/byzipcode?zipcode=${zipcode}`;
         stateJQuery.empty();
@@ -21,6 +32,7 @@ $(() => {
                     }
                     stateJQuery.append(option);
                 });
+                stateJQuery.attr("disabled", "disabled");
                 let emptyOptionTwo = $("<option>", { "value": 0, "text": "Seleccione Opción", "selected": "selected", "disabled": "disabled" });
                 townshipJQuery.append(emptyOptionTwo);
                 $.each(townships, function (i, item) {
@@ -30,6 +42,7 @@ $(() => {
                     }
                     townshipJQuery.append(option);
                 });
+                townshipJQuery.attr("disabled", "disabled");
                 let emptyOptionThree = $("<option>", { "value": 0, "text": "Seleccione Opción", "selected": "selected", "disabled": "disabled" });
                 colonyJQuery.append(emptyOptionThree);
                 $.each(colonies, function (i, item) {
@@ -37,9 +50,9 @@ $(() => {
                     colonyJQuery.append(option);
                 });
             }
+            else {
+                resultNotFoundModal.modal('show');
+            }
         });
-    });
-    btnSaveConsultantJQuery.on('click', function () {
-        console.log("");
     });
 });
