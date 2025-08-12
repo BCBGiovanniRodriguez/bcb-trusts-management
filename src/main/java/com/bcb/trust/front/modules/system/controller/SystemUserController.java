@@ -71,7 +71,7 @@ public class SystemUserController {
                 catalogPersonEntity.setSecondName((String) personMap.get("secondName"));
                 catalogPersonEntity.setLastName((String) personMap.get("lastName"));
                 catalogPersonEntity.setSecondLastName((String) personMap.get("secondLastName"));
-                catalogPersonEntity.setGender((String) personMap.get("gender"));
+                catalogPersonEntity.setGender((Integer) personMap.get("gender"));
                 String birthDateString = personMap.get("birthDate").toString();
                 catalogPersonEntity.setBirthDate(LocalDate.parse(birthDateString, isoFormatter));
                 catalogPersonEntity.setRfc((String) personMap.get("rfc"));
