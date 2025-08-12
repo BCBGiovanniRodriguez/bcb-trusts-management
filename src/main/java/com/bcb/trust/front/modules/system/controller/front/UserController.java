@@ -1,6 +1,7 @@
 package com.bcb.trust.front.modules.system.controller.front;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
@@ -65,6 +67,28 @@ public class UserController {
         model.addAttribute("profileEntityList", profileEntityList);
         return "system/user/create";
     }
+
+    @GetMapping("/user/detail/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        SystemUserEntity userEntity = null;
+
+        try {
+            Optional<SystemUserEntity> result = systemUserEntityRepository.findById(id);
+
+            if (!result.isPresent()) {
+                
+            } else {
+                userEntity = result.get();
+            }
+
+            model.addAttribute("userEntity", userEntity);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        return "system/user/detail";
+    }
+    
     
     @ModelAttribute("systemUserEntity")
     public SystemUserEntity systemUserEntity(Authentication authentication) {

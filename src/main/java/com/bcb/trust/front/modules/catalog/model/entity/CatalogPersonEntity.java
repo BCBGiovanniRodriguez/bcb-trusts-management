@@ -2,16 +2,25 @@ package com.bcb.trust.front.modules.catalog.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
+import com.bcb.trust.front.modules.common.model.CommonEntity;
+import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "catalog_persons")
-public class CatalogPersonEntity {
+public class CatalogPersonEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +34,9 @@ public class CatalogPersonEntity {
 
     private String secondLastName;
 
-    private String gender;
+    private String fullName;
+
+    private Integer gender;
 
     private LocalDate birthDate;
 
@@ -33,9 +44,39 @@ public class CatalogPersonEntity {
 
     private String rfc;
 
+    private Integer foreignStatus;
+
+    private Integer type;
+
+    private Integer status;
+
     private LocalDateTime created;
 
+    @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RequestRequestEntity> requestSet;
+
+    public static final Integer GENDER_FEMALE = 1;
+
+    public static final Integer GENDER_MALE = 2;
+
+    public static final Integer GENDER_UNKWON = 2;
+
+    public static final String[] genders = {"Seleccione Opción", "Femenino", "Masculino", "No especificado"};
+
+    public static final Integer TYPE_PERSON = 1;
+
+    public static final Integer TYPE_ENTERPRISE = 2;
+
+    public static final String[] types = {"Seleccione Opción", "Persona Física", "Persona Moral"};
+
+    public static final Integer FOREIGN_STATUS_CITIZEN = 1;
+
+    public static final Integer FOREIGN_STATUS_FOREIGNER = 2;
+
+    public static final String[] foreignStatuses = {"Seleccione Opción", "Nacional", "Extranjero"};
+
     public CatalogPersonEntity() {
+        this.requestSet = new HashSet<>();
     }
 
     public Long getPersonId() {
@@ -78,11 +119,30 @@ public class CatalogPersonEntity {
         this.secondLastName = secondLastName;
     }
 
-    public String getGender() {
+    public String getFullName() {
+        String fullName = "";
+        
+        if(this.fullName != null && !this.fullName.equals("")) {
+            fullName = this.fullName;
+        } else {
+            fullName = this.lastName != null ? fullName += this.lastName + " " : "";
+            fullName = this.secondLastName != null ? fullName += this.secondLastName + " " : "";
+            fullName = this.firstName != null ? fullName += this.firstName + " " : "";
+            fullName = this.secondName != null ? fullName += this.secondName + " " : "";
+        }
+        
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -110,6 +170,30 @@ public class CatalogPersonEntity {
         this.rfc = rfc;
     }
 
+    public Integer getForeignStatus() {
+        return foreignStatus;
+    }
+
+    public void setForeignStatus(Integer foreignStatus) {
+        this.foreignStatus = foreignStatus;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public LocalDateTime getCreated() {
         return created;
     }
@@ -118,33 +202,56 @@ public class CatalogPersonEntity {
         this.created = created;
     }
 
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("personId", this.personId);
+        map.put("firstName", this.firstName);
+        map.put("secondName", this.secondName);
+        map.put("lastName", this.lastName);
+        map.put("secondLastName", this.secondLastName);
+        map.put("fullName", this.fullName);
+        map.put("gender", this.gender);
+        map.put("birthDate", this.birthDate);
+        map.put("curp", this.curp);
+        map.put("rfc", this.rfc);
+        map.put("foreignStatus", this.foreignStatus);
+        map.put("type", this.type);
+        map.put("status", this.status);
+        map.put("created", this.created);
+
+        return map;
+    }
+
+    public String getGenderAsString() throws Exception {
+        if (this.gender < 0 || (this.gender > CatalogPersonEntity.genders.length)) {
+            throw new Exception("CatalogPersonEntity::getGenderAsString::Valor de género fuera del rango");
+        }
+
+        return CatalogPersonEntity.genders[this.gender];
+    }
+
     @Override
-    public String toString() {
-        return "Person [personId=" + personId + ", firstName=" + firstName + ", secondName=" + secondName
-                + ", lastName=" + lastName + ", secondLastName=" + secondLastName + ", gender=" + gender
-                + ", birthDate=" + birthDate + ", curp=" + curp + ", rfc=" + rfc + ", created=" + created + "]";
+    public String getStatusAsString() throws Exception {
+        if (this.status < 0 || (this.status > CommonEntity.statuses.length)) {
+            throw new Exception("CatalogPersonEntity::getStatusAsString::Valor de estatus fuera del rango");
+        }
+
+        return CommonEntity.statuses[this.status];
     }
 
-    public String getFullName() {
-        String fullName = "";
-
-        if (this.lastName != null) {
-            fullName += this.lastName + " ";
+    public String getTypeAsString() throws Exception {
+        if (this.type < 0 || (this.type > CatalogPersonEntity.types.length)) {
+            throw new Exception("CatalogPersonEntity::getStatusAsString::Valor de tipo fuera del rango");
         }
 
-        if (this.secondLastName != null) {
-            fullName += this.secondLastName + " ";
-        }
-
-        if (this.firstName != null) {
-            fullName += ", " + this.firstName + " ";
-        }
-
-        if (this.secondName != null) {
-            fullName += this.secondName;
-        }
-
-        return fullName;
+        return CatalogPersonEntity.types[this.type];
     }
-    
+
+    public String getForeignStatusAsString() throws Exception {
+        if (this.foreignStatus < 0 || (this.foreignStatus > CatalogPersonEntity.foreignStatuses.length)) {
+            throw new Exception("CatalogPersonEntity::getStatusAsString::Valor de tipo fuera del rango");
+        }
+
+        return CatalogPersonEntity.foreignStatuses[this.foreignStatus];
+    }
 }

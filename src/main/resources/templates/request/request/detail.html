@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Detalle de Prospecto</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Detalle de Prospecto</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a th:href="@{/request/request}" class="btn btn-info btn-sm">
+                                                <i class="fa fa-arrow-circle-left"></i> Regresar a Prospectos
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <img th:src="@{/public/img/underConstructionDefault.jpg}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

@@ -26,6 +26,12 @@
                                 <div class="card card-outline card-success mb-4">
                                     <div class="card-header">
                                         <h3 class="card-title"><strong>Registrar Nuevo Prospecto</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a th:href="@{/request/request}" class="btn btn-sm btn-info">
+                                                <i class="fa fa-arrow-circle-left"></i> Regresar a Prospectos
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="form">
@@ -33,13 +39,25 @@
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="general-data-tab" data-bs-toggle="tab" data-bs-target="#general-data-tab-pane" 
                                                     type="button" role="tab" aria-controls="general-data-tab-pane" aria-selected="true" tabindex="0">
-                                                        <i class="fa fa-person"></i> <strong>Datos Generales</strong>
+                                                        <i class="bi bi-clipboard2-check-fill"></i> <strong>Datos Generales</strong>
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane" 
                                                     type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false" tabindex="-1">
-                                                        <i class="bi bi-globe-americas"></i> <strong>Domicilio</strong>
+                                                        <i class="bi bi-geo-alt-fill"></i> <strong>Domicilio</strong>
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" 
+                                                    type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">
+                                                        <i class="bi bi-telephone-outbound-fill"></i> <strong>Contacto</strong>
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary-tab-pane" 
+                                                    type="button" role="tab" aria-controls="summary-tab" aria-selected="false" tabindex="-1">
+                                                        <i class="bi bi-journal-check"></i> <strong>Resumen</strong>
                                                     </button>
                                                 </li>
                                             </ul>
@@ -47,35 +65,73 @@
                                                 <div class="tab-pane fade active show" id="general-data-tab-pane" role="tabpanel" aria-labelledby="general-data-tab" tabindex="0">
                                                     <div class="row g-3">
                                                         <div class="col-4">
-                                                            <label for="requestTypeId" class="form-label"><strong>Tipo de Fideicomiso</strong></label>
-                                                            <select name="RequestTypeId" id="RequestTypeId" class="form-select">
+                                                            <label for="trustTypeId" class="form-label"><strong>Tipo de Fideicomiso</strong></label>
+                                                            <select name="trustTypeId" id="trustTypeId" class="form-select request-validate">
                                                                 <option value="0" selected disabled>Seleccione Opción</option>
-                                                                <!--
-                                                                <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
-                                                                -->
-                                                                <option value="1">Patrimonial</option>
+                                                                <option th:each="trustTypeEntity: ${trustTypeEntityList}" th:value="${trustTypeEntity.trustTypeId}" th:text="${trustTypeEntity.name}"></option>
                                                             </select>
                                                         </div>
+                                                        <div class="col-3">
+                                                            <label for="trustChange" class="form-label"><strong>Es cambio de Fiduciario?</strong></label>
+                                                            <select id="trustChange" name="trustChange" class="form-select">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <option value="1">Si</option>
+                                                                <option value="2">No</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-5 trustChange" hidden>
+                                                            <label for="trustChangeTrust" class="form-label"><strong>Fiduciario Anterior</strong></label>
+                                                            <input id="trustChangeTrust" name="trustChangeTrust" type="text" class="form-control">
+                                                        </div>
                                                     </div>
+                                                    <div class="row g-3">
+                                                        <div class="col-4">
+                                                            <label for="wasRefered" class="form-label"><strong>Fue recomendado?</strong></label>
+                                                            <select id="wasRefered" name="wasRefered" class="form-select">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <option value="1">Si</option>
+                                                                <option value="2">No</option>
+                                                            </select>
+                                                        </div>
 
-                                                    
-
+                                                        <div class="col-3 wasRefered" hidden>
+                                                            <label for="wasReferedBy" class="form-label"><strong>Recomendado por</strong></label>
+                                                            <select id="wasReferedBy" name="wasReferedBy" class="form-select">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <option value="1">Área Fiduciaria</option>
+                                                                <option value="2">Área Jurídica</option>
+                                                                <option value="3">Asesor</option>
+                                                                <option value="4">Promotor</option>
+                                                                <option value="5">Otro</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-5 wasRefered" hidden>
+                                                            <label for="wasReferedByFullName" class="form-label"><strong>Nombre Completo</strong></label>
+                                                            <input id="wasReferedByFullName" name="wasReferedByFullName" type="text" class="form-control request-validate" maxlength="250" />
+                                                        </div>
+                                                    </div>
                                                     <hr>
                                                     <div class="row g-3">
                                                         <div class="col-4">
-                                                            <label for="personTypeId" class="form-label"><strong>Tipo de Solicitante</strong></label>
-                                                            <select id="personTypeId" name="personTypeId" class="form-select">
+                                                            <label for="personType" class="form-label"><strong>Tipo de Persona</strong></label>
+                                                            <select id="personType" name="personType" class="form-select request-validate">
                                                                 <option value="0" selected disabled>Seleccione Opción</option>
-                                                                <!--
-                                                                <option th:each="process: ${processList}" th:value="${process.processId}" th:text="${process.processType.toString()} + ' ' + ${#dates.format(process.created, 'yyyy-MM-dd@HH:mm:ss')}"></option>
-                                                                -->
                                                                 <option value="1">Persona Física</option>
                                                                 <option value="2">Persona Moral</option>
                                                             </select>
                                                         </div>
+
+                                                        <div class="col-4">
+                                                            <label for="foreignStatus" class="form-label"><strong>Estatus Migratorio</strong></label>
+                                                            <select id="foreignStatus" name="foreignStatus" class="form-select request-validate">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <option value="1">Nacional</option>
+                                                                <option value="2">Extranjero</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                     <hr>
-                                                    <div id="personType" hidden>
+                                                    <div id="personTypePerson" hidden>
                                                         <div class="row g-3">
                                                             <div class="col-3">
                                                                 <label for="firstName" class="form-label"><strong>Primer Nombre</strong></label>
@@ -125,16 +181,16 @@
                                                         </div>
                                                     </div>
 
-                                                    <div id="enterpriseType" hidden>
+                                                    <div id="personTypeEnterprise" hidden>
                                                         <div class="row g-3">
                                                             <div class="col-3">
-                                                                <label for="rfc" class="form-label"><strong>RFC</strong></label>
-                                                                <input id="rfc" name="rfc" type="text" class="form-control" maxlength="12" minlength="12" value="XAXX000000XX0" />
+                                                                <label for="rfcEnterprise" class="form-label"><strong>RFC</strong></label>
+                                                                <input id="rfcEnterprise" name="rfcEnterprise" type="text" class="form-control request-validate" maxlength="12" minlength="12" value="XAXX000000XX0" />
                                                             </div>
 
                                                             <div class="col-8">
-                                                                <label for="name" class="form-label"><strong>Razón Social</strong></label>
-                                                                <input id="name" name="name" type="text" class="form-control"  maxlength="200">
+                                                                <label for="fullName" class="form-label"><strong>Razón Social</strong></label>
+                                                                <input id="fullName" name="fullName" type="text" class="form-control request-validate"  maxlength="200">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -144,26 +200,26 @@
                                                     <div class="row g-3">
                                                         <div class="col-3">
                                                             <label for="zipcode" class="form-label"><strong>Código Postal</strong></label>
-                                                            <input id="zipcode" name="zipcode" type="text" class="form-control" maxlength="5" minlength="5" />
+                                                            <input id="zipcode" name="zipcode" type="text" class="form-control request-validate" maxlength="5" minlength="5" />
                                                         </div>
 
                                                         <div class="col-3">
                                                             <label for="colony" class="form-label"><strong>Colonia</strong></label>
-                                                            <select id="colony" name="colony" class="form-select" readonly aria-readonly="true">
+                                                            <select id="colony" name="colony" class="form-select request-validate" readonly aria-readonly="true">
                                                                 <option value="0" selected disabled>Selecione Opción</option>
                                                             </select>
                                                         </div>
 
                                                         <div class="col-3">
                                                             <label for="township" class="form-label"><strong>Municipio</strong></label>
-                                                            <select id="township" name="township" class="form-select" readonly aria-readonly="true">
+                                                            <select id="township" name="township" class="form-select request-validate" readonly aria-readonly="true">
                                                                 <option value="0" selected disabled>Selecione Opción</option>
                                                             </select>
                                                         </div>
                                                         
                                                         <div class="col-3">
                                                             <label for="state" class="form-label"><strong>Estado</strong></label>
-                                                            <select id="state" name="state" class="form-select" readonly aria-readonly="true">
+                                                            <select id="state" name="state" class="form-select request-validate" readonly aria-readonly="true">
                                                                 <option value="0" selected disabled>Selecione Opción</option>
                                                             </select>
                                                         </div>
@@ -172,19 +228,82 @@
                                                     <div class="row">
                                                         <div class="col-3">
                                                             <label for="externalNumber" class="form-label"><strong>Número Exterior</strong></label>
-                                                            <input id="externalNumber" name="externalNumber" type="text" class="form-control" maxlength="200" />
+                                                            <input id="externalNumber" name="externalNumber" type="text" class="form-control request-validate" maxlength="200" />
                                                         </div>
 
                                                         <div class="col-3">
                                                             <label for="internalNumber" class="form-label"><strong>Número Interior</strong></label>
-                                                            <input id="internalNumber" name="internalNumber" type="text" class="form-control" maxlength="200" />
+                                                            <input id="internalNumber" name="internalNumber" type="text" class="form-control request-validate" maxlength="200" />
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <label for="street" class="col-2 form-label"><strong>Calle</strong></label>
-                                                            <input id="street" name="street" type="text" class="form-control" maxlength="200" />
+                                                            <input id="street" name="street" type="text" class="form-control request-validate" maxlength="200" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="2">
+
+                                                    <div class="row g-3">
+                                                        <div class="col-3">
+                                                            <label for="phoneType" class="form-label"><strong>Tipo Teléfono</strong></label>
+                                                            <select id="phoneType" name="phoneType" class="form-select request-validate">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                                <option value="1">Casa</option>
+                                                                <option value="2">Trabajo</option>
+                                                                <option value="3">Personal</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <label for="phoneNumber" class="form-label"><strong>Número</strong></label>
+                                                            <input id="phoneNumber" name="phoneNumber" type="text" class="form-control request-validate" maxlength="10" minlength="10" />
+                                                        </div>
+
+                                                        
+
+                                                        <div class="col-3">
+                                                            <label for="emailType" class="form-label"><strong>Tipo Email</strong></label>
+                                                            <select id="emailType" name="emailType" class="form-select request-validate">
+                                                                <option value="0" selected disabled>Selecione Opción</option>
+                                                                <option value="1">Trabajo</option>
+                                                                <option value="2">Personal</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            <label for="email" class="form-label"><strong>Email</strong></label>
+                                                            <input id="email" name="email" type="text" class="form-control request-validate" maxlength="200" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="summary-tab-pane" role="tabpanel" aria-labelledby="summary-tab" tabindex="2">
+
+                                                    <div class="row g-3">
+                                                        <div class="col-6">
+                                                            <button id="btnValidate" class="btn btn-info" type="button" role="button">
+                                                                <i class="bi bi-ui-checks-grid"></i> Validar Información
+                                                            </button>
+
+                                                            <button id="btnSaveRequest" class="btn btn-success" type="button" role="button" hidden>
+                                                                <i class="bi bi-floppy"></i> Registrar Usuario
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            
+                                                        </div>
+                                                        
+                                                        <div class="col-3">
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>

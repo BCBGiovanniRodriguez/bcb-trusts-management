@@ -86,7 +86,7 @@
                 <div class="mt-2">
                     <!-- Sidebar Menu -->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
+                        <li class="nav-item" hidden>
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-cogs"></i>
                                 <p>
@@ -125,7 +125,7 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
+                                <li class="nav-item" hidden>
                                     <a th:href="@{/catalog/person-type/}" class="nav-link">
                                         <i class="nav-icon bi bi-person-bounding-box"></i>
                                         <p>
@@ -167,7 +167,7 @@
                                     <a th:href="@{/request/request}" class="nav-link">
                                         <i class="nav-icon bi bi-person-plus-fill"></i>
                                         <p>
-                                            Solicitudes
+                                            Prospectos
                                         </p>
                                     </a>
                                 </li>
@@ -293,7 +293,7 @@
                             <h5 class="modal-title text-white" id="confirmOperationModalLabel">Operación realizada exitosamente</h5>
                         </div>
                         <div class="modal-body">
-                            La información se ha actualizado exitosamente <br>
+                            La información se ha registrado exitosamente <br>
                             Redireccionando en 5 segundos... <span id="redirectionSpan"></span>
                         </div>
                     </div>
@@ -308,6 +308,33 @@
                         </div>
                         <div class="modal-body">
                             La consulta no encontró resultados <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="errorValidationModal" tabindex="-1" role="dialog" aria-labelledby="errorValidationModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-center">
+                            <h5 class="modal-title text-white" id="errorValidationModalLabel">Error de Validación de Información</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Se presentaron los siguientes errores:</h5>
+                            <span id="errorDetail"></span> <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="successValidationModal" tabindex="-1" role="dialog" aria-labelledby="successValidationModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-success text-center">
+                            <h5 class="modal-title text-white" id="successValidationModalModalLabel">Validación de Información</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h5>La validación de Información fue exitosa, se puede integrar la información!</h5>
                         </div>
                     </div>
                 </div>

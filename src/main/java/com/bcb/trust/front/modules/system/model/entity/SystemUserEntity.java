@@ -1,6 +1,8 @@
 package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
@@ -22,7 +24,7 @@ public class SystemUserEntity extends CommonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "ProfileId", referencedColumnName = "ProfileId")
     private SystemProfileEntity profile;
 
@@ -32,7 +34,7 @@ public class SystemUserEntity extends CommonEntity {
 
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "PersonId", referencedColumnName = "PersonId")
     private CatalogPersonEntity person;
 
@@ -122,4 +124,16 @@ public class SystemUserEntity extends CommonEntity {
         return CommonEntity.statuses[this.status];
     }
     
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("personId", this.userId);
+        map.put("nickname", this.nickname);
+        map.put("email", this.email);
+        map.put("profile", this.profile.toMap());
+        map.put("person", this.person.toMap());
+        map.put("status", this.status);
+        map.put("created", this.created);
+
+        return map;
+    }
 }

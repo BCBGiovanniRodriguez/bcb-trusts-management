@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -64,6 +67,46 @@ public class SystemProfileController {
         
         return jsonResponse;
     }
+
+    @GetMapping("/profile/permission/{id}")
+    public String getMethodName(@PathVariable Long id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String jsonResponse = null;
+        Map<String, Object> resultMap = new HashMap<>();
+
+        Set<SystemPermissionEntity> permissionSet = new HashSet<>();
+        List<Map> permissionList = new ArrayList<>();
+
+        try {
+            Optional<SystemProfileEntity> result = systemProfileRepository.findById(id);
+
+            if (result.isPresent()) {
+                SystemProfileEntity profileEntity = result.get();
+                //permissionSet = profileEntity.getPermissions();
+
+                for (SystemPermissionEntity systemPermissionEntity : profileEntity.getPermissions()) {
+                    permissionList.add(systemPermissionEntity.toMap());
+                }
+            }
+
+            resultMap.put("status", 1);
+            resultMap.put("message", "Petición Correcta");
+            resultMap.put("data", permissionList);
+            
+            jsonResponse = mapper.writeValueAsString(resultMap);
+
+        } catch (Exception e) {
+            resultMap.put("status", 0);
+            resultMap.put("message", "Error en SystemProfileController::getAll[" + e.getLocalizedMessage() + "]");
+            resultMap.put("data", null);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
+        }
+        
+        return jsonResponse;
+    }
+    
 
     @PostMapping("/profile")
     public String saveProfile(@RequestBody Map<String, Object> data) throws JsonProcessingException {

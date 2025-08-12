@@ -70,7 +70,7 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Perfil</th>
-                                                        <th>Acceso</th>
+                                                        <th>Nickname</th>
                                                         <th>Nombre Completo</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
@@ -86,7 +86,7 @@
                                                         <td th:text="${user.statusAsString}"></td>
                                                         <td th:text="${user.created}"></td>
                                                         <td>
-                                                            <a th:href="@{/system/user/{id}(id=${user.userId})}" class="btn btn-sm btn-info">
+                                                            <a th:href="@{/system/user/detail/{id}(id=${user.userId})}" class="btn btn-sm btn-info">
                                                                 <i class="fa fa-search"></i> Ver Detalles
                                                             </a>
                                                         </td>

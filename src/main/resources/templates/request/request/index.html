@@ -13,7 +13,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <h4>Solicitudes a Fideicomiso</h4>
+                                <h4>Prospectos a Fideicomiso</h4>
                                 <hr>
                             </div>
                         </div>
@@ -26,11 +26,11 @@
                             <div class="col-12">
                                 <div class="card card-outline card-primary mb-4">
                                     <div class="card-header">
-                                        <h3 class="card-title"><strong>Solicitudes Registradas</strong></h3>
+                                        <h3 class="card-title"><strong>Prospectos Registrados</strong></h3>
 
                                         <div class="card-tools">
                                             <a th:href="@{/request/request/create}" class="btn btn-success btn-sm">
-                                                <i class="bi bi-plus-circle"></i> Nueva Solicitud
+                                                <i class="bi bi-plus-circle"></i> Nuevo Prospecto
                                             </a>
                                         </div>
                                     </div>
@@ -40,25 +40,31 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Nombre</th>
-                                                        <th>Tipo de Solicitud</th>
+                                                        <th>Número Prospecto</th>
+                                                        <th>Tipo Fideicomiso</th>
+                                                        <th>Etapa</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
+                                                        <th>Registrado Por</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
-                                                <!--
                                                 <tbody th:each="request : ${requestList}">
                                                     <tr>
-                                                        <td th:text="${request.id}"></td>
-                                                        <td th:text="${request.name}"></td>
-                                                        <td th:text="${request.type}"></td>
-                                                        <td th:text="${request.status}"></td>
-                                                        <td th:text="${#dates.format(request.created, 'yyyy-MM-dd@HH:mm:ss')}"></td>
-                                                        <td><a th:href="@{/request/{id}(id=${request.id})}" class="btn btn-primary">Ver Detalles</a></td>
+                                                        <td th:text="${request.requestId}"></td>
+                                                        <td th:text="${request.number}"></td>
+                                                        <td th:text="${request.trustTypeEntity.name}"></td>
+                                                        <td th:text="${request.state}"></td>
+                                                        <td th:text="${request.statusAsString}"></td>
+                                                        <td th:text="${#temporals.format(request.created, 'yyyy-MM-dd HH:mm-ss')}"></td>
+                                                        <td th:text="${request.registeredBy.person.fullName}"></td>
+                                                        <td>
+                                                            <a th:href="@{/request/request/detail/{id}(id=${request.requestId})}" class="btn btn-info">
+                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
-                                                -->
                                             </table>
 
                                         </div>

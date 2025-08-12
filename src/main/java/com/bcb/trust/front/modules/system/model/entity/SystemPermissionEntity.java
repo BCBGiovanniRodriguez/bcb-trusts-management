@@ -1,7 +1,9 @@
 package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
@@ -178,7 +180,19 @@ public class SystemPermissionEntity extends CommonEntity {
         return true;
     }
 
-    
+    public Map<String, Object> toMap() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("permissionId", this.permissionId);
+        map.put("name", this.name);
+        map.put("code", this.code);
+        map.put("module", this.module);
+        map.put("moduleAsString", this.getModuleAsString());
+        map.put("status", this.status);
+        map.put("statusAsString", this.getStatusAsString());
+        map.put("created", this.created);
+
+        return map;
+    }
 
     
 }

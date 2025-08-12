@@ -29,6 +29,7 @@ import jakarta.persistence.EntityManagerFactory;
     basePackages = {
         "com.bcb.trust.front.model.trusts.*",
         "com.bcb.trust.front.modules.catalog.model.*",
+        //"com.bcb.trust.front.modules.catalog.model.*",
         "com.bcb.trust.front.modules.request.model.*",
         "com.bcb.trust.front.modules.system.model.*",
         "com.bcb.trust.front.modules.trust.model.*",

@@ -33,46 +33,99 @@
                                         <div class="form">
                                             <ul class="nav nav-tabs mb-3" id="personTab" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active" id="person-tab" data-bs-toggle="tab" data-bs-target="#person-tab-pane" 
-                                                    type="button" role="tab" aria-controls="person-tab-pane" aria-selected="true" tabindex="0">
-                                                        <i class="fa fa-person"></i> <strong>Datos Personales</strong>
-                                                    </button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" 
+                                                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" 
                                                     type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">
                                                         <strong>Perfil & Permisos</strong>
                                                     </button>
                                                 </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="person-tab" data-bs-toggle="tab" data-bs-target="#person-tab-pane" 
+                                                    type="button" role="tab" aria-controls="person-tab-pane" aria-selected="true" tabindex="0">
+                                                        <i class="fa fa-person"></i> <strong>Datos Personales</strong>
+                                                    </button>
+                                                </li>
+                                                
                                             </ul>
                                             <div class="tab-content">
-                                                <div class="tab-pane fade active show" id="person-tab-pane" role="tabpanel" aria-labelledby="person-tab" tabindex="0">
+                                                <div class="tab-pane fade active show" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="1">
+                                                    <div class="row g-3">
+                                                        <div class="col-6">
+                                                            <label for="email" class="form-label"><strong>Correo Electrónico</strong></label>
+                                                            <input id="email" name="email" type="text" class="form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label for="nickname" class="form-label"><strong>Nickname</strong></label>
+                                                            <input id="nickname" name="nickname" type="text" class="form-control" disabled>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="row g-3">
+                                                        <div class="col-3">
+                                                            <label for="profile" class="form-label"><strong>Perfil</strong></label>
+                                                            <select id="profile" name="profile" class="form-select">
+                                                                <option value="0" selected disabled>Seleccione Opción</option>
+                                                                <option th:each="profile : ${profileEntityList}" th:value="${profile.profileId}" th:text="${profile.name}"></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row g-3">
+                                                        <div class="table-responsive">
+                                                            <table id="profilePermissionTable" class="table table-sm table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Módulo</th>
+                                                                        <th>Código</th>
+                                                                        <th>Descripción Permiso</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="person-tab-pane" role="tabpanel" aria-labelledby="person-tab" tabindex="0">
+                                                    <div class="row g-3">
+                                                        <div class="col-6">
+                                                            <button id="btnValidate" class="btn btn-info" role="button">
+                                                                <i class="bi bi-ui-checks-grid"></i> Validar Información
+                                                            </button>
+
+                                                            <button id="btnSaveUser" class="btn btn-success" role="button" hidden>
+                                                                <i class="bi bi-floppy"></i> Registrar Usuario
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    
                                                     <div class="row g-3">
                                                         <div class="col-3">
                                                             <label for="firstName" class="form-label"><strong>Primer Nombre</strong></label>
-                                                            <input type="text" name="firstName" id="firstName" class="form-control" />
+                                                            <input id="firstName" name="firstName" type="text" class="form-control" />
                                                         </div>
                                                         
                                                         <div class="col-3">
-                                                            <label for="secondName" class="form-label">Segundo Nombre</label>
-                                                            <input type="text" name="secondName" id="secondName" class="form-control" placeholder="Opcional" />
+                                                            <label for="secondName" class="form-label"><strong>Segundo Nombre</strong></label>
+                                                            <input id="secondName" name="secondName" type="text" class="form-control" placeholder="Opcional" />
                                                         </div>
                                                         
                                                         <div class="col-3">
-                                                            <label for="lastName" class="form-label">Apellido Paterno</label>
-                                                            <input type="text" name="lastName" id="lastName" class="form-control" />
+                                                            <label for="lastName" class="form-label"><strong>Apellido Paterno</strong></label>
+                                                            <input id="lastName" name="lastName" type="text" class="form-control" />
                                                         </div>
 
                                                         <div class="col-3">
-                                                            <label for="secondLastName" class="form-label">Apellido Materno</label>
-                                                            <input type="text" name="secondLastName" id="secondLastName" class="form-control" />
+                                                            <label for="secondLastName" class="form-label"><strong>Apellido Materno</strong></label>
+                                                            <input id="secondLastName" name="secondLastName" type="text" class="form-control" />
                                                         </div>
                                                     </div>
 
                                                     <div class="row g-3">
                                                         <div class="col-3">
-                                                            <label for="gender" class="form-label">Género</label>
-                                                            <select name="gender" id="gender" class="form-select">
+                                                            <label for="gender" class="form-label"><strong>Género</strong></label>
+                                                            <select id="gender" name="gender" class="form-select">
                                                                 <option value="0" selected disabled>Seleccione Opción</option>
                                                                 <option value="1">Femenino</option>
                                                                 <option value="2">Masculino</option>
@@ -80,29 +133,19 @@
                                                         </div>
                                                         
                                                         <div class="col-3">
-                                                            <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
-                                                            <input type="date" name="birth_date" class="form-control" />
+                                                            <label for="birthDate" class="form-label"><strong>Fecha de Nacimiento</strong></label>
+                                                            <input id="birthDate" name="birthDate" type="date" class="form-control" />
                                                         </div>
                                                         
                                                         <div class="col-3">
-                                                            <label for="curp" class="form-label">CURP</label>
-                                                            <input type="text" name="curp" class="form-control" maxlength="18" value="XAXX000000XXXXXX00" />
+                                                            <label for="curp" class="form-label"><strong>CURP</strong></label>
+                                                            <input id="curp" name="curp" type="text" class="form-control" maxlength="18" value="XAXX000000XXXXXX00" />
                                                         </div>
 
                                                         <div class="col-3">
-                                                            <label for="rfc" class="form-label">RFC</label>
-                                                            <input type="text" name="rfc" class="form-control" maxlength="13" value="XAXX000000XX0" />
+                                                            <label for="rfc" class="form-label"><strong>RFC</strong></label>
+                                                            <input id="rfc" name="rfc" type="text" class="form-control" maxlength="13" value="XAXX000000XX0" />
                                                         </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="1">
-                                                    <div class="col-3">
-                                                        <label for="profile" class="form-label">Perfil</label>
-                                                        <select name="profile" id="profile" class="form-select">
-                                                            <option value="0" selected disabled>Seleccione Opción</option>
-                                                            <option th:each="profile : ${profileEntityList}" th:value="${profile.profileId}" th:text="${profile.name}"></option>
-                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -117,6 +160,8 @@
             </main>
 
             <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
 
             <div th:replace="~{fragments/common :: jsDependencies}"></div>
 
