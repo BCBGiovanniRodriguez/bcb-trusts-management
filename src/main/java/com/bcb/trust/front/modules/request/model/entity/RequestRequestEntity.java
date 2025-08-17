@@ -29,8 +29,8 @@ public class RequestRequestEntity extends CommonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long requestId;
 
-    @Column(length = 20, nullable = false)
-    private String number;
+    @Column(nullable = false)
+    private Integer number;
 
     private Integer trustChange;
 
@@ -75,11 +75,11 @@ public class RequestRequestEntity extends CommonEntity {
         this.requestId = requestId;
     }
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

@@ -59,8 +59,11 @@
                                                         <td th:text="${#temporals.format(request.created, 'yyyy-MM-dd HH:mm-ss')}"></td>
                                                         <td th:text="${request.registeredBy.person.fullName}"></td>
                                                         <td>
-                                                            <a th:href="@{/request/request/detail/{id}(id=${request.requestId})}" class="btn btn-info">
-                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            <a th:href="@{/request/request/detail/{id}(id=${request.requestId})}" class="btn btn-info" title="Ver Detalles">
+                                                                <i class="fa fa-search"></i>
+                                                            </a>
+                                                            <a th:href="@{/request/request/detail/{id}(id=${request.requestId})}" class="btn btn-info" title="Fideicomisarios">
+                                                                <i class="fa fa-person"></i>
                                                             </a>
                                                         </td>
                                                     </tr>

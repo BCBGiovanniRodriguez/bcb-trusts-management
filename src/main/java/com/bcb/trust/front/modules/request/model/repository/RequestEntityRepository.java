@@ -8,4 +8,5 @@ import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 @Repository
 public interface RequestEntityRepository extends JpaRepository<RequestRequestEntity, Long> {
 
+    RequestRequestEntity findFirstByOrderByNumberDesc();
 }

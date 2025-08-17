@@ -19,6 +19,7 @@ import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddressEntity;
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogAddressEntityRepository;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonEntityRepository;
+import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
@@ -51,22 +52,28 @@ public class RequestRequestController {
     
     private DateTimeFormatter isoFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/request")
     public String create(@RequestBody Map<String, Object> data, Authentication authentication) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
         Map<String, Object> resultMap = new HashMap<>();
+        Integer currentRequestNumber = 1;
 
         try {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             SystemUserEntity systemUserEntity = userEntityRepository.findByNickname(userDetails.getUsername());
-
-            for (String element : data.keySet()) {
-                System.out.println(element);
-            }
             LocalDateTime now = LocalDateTime.now();
 
+            RequestRequestEntity lastRequest = requestEntityRepository.findFirstByOrderByNumberDesc();
+            if (lastRequest != null) {
+                currentRequestNumber = lastRequest.getNumber();
+                
+            } 
+
+
+            @SuppressWarnings("unchecked")
             Map<String, Object> personMap = (Map<String, Object>) data.get("person");
             Map<String, Object> addressMap = (Map<String, Object>) data.get("address");
 
@@ -78,7 +85,8 @@ public class RequestRequestController {
                 personEntity.setSecondName((String) personMap.get("secondName"));
                 personEntity.setLastName((String) personMap.get("lastName"));
                 personEntity.setSecondLastName((String) personMap.get("secondLastName"));
-                personEntity.setGender((Integer) personMap.get("gender"));
+                Integer gender = Integer.parseInt(personMap.get("gender").toString());
+                personEntity.setGender(gender);
                 String birthDateString = personMap.get("birthDate").toString();
                 personEntity.setBirthDate(LocalDate.parse(birthDateString, isoFormatter));
                 personEntity.setCurp((String) personMap.get("curp"));
@@ -109,12 +117,26 @@ public class RequestRequestController {
             addressEntityRepository.saveAndFlush(addressEntity);
 
             RequestRequestEntity requestEntity = new RequestRequestEntity();
-            requestEntity.setNumber("10");
-            requestEntity.setTrustChange(Integer.parseInt(data.get("trustChange").toString()));
-            requestEntity.setTrustChangeTrust(data.get("trustChangeTrust").toString());
-            requestEntity.setWasRefered(Integer.parseInt(data.get("wasRefered").toString()));
-            requestEntity.setWasReferedBy(Integer.parseInt(data.get("wasReferedBy").toString()));
-            requestEntity.setWasReferedByFullName(data.get("wasReferedByFullName").toString());
+            requestEntity.setNumber(currentRequestNumber);
+
+            Integer trustChange = Integer.parseInt(data.get("trustChange").toString());
+            requestEntity.setTrustChange(trustChange);
+            if (CommonEntity.SIMPLE_OPTION_YES == trustChange) {
+                requestEntity.setTrustChangeTrust(data.get("trustChangeTrust").toString());
+            } else {
+                requestEntity.setTrustChangeTrust(null);
+            }
+
+            Integer wasRefered = Integer.parseInt(data.get("wasRefered").toString());
+            requestEntity.setWasRefered(wasRefered);
+            if (CommonEntity.SIMPLE_OPTION_YES == wasRefered) {
+                requestEntity.setWasReferedBy(Integer.parseInt(data.get("wasReferedBy").toString()));
+                requestEntity.setWasReferedByFullName(data.get("wasReferedByFullName").toString());
+            } else {
+                requestEntity.setWasReferedBy(null);
+                requestEntity.setWasReferedByFullName(null);
+            }
+
             Long trustTypeId = Long.parseLong(data.get("type").toString());
             Optional<TrustTrustTypeEntity> result = trustTypeRepository.findById(trustTypeId);
             if (result.isPresent()) {
@@ -137,6 +159,7 @@ public class RequestRequestController {
             jsonResponse = mapper.writeValueAsString(resultMap);
             
         } catch (Exception e) {
+            System.out.println("Error en SystemUserController::create[" + e.getLocalizedMessage() + "]");
             resultMap.put("status", 0);
             resultMap.put("message", "Error en SystemUserController::create[" + e.getLocalizedMessage() + "]");
             resultMap.put("data", null);
