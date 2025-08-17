@@ -1,6 +1,6 @@
 "use strict";
 $(() => {
-    const milisecondsOnOneYear = 31557600000, btnValidateJQuery = $("#btnValidate"), btnSaveUserJQuery = $("#btnSaveUser"), profileJQuery = $("#profile"), firstNameJQuery = $("#firstName"), secondNameJQuery = $("#secondName"), lastNameJQuery = $("#lastName"), secondLastNameJQuery = $("#secondLastName"), genderJQuery = $("#gender"), birthDateJQuery = $("#birthDate"), curpJQuery = $("#curp"), rfcJQuery = $("#rfc"), emailJQuery = $("#email"), nicknameJQuery = $("#nickname"), errorValidationModalJQuery = $("#errorValidationModal"), successValidationModalJQuery = $("#successValidationModal"), localApiSystem = "/api/system";
+    const milisecondsOnOneYear = 31557600000, btnValidateJQuery = $("#btnValidate"), btnSaveUserJQuery = $("#btnSaveUser"), profileJQuery = $("#profile"), firstNameJQuery = $("#firstName"), secondNameJQuery = $("#secondName"), lastNameJQuery = $("#lastName"), secondLastNameJQuery = $("#secondLastName"), genderJQuery = $("#gender"), birthDateJQuery = $("#birthDate"), curpJQuery = $("#curp"), rfcJQuery = $("#rfc"), emailJQuery = $("#email"), nicknameJQuery = $("#nickname"), errorValidationModalJQuery = $("#errorValidationModal"), successValidationModalJQuery = $("#successValidationModal"), confirmOperationModalJQuery = $("#confirmOperationModal"), serverErrorModalJQuery = $("#serverErrorModal"), resultFoundModalJQuery = $("#resultFoundModal"), localApiSystem = "/api/system";
     let errorList = [];
     btnValidateJQuery.on('click', function () {
         errorList = [];
@@ -31,18 +31,26 @@ $(() => {
             console.log(error);
         })
             .then((result, textStatus, jqXHR) => {
-            let resultJson = JSON.parse(result);
-            if (resultJson.status == 1) {
-                let data = resultJson.data;
-                tbody.empty();
-                $.each(data, function (i, item) {
-                    let tr = $('<tr>'), tdId = $('<td>', { 'text': item.permissionId }), tdModule = $('<td>', { 'text': item.moduleAsString }), tdCode = $('<td>', { 'text': item.code }), tdName = $('<td>', { 'text': item.name });
-                    tr.append(tdId).append(tdModule).append(tdCode).append(tdName);
-                    tbody.append(tr);
-                });
+            if (result != undefined) {
+                let resultJson = JSON.parse(result);
+                if (resultJson.status == 1) {
+                    setTimeout(function () {
+                        resultFoundModalJQuery.modal('show');
+                    }, 1000);
+                    let data = resultJson.data;
+                    tbody.empty();
+                    $.each(data, function (i, item) {
+                        let tr = $('<tr>'), tdId = $('<td>', { 'text': item.permissionId }), tdModule = $('<td>', { 'text': item.moduleAsString }), tdCode = $('<td>', { 'text': item.code }), tdName = $('<td>', { 'text': item.name });
+                        tr.append(tdId).append(tdModule).append(tdCode).append(tdName);
+                        tbody.append(tr);
+                    });
+                }
+                else if (resultJson.status == 0) {
+                    console.log(resultJson.message);
+                }
             }
-            else if (resultJson.status == 0) {
-                console.log(resultJson.message);
+            else {
+                serverErrorModalJQuery.modal('show');
             }
         });
         validatePerson();
@@ -112,7 +120,6 @@ $(() => {
         return valid;
     }
     emailJQuery.on('change', function () {
-        console.log('Change');
         let self = $(this), email, nickname;
         if (self.val() != null && self.val() != undefined && self.val() != "") {
             email = self.val().toString();
@@ -149,12 +156,22 @@ $(() => {
                 console.log(error);
             })
                 .then((result, textStatus, jqXHR) => {
-                let resultJson = JSON.parse(result);
-                if (resultJson.status == 1) {
-                    console.log("Registrado!");
+                if (result != undefined) {
+                    let resultJson = JSON.parse(result);
+                    if (resultJson.status == 1) {
+                        confirmOperationModalJQuery.modal('show');
+                        setTimeout(function () {
+                            window.location.href = "/system/user?status=1";
+                        }, 5000);
+                    }
+                    else if (resultJson.status == 0) {
+                        console.log(resultJson.message);
+                        $("#errorMessage").text(resultJson.message);
+                        serverErrorModalJQuery.modal('show');
+                    }
                 }
-                else if (resultJson.status == 0) {
-                    console.log(result.message);
+                else {
+                    serverErrorModalJQuery.modal('show');
                 }
             });
         }

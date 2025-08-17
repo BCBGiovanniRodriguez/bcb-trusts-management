@@ -46,7 +46,7 @@
                                                         <th>Perfil</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
-                                                        <th>Acciones</th>
+                                                        <th hidden>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -56,9 +56,8 @@
                                                         <td th:text="${userEntity.email}"></td>
                                                         <td th:text="${userEntity.profile.name}"></td>
                                                         <td th:text="${userEntity.statusAsString}"></td>
-                                                        <td th:text="${userEntity.created}"></td>
-                                                        <td>
-                                                        </td>
+                                                        <td th:text="${#temporals.format(userEntity.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                        <td hidden></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -76,7 +75,7 @@
                                                         <th>Apellido Materno</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
-                                                        <th>Acciones</th>
+                                                        <th hidden>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -87,9 +86,8 @@
                                                         <td th:text="${userEntity.person.lastName}"></td>
                                                         <td th:text="${userEntity.person.secondLastName}"></td>
                                                         <td th:text="${userEntity.statusAsString}"></td>
-                                                        <td th:text="${userEntity.person.created}"></td>
-                                                        <td>
-                                                        </td>
+                                                        <td th:text="${#temporals.format(userEntity.person.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                        <td hidden></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

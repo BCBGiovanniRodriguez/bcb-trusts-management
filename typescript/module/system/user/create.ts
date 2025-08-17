@@ -18,6 +18,9 @@ $(() => {
         nicknameJQuery: JQuery = $("#nickname"),
         errorValidationModalJQuery: JQuery = $("#errorValidationModal"),
         successValidationModalJQuery: JQuery = $("#successValidationModal"),
+        confirmOperationModalJQuery: JQuery = $("#confirmOperationModal"),
+        serverErrorModalJQuery: JQuery = $("#serverErrorModal"),
+        resultFoundModalJQuery: JQuery = $("#resultFoundModal"),
         localApiSystem: string = "/api/system";
 
     let errorList: string[] = [];
@@ -54,7 +57,6 @@ $(() => {
             errorValidationModalJQuery
                 .find($("#errorDetail"))
                 .html(errorList.join('<br />'));
-
             // @ts-ignore
             errorValidationModalJQuery.modal('show');
             btnSaveUserJQuery.attr('hidden', 'hidden');
@@ -79,25 +81,36 @@ $(() => {
             console.log(error);
         })
         .then((result, textStatus, jqXHR) => {
-            let resultJson = JSON.parse(result);
+            if(result != undefined) {
+                let resultJson = JSON.parse(result);
+    
+                if(resultJson.status == 1) {
+                    setTimeout(function() {
+                        // @ts-ignore
+                        resultFoundModalJQuery.modal('show');
+                    }, 1000);
 
-            if(resultJson.status == 1) {
-                let data = resultJson.data;
-                tbody.empty();
-                $.each(data, function(i, item) {
+                    let data = resultJson.data;
+                    tbody.empty();
+                    $.each(data, function(i, item) {
+    
+                        let tr = $('<tr>'), 
+                            tdId = $('<td>', {'text': item.permissionId}),
+                            tdModule = $('<td>', {'text': item.moduleAsString}),
+                            tdCode = $('<td>', {'text': item.code}),
+                            tdName = $('<td>', {'text': item.name});
+    
+                        tr.append(tdId).append(tdModule).append(tdCode).append(tdName);
+                        tbody.append(tr);
+                    });
+    
+                } else if(resultJson.status == 0) {
+                    console.log(resultJson.message);
+                }
 
-                    let tr = $('<tr>'), 
-                        tdId = $('<td>', {'text': item.permissionId}),
-                        tdModule = $('<td>', {'text': item.moduleAsString}),
-                        tdCode = $('<td>', {'text': item.code}),
-                        tdName = $('<td>', {'text': item.name});
-
-                    tr.append(tdId).append(tdModule).append(tdCode).append(tdName);
-                    tbody.append(tr);
-                });
-
-            } else if(resultJson.status == 0) {
-                console.log(resultJson.message);
+            } else {
+                // @ts-ignore
+                serverErrorModalJQuery.modal('show');
             }
         });
 
@@ -182,7 +195,6 @@ $(() => {
     }
 
     emailJQuery.on('change', function(this: any) {
-        console.log('Change');
         let self = $(this),
             email: string,
             nickname: string;
@@ -229,13 +241,26 @@ $(() => {
                 console.log(error);
             })
             .then((result, textStatus, jqXHR) => {
-                let resultJson = JSON.parse(result);
-
-                if(resultJson.status == 1) {
-                    console.log("Registrado!");
-
-                } else if(resultJson.status == 0) {
-                    console.log(result.message);
+                if(result != undefined) {
+                    let resultJson = JSON.parse(result);
+    
+                    if(resultJson.status == 1) {
+                        // @ts-ignore
+                        confirmOperationModalJQuery.modal('show');
+                        
+                        setTimeout(function() {
+                            window.location.href = "/system/user?status=1";
+                        }, 5000);
+    
+                    } else if(resultJson.status == 0) {
+                        console.log(resultJson.message);
+                        $("#errorMessage").text(resultJson.message);
+                        // @ts-ignore
+                        serverErrorModalJQuery.modal('show');
+                    }
+                } else {
+                    // @ts-ignore
+                    serverErrorModalJQuery.modal('show');
                 }
             });
         }

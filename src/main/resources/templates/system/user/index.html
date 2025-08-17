@@ -31,6 +31,10 @@
                                             <h3 class="card-title"><strong>Consulta de Usuarios Registrados en el Sistema</strong></h3>
 
                                             <div class="card-tools">
+                                                <a class="btn btn-sm btn-primary" th:href="@{/dashboard}">
+                                                    <i class="fa fa-arrow-circle-left"></i> Regresar a Dashboard
+                                                </a>
+
                                                 <a class="btn btn-sm btn-success" th:href="@{/system/user/create}">
                                                     <i class="fa fa-plus"></i> Registrar Usuario
                                                 </a>
@@ -48,7 +52,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-center">
-                                            <button class="btn btn-info" type="submit">
+                                            <button class="btn btn-sm btn-info" type="submit">
                                                 <i class="fa fa-search"></i> Búsqueda
                                             </button>
                                         </div>
@@ -65,13 +69,13 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-sm table-striped table-bordered" id="userTable">
+                                            <table id="userTable" class="table table-sm table-striped table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Perfil</th>
                                                         <th>Nickname</th>
                                                         <th>Nombre Completo</th>
+                                                        <th>Perfil</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
                                                         <th>Acciones</th>
@@ -80,9 +84,9 @@
                                                 <tbody th:each="user : ${userEntityList}">
                                                     <tr>
                                                         <td th:text="${user.userId}"></td>
-                                                        <td th:text="${user.profile.name}"></td>
                                                         <td th:text="${user.nickname}"></td>
                                                         <td th:text="${user.person.fullName}"></td>
+                                                        <td th:text="${user.profile.name}"></td>
                                                         <td th:text="${user.statusAsString}"></td>
                                                         <td th:text="${user.created}"></td>
                                                         <td>

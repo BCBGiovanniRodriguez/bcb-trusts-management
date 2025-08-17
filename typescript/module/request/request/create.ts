@@ -41,6 +41,7 @@ $(() => {
         wasReferedByFullNameJQuery: JQuery = $("#wasReferedByFullName"),
         foreignStatusJQuery: JQuery = $("#foreignStatus"),
         resultNotFoundModal: JQuery = $("#resultNotFoundModal"),
+        serverErrorModal: JQuery = $("#serverErrorModal"),
         errorValidationModalJQuery: JQuery = $("#errorValidationModal"),
         successValidationModalJQuery: JQuery = $("#successValidationModal");
     let errorList: string[] = [],
@@ -138,50 +139,78 @@ $(() => {
 
         $.ajax({
             method: 'GET',
+            timeout: 5000,
             url: locationUrl
-        }).then((result, textStatus, jqXHR) => {
-            //console.dir(result);
-            if(result.state) {
-                let country = result.data.country,
-                    state = result.data.state,
-                    states = result.data.states,
-                    township = result.data.township,
-                    townships = result.data.townships,
-                    colonies = result.data.colonies;
-                
-                let emptyOptionOne = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
-                partialAddress = township.name + ", " + state.name + ", " + country.name;
-                stateJQuery.append(emptyOptionOne);
-                $.each(states, function(i, item) {
-                    let option = $("<option>", {"value": item.stateId, "text": item.name});
-                    if(state.stateId == item.stateId) {
-                        option.attr("selected", "selected");
-                    }
-                    stateJQuery.append(option);
-                });
-                stateJQuery.attr("disabled", "disabled");
-
-                let emptyOptionTwo = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
-                townshipJQuery.append(emptyOptionTwo);
-                $.each(townships, function(i, item){
-                    let option = $("<option>", {"value": item.townshipId, "text": item.name});
-                    if(township.townshipId == item.townshipId) {
-                        option.attr("selected", "selected");
-                    }
-                    townshipJQuery.append(option);
-                });
-                townshipJQuery.attr("disabled", "disabled");
-
-                let emptyOptionThree = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
-                colonyJQuery.append(emptyOptionThree);
-                $.each(colonies, function(i, item) {
-                    let option = $("<option>", {"value": item.colonyId, "text": item.name});
-                    colonyJQuery.append(option);
-                });
-            } else {
+        }).fail((jqXHR, textStatus, error) => {
+                console.dir(jqXHR);
+                console.dir(textStatus);
+                console.dir(error);
+                if(textStatus == "timeout") {
+                    $("#errorMessage").html("Timeout: Sin conexión al endpoint <strong>BCB Location</strong>");
+                } else {
+                    $("#errorMessage").text("Error desconocido");
+                }
                 // @ts-ignore
-                resultNotFoundModal.modal('show');
+                serverErrorModal.modal('show');
+
+                setTimeout(function() {
+                    // @ts-ignore
+                    serverErrorModal.modal('hide');
+                }, 5000);
+
+        }).then((result, textStatus, jqXHR) => {
+            console.log(textStatus);
+
+            console.log(jqXHR);
+            if(result != undefined) {
+                if(result.state) {
+                    let country = result.data.country,
+                        state = result.data.state,
+                        states = result.data.states,
+                        township = result.data.township,
+                        townships = result.data.townships,
+                        colonies = result.data.colonies;
+                    
+                    let emptyOptionOne = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
+                    partialAddress = township.name + ", " + state.name + ", " + country.name;
+                    stateJQuery.append(emptyOptionOne);
+                    $.each(states, function(i, item) {
+                        let option = $("<option>", {"value": item.stateId, "text": item.name});
+                        if(state.stateId == item.stateId) {
+                            option.attr("selected", "selected");
+                        }
+                        stateJQuery.append(option);
+                    });
+                    stateJQuery.attr("disabled", "disabled");
+
+                    let emptyOptionTwo = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
+                    townshipJQuery.append(emptyOptionTwo);
+                    $.each(townships, function(i, item){
+                        let option = $("<option>", {"value": item.townshipId, "text": item.name});
+                        if(township.townshipId == item.townshipId) {
+                            option.attr("selected", "selected");
+                        }
+                        townshipJQuery.append(option);
+                    });
+                    townshipJQuery.attr("disabled", "disabled");
+
+                    let emptyOptionThree = $("<option>", {"value": 0, "text": "Seleccione Opción", "selected":"selected", "disabled":"disabled"});
+                    colonyJQuery.append(emptyOptionThree);
+                    $.each(colonies, function(i, item) {
+                        let option = $("<option>", {"value": item.colonyId, "text": item.name});
+                        colonyJQuery.append(option);
+                    });
+                } else {
+                    // @ts-ignore
+                    resultNotFoundModal.modal('show');
+                }
+            } else {
+                $("#errorMessage").text("Sin conexión al endpoint");
+                // @ts-ignore
+                serverErrorModal.modal('show');
             }
+            
+            
         });
     });
 
@@ -213,29 +242,32 @@ $(() => {
             errorList.push("<strong>Tipo de Fideicomiso</strong> es requerido, seleccione una opción");
         }
 
-        if (trustChangeJQuery.val() == null || trustChangeJQuery.val() == "") {
+        if (trustChangeJQuery.val() == null == undefined || trustChangeJQuery.val() == null || trustChangeJQuery.val() == "") {
             valid &&= false;
             errorList.push("<strong>Es cambio de Fiduciario?</strong> es requerido, seleccione una opción");
         } else {
-            if (trustChangeTrustJQuery.val() == null || trustChangeTrustJQuery.val() == "") {
+            let trustChange = Number(trustChangeTrustJQuery.val());
+            if (OPTION_YES === trustChange) {
                 valid &&= false;
                 errorList.push("<strong>Fiduciario Anterior</strong> es requerido, especifique");
             }
         }
 
-        if (wasReferedJQuery.val() == null || wasReferedJQuery.val() == "") {
+        if (wasReferedJQuery.val() == undefined || wasReferedJQuery.val() == null || wasReferedJQuery.val() == "") {
             valid &&= false;
             errorList.push("<strong>Fue recomendado?</strong> es requerido, seleccione una opción");
         } else {
-            if(wasReferedByJQuery.val() == null || wasReferedByJQuery.val() == "") {
+            let wasRefered = Number(wasReferedJQuery.val());
+            if(OPTION_YES == wasRefered) {
                 valid &&= false;
                 errorList.push("<strong>Recomendado por</strong> es requerido, seleccione una opción");
+                
+                if(wasReferedByFullNameJQuery.val() == undefined || wasReferedByFullNameJQuery.val() == null || wasReferedByFullNameJQuery.val() == "") {
+                    valid &&= false;
+                    errorList.push("<strong>Nombre Completo</strong> es requerido, especifique");
+                }
             }
 
-            if(wasReferedByFullNameJQuery.val() == null || wasReferedByFullNameJQuery.val() == "") {
-                valid &&= false;
-                errorList.push("<strong>Nombre Completo</strong> es requerido, especifique");
-            }
         }
 
         if (trustTypeIdJQuery.val() == null || trustTypeIdJQuery.val() == "0") {
@@ -432,20 +464,21 @@ $(() => {
                 console.log(error);
             })
             .then((result, textStatus, jqXHR) => {
-                let resultJson = JSON.parse(result);
+                if(result != undefined) {
+                    let resultJson = JSON.parse(result);
 
-                if(resultJson.status == 1) {
-                    console.log("Registrado!");
-                    // @ts-ignore
-                    confirmOperationModal.modal('show');
-                    /*
-                    setTimeout(function() {
-                        window.location.href = "/request/request?status=1";
-                    }, 5000);
-                    */
-                } else if(resultJson.status == 0) {
-                    console.log(result.message);
+                    if(resultJson.status == 1) {
+                        console.log("Registrado!");
+                        // @ts-ignore
+                        confirmOperationModal.modal('show');
+                        setTimeout(function() {
+                            window.location.href = "/request/request?status=1";
+                        }, 5000);
+                    } else if(resultJson.status == 0) {
+                        console.log(result.message);
+                    }
                 }
+                
             });
         }
         
