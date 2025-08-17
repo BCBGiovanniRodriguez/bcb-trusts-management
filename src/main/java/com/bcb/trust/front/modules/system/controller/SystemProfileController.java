@@ -114,6 +114,7 @@ public class SystemProfileController {
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
         Map<String, Object> resultMap = new HashMap<>();
+        String members = null;
         
         try {
             if (data.size() < 0 ) {
@@ -126,14 +127,14 @@ public class SystemProfileController {
                 throw new Exception("Nombre es requerido");
             }
 
-            String members = (String) data.get("members");
-            System.out.println(members);
-            if (members != null || members.length() == 0) {
+            members = data.get("members").toString();
+            //System.out.println(members);
+            if (members != null) {
                 profileEntity.setMembers(Integer.parseInt(members));
             }
 
             profileEntity.setName(data.get("name").toString());
-            profileEntity.setStatus(1);
+            profileEntity.setStatus(SystemProfileEntity.STATUS_ENABLED);
             profileEntity.setCreated(LocalDateTime.now());
 
             systemProfileRepository.saveAndFlush(profileEntity);
