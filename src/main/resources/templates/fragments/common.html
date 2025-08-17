@@ -5,11 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BCB Fiduciario</title>
         <link rel="icon" th:href="@{/public/img/favicon.ico}">
+        <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/bootstrap-5.3.6/css/bootstrap.min.css}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/plugins/fontawesome/css/all.min.css}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.11.0/styles/overlayscrollbars.min.css" integrity="sha512-PBzouFB1XtDMHX9kVQ3rh7MDwvHFyD5FflRNcuMk7Q9BR9v8DgwjZWu++yrIxOjsdW3j+sj9KnnY59Jjzx5hWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            main.app-main {
+                background-image: url(/public/img/logo-bursametrica-fiduciario.svg);
+                background-color: rgba(255,255,255,0.6);
+                background-blend-mode: lighten;
+                background-size: cover;
+
+            }
+        </style>
         <script>
             const baseUrl = '/';
         </script>
@@ -37,21 +46,19 @@
                     <li class="nav-item dropdown user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img th:src="@{/public/img/fideicomiso-fisica-0.svg}" class="user-image rounded-circle shadow" alt="User Image">
-                            <span th:if="${systemUserEntity != null}" class="d-none d-md-inline" th:text="${systemUserEntity.nickname} ?: 'VALOR_NO_PRESENTE'"></span>
-                            <span th:unless="${systemUserEntity != null}" class="d-none d-md-inline" th:text="VALOR_NO_PRESENTE"></span>
+                            <span id="spanNavUsername" class="d-none d-md-inline"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
                             <li class="user-header text-bg-primary-subtle">
                                 <img th:src="@{/public/img/fideicomiso-fisica-0.svg}" class="rounded-circle shadow" alt="User Image">
                                 <p>
-                                    <span th:if="${systemUserEntity != null}" th:text="${systemUserEntity.nickname} ?: 'VALOR_NO_PRESENTE'" ></span>
-                                    <span th:unless="${systemUserEntity != null}"></span>
+                                    <span id="spanCardUsername"></span>
                                     <br>
-                                    <span th:if="${systemProfileEntity != null}" th:text="${systemProfileEntity.name} ?: 'VALOR_NO_PRESENTE'" ></span>
-                                    <span th:unless="${systemProfileEntity != null}" th:text="VALOR_NO_PRESENTE"></span>
+                                    <span id="spanCardProfile"></span>
                                     <small>Miembro desde 
-                                        <span th:if="${systemProfileEntity != null}" th:text="${#temporals.format(systemProfileEntity.created, 'dd-MM-yyyy HH:mm-ss')} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                        <span th:if="${systemProfileEntity != null}" th:text="${#temporals.format(systemProfileEntity.created, 'yyyy-MM-dd HH:mm:ss')} ?: 'VALOR_NO_PRESENTE'" ></span>
+                                        <span id="spanCardUserCreated"></span>
                                     </small>
                                 </p>
                             </li>
@@ -117,7 +124,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a th:href="@{/catalog/trust-type/}" class="nav-link">
+                                    <a th:href="@{/catalog/trust-type}" class="nav-link">
                                         <i class="nav-icon bi bi-search"></i>
                                         <p>
                                             Tipos de Fideicomiso
@@ -126,7 +133,7 @@
                                 </li>
 
                                 <li class="nav-item" hidden>
-                                    <a th:href="@{/catalog/person-type/}" class="nav-link">
+                                    <a th:href="@{/catalog/person-type}" class="nav-link">
                                         <i class="nav-icon bi bi-person-bounding-box"></i>
                                         <p>
                                             Tipos de Personas
@@ -135,7 +142,7 @@
                                 </li>
 
                                 <li class="nav-item" hidden>
-                                    <a th:href="@{/catalog/consultant/}" class="nav-link">
+                                    <a th:href="@{/catalog/consultant}" class="nav-link">
                                         <i class="nav-icon bi bi-person-fill-check"></i>
                                         <p>
                                             Asesores
@@ -144,7 +151,7 @@
                                 </li>
 
                                 <li class="nav-item" hidden>
-                                    <a th:href="@{/catalog/sponsor/}" class="nav-link">
+                                    <a th:href="@{/catalog/sponsor}" class="nav-link">
                                         <i class="nav-icon bi bi-person-fill-up"></i>
                                         <p>
                                             Promotores
@@ -173,7 +180,36 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a th:href="@{/trust}" class="nav-link">
+                                    <a th:href="@{/trust/trust}" class="nav-link">
+                                        <i class="nav-icon bi bi-person-vcard-fill"></i>
+                                        <p>
+                                            Fideicomisos
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-briefcase"></i>
+                                <p>
+                                    Operación Fiduciaria
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a th:href="@{/operation/request}" class="nav-link">
+                                        <i class="nav-icon bi bi-person-plus-fill"></i>
+                                        <p>
+                                            Catálogos
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item" hidden>
+                                    <a th:href="@{/trust/trust}" class="nav-link">
                                         <i class="nav-icon bi bi-person-vcard-fill"></i>
                                         <p>
                                             Fideicomisos
@@ -286,7 +322,7 @@
 
         <!-- Common Modals -->
         <div th:fragment="commonModals">
-            <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModalLabel">
+            <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModalLabel" aria-modal="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
@@ -300,7 +336,36 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="resultNotFoundModal" tabindex="-1" role="dialog" aria-labelledby="resultNotFoundModalLabel">
+            <div class="modal fade" id="serverErrorModal" tabindex="-1" role="dialog" aria-labelledby="serverErrorModalLabel" aria-modal="true" inert="">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-center">
+                            <h5 class="modal-title text-white" id="serverErrorModalLabel">ERROR EN SERVIDOR</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Se debe notificar a Desarrollo de Sistemas</h5>
+                            <hr>
+                            <div id="errorMessage">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="resultFoundModal" tabindex="-1" role="dialog" aria-labelledby="resultFoundModalLabel" aria-modal="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-primary bg-success text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="resultFoundModalLabel">CONSULTA REALIZADA EXITOSAMENTE</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h5></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="resultNotFoundModal" tabindex="-1" role="dialog" aria-labelledby="resultNotFoundModalLabel" aria-modal="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header bg-body-tertiary bg-danger text-center" data-bs-theme="dark">
@@ -313,21 +378,22 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="errorValidationModal" tabindex="-1" role="dialog" aria-labelledby="errorValidationModalLabel">
+            <div class="modal fade" id="errorValidationModal" tabindex="-1" role="dialog" aria-labelledby="errorValidationModalLabel" aria-modal="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header bg-danger text-center">
-                            <h5 class="modal-title text-white" id="errorValidationModalLabel">Error de Validación de Información</h5>
+                            <h5 class="modal-title text-white" id="errorValidationModalLabel">ERROR EN VALIDACIÓN DE INFORMACIÓN</h5>
                         </div>
                         <div class="modal-body">
-                            <h5>Se presentaron los siguientes errores:</h5>
+                            <h5>Se obtuvieron los siguientes errores al validar</h5>
+                            <hr>
                             <span id="errorDetail"></span> <br>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="successValidationModal" tabindex="-1" role="dialog" aria-labelledby="successValidationModalLabel">
+            <div class="modal fade" id="successValidationModal" tabindex="-1" role="dialog" aria-labelledby="successValidationModalLabel" aria-modal="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header bg-success text-center">
@@ -357,6 +423,7 @@
         <div th:fragment="jsDependencies">
             <script>var exports = {};</script>
             <script th:src="@{/public/adminlte/plugins/jquery/jquery-3.7.1.min.js}"></script>
+            <script th:src="@{/public/js/module/common/common.js}"></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script th:src="@{/public/bootstrap-5.3.6/js/bootstrap.min.js}"></script>
             <script th:src="@{/public/adminlte/js/adminlte.min.js}"></script>

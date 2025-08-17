@@ -1,13 +1,16 @@
 package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 @Entity
 @Table(name = "system_profiles")
@@ -46,8 +50,12 @@ public class SystemProfileEntity extends CommonEntity {
     )
     private Set<SystemPermissionEntity> permissions;
 
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<SystemUserEntity> users;
+
     public SystemProfileEntity() {
         this.permissions = new HashSet<>();
+        this.users = new ArrayList<>();
     }
 
     public Long getProfileId() {
@@ -100,6 +108,7 @@ public class SystemProfileEntity extends CommonEntity {
         Map<String, Object> map = new HashMap<>();
         map.put("profileId", this.profileId);
         map.put("name", this.name);
+        map.put("members", this.members);
         map.put("status", this.status);
         map.put("created", this.created);
 

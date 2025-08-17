@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -24,8 +25,8 @@ public class SystemUserEntity extends CommonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "ProfileId", referencedColumnName = "ProfileId")
+    @ManyToOne
+    @JoinColumn(name = "profile_id", nullable = false)
     private SystemProfileEntity profile;
 
     private String nickname;
@@ -126,7 +127,7 @@ public class SystemUserEntity extends CommonEntity {
     
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("personId", this.userId);
+        map.put("userId", this.userId);
         map.put("nickname", this.nickname);
         map.put("email", this.email);
         map.put("profile", this.profile.toMap());
