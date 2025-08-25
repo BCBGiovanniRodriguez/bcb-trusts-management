@@ -42,6 +42,8 @@
                                                         <th>#</th>
                                                         <th>Número Prospecto</th>
                                                         <th>Tipo Fideicomiso</th>
+                                                        <th>RFC</th>
+                                                        <th>Fideicomitente</th>
                                                         <th>Etapa</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
@@ -54,6 +56,8 @@
                                                         <td th:text="${request.requestId}"></td>
                                                         <td th:text="${request.number}"></td>
                                                         <td th:text="${request.trustTypeEntity.name}"></td>
+                                                        <td th:text="${request.personEntity.rfc}"></td>
+                                                        <td th:text="${request.personEntity.fullName}"></td>
                                                         <td th:text="${request.state}"></td>
                                                         <td th:text="${request.statusAsString}"></td>
                                                         <td th:text="${#temporals.format(request.created, 'yyyy-MM-dd HH:mm-ss')}"></td>
@@ -63,7 +67,10 @@
                                                                 <i class="fa fa-search"></i>
                                                             </a>
                                                             <a th:href="@{/request/request/detail/{id}(id=${request.requestId})}" class="btn btn-info" title="Fideicomisarios">
-                                                                <i class="fa fa-person"></i>
+                                                                <i class="bi bi-people"></i>
+                                                            </a>
+                                                            <a th:href="@{/request/request/documents/{id}(id=${request.requestId})}" class="btn btn-info" title="Documentación">
+                                                                <i class="bi bi-archive"></i>
                                                             </a>
                                                         </td>
                                                     </tr>

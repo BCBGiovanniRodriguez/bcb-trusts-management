@@ -6,13 +6,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.bcb.trust.front.model.trusts.enums.StatusEnum;
+import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +19,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "trust_trust_types")
-public class TrustTrustTypeEntity {
+public class TrustTrustTypeEntity extends CommonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trustTypeId;
@@ -30,8 +28,7 @@ public class TrustTrustTypeEntity {
 
     private String description;
 
-    @Enumerated(EnumType.ORDINAL)
-    private StatusEnum status;
+    private Integer status;
 
     private LocalDateTime created;
 
@@ -66,11 +63,11 @@ public class TrustTrustTypeEntity {
         this.description = description;
     }
 
-    public StatusEnum getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -88,16 +85,25 @@ public class TrustTrustTypeEntity {
                 + ", status=" + status + ", created=" + created + "]";
     }
 
-    public Map<String, Object> toMap() {
+    public Map<String, Object> toMap() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("profileId", this.trustTypeId);
         map.put("name", this.name);
         map.put("description", this.description);
-        map.put("status", this.status.getIntValue());
-        map.put("statusAsString", this.status.getStringValue());
+        map.put("status", this.status);
+        map.put("statusAsString", this.getStatusAsString());
         map.put("created", this.created);
 
         return map;
+    }
+
+    @Override
+    public String getStatusAsString() throws Exception {
+        if (this.status < 0 || (this.status > CommonEntity.statuses.length)) {
+            throw new Exception("TrustTrusTypeEntity::getStatusAsString::Valor de estatus fuera del rango");
+        }
+
+        return CommonEntity.statuses[this.status];
     }
 
 }

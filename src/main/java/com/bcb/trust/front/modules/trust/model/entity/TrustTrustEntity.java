@@ -2,6 +2,8 @@ package com.bcb.trust.front.modules.trust.model.entity;
 
 import java.time.LocalDateTime;
 
+import com.bcb.trust.front.modules.common.model.CommonEntity;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "trust_trusts")
-public class TrustTrustEntity {
+public class TrustTrustEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,18 @@ public class TrustTrustEntity {
     private Integer status;
 
     private LocalDateTime created;
+
+    public static final Integer STATE_STARTED = 1;
+
+    public static final Integer STATE_PAUSED = 2;
+
+    public static final Integer STATE_LOCKED = 3;
+
+    public static final Integer STATE_ACTIVE = 4;
+
+    public static final Integer STATE_FINISHED = 5;
+
+    public static String[] states = {"Seleccione Opción", "Iniciado", "Pausado", "Bloqueado", "Constituido", "Finalizado"};
 
     public TrustTrustEntity() {
     }
@@ -96,5 +110,14 @@ public class TrustTrustEntity {
     public String toString() {
         return "TrustTrustEntity [trustId=" + trustId + ", number=" + number + ", name=" + name + ", trustTypeEntity="
                 + trustTypeEntity + ", state=" + state + ", status=" + status + ", created=" + created + "]";
+    }
+
+    @Override
+    public String getStatusAsString() throws Exception {
+        if (this.status < 0 || (this.status > CommonEntity.statuses.length)) {
+            throw new Exception("SystemProfileEntity::getStatusAsString::Valor de estatus fuera del rango");
+        }
+
+        return CommonEntity.statuses[this.status];
     }
 }

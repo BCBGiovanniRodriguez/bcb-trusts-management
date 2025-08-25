@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="es" xmlns:th="http://thymeleaf.org">
     <head th:fragment="head">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BCB Fiduciario</title>
+        <title>BCB SAF</title>
         <link rel="icon" th:href="@{/public/img/favicon.ico}">
         <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/bootstrap-5.3.6/css/bootstrap.min.css}" />
@@ -34,7 +34,9 @@
                         </a>
                     </li>
                     <li class="nav-item d-none d-md-block">
-                        <a th:href="@{/dashboard}" class="nav-link">Inicio</a>
+                        <a th:href="@{/dashboard}" class="nav-link">
+                            <i class="bi bi-speedometer"></i> Dashboard
+                        </a>
                     </li>
                 </ul>
 
@@ -102,68 +104,11 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a th:href="@{/configuration/endpoint}" class="nav-link">
-                                        <i class="nav-icon fa fa-hexagon-nodes"></i>
-                                        <p>
-                                            Endpoints
-                                        </p>
-                                    </a>
-                                </li>
-
                             </ul>
                         </li>
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-clipboard-list"></i>
-                                <p>
-                                    Catálogos
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a th:href="@{/catalog/trust-type}" class="nav-link">
-                                        <i class="nav-icon bi bi-search"></i>
-                                        <p>
-                                            Tipos de Fideicomiso
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item" hidden>
-                                    <a th:href="@{/catalog/person-type}" class="nav-link">
-                                        <i class="nav-icon bi bi-person-bounding-box"></i>
-                                        <p>
-                                            Tipos de Personas
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item" hidden>
-                                    <a th:href="@{/catalog/consultant}" class="nav-link">
-                                        <i class="nav-icon bi bi-person-fill-check"></i>
-                                        <p>
-                                            Asesores
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item" hidden>
-                                    <a th:href="@{/catalog/sponsor}" class="nav-link">
-                                        <i class="nav-icon bi bi-person-fill-up"></i>
-                                        <p>
-                                            Promotores
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-user-tie"></i>
+                                <i class="nav-icon bi bi-kanban"></i>
                                 <p>
                                     Administración
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -171,8 +116,54 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-files"></i>
+                                        <p>
+                                            Catálogos
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a th:href="@{/catalog/person-type}" class="nav-link">
+                                                <i class="nav-icon bi bi-archive"></i>
+                                                <p>
+                                                    Documentación
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/catalog/trust-type}" class="nav-link">
+                                                <i class="nav-icon bi bi-list-stars"></i>
+                                                <p>
+                                                    Tipos de Fideicomiso
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item" hidden>
+                                            <a th:href="@{/catalog/consultant}" class="nav-link">
+                                                <i class="nav-icon bi bi-person-fill-check"></i>
+                                                <p>
+                                                    Asesores
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item" hidden>
+                                            <a th:href="@{/catalog/sponsor}" class="nav-link">
+                                                <i class="nav-icon bi bi-person-fill-up"></i>
+                                                <p>
+                                                    Promotores
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
                                     <a th:href="@{/request/request}" class="nav-link">
-                                        <i class="nav-icon bi bi-person-plus-fill"></i>
+                                        <i class="nav-icon bi bi-person-fill-add"></i>
                                         <p>
                                             Prospectos
                                         </p>
@@ -187,6 +178,61 @@
                                         </p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-file-earmark-ruled"></i>
+                                        <p>
+                                            Reportes
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item" hidden>
+                                            <a th:href="@{/report/statement}" class="nav-link">
+                                                <i class="nav-icon bi bi-person-plus-fill"></i>
+                                                <p>
+                                                    Elemento
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon bi bi-file-earmark-ruled-fill"></i>
+                                                <p>
+                                                    Estados de Cuenta
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item" hidden>
+                                                    <a th:href="@{/balance}" class="nav-link">
+                                                        <i class="nav-icon bi bi-view-list"></i>
+                                                        <p>
+                                                            Trimestral por rangos
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a th:href="@{/report/statement}" class="nav-link">
+                                                        <i class="nav-icon bi bi-filetype-pdf"></i>
+                                                        <p>
+                                                            Individual
+                                                        </p>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a th:href="@{/report/statement-massive}" class="nav-link">
+                                                        <i class="nav-icon bi bi-view-list"></i>
+                                                        <p>
+                                                            Masivo
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
 
@@ -200,12 +246,23 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a th:href="@{/operation/request}" class="nav-link">
-                                        <i class="nav-icon bi bi-person-plus-fill"></i>
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-files"></i>
                                         <p>
                                             Catálogos
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
                                         </p>
                                     </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a th:href="@{/operation/catalog/accounting-guide}" class="nav-link">
+                                                <i class="nav-icon bi bi-list-columns-reverse"></i>
+                                                <p>
+                                                    Guía Contable
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
 
                                 <li class="nav-item" hidden>
@@ -219,61 +276,7 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-file-earmark-ruled"></i>
-                                <p>
-                                    Reportes
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item" hidden>
-                                    <a th:href="@{/report/statement}" class="nav-link">
-                                        <i class="nav-icon bi bi-person-plus-fill"></i>
-                                        <p>
-                                            Elemento
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon bi bi-file-earmark-ruled-fill"></i>
-                                        <p>
-                                            Estados de Cuenta
-                                            <i class="nav-arrow bi bi-chevron-right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item" hidden>
-                                            <a th:href="@{/balance}" class="nav-link">
-                                                <i class="nav-icon bi bi-view-list"></i>
-                                                <p>
-                                                    Trimestral por rangos
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a th:href="@{/report/statement}" class="nav-link">
-                                                <i class="nav-icon bi bi-filetype-pdf"></i>
-                                                <p>
-                                                    Individual
-                                                </p>
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a th:href="@{/report/statement-massive}" class="nav-link">
-                                                <i class="nav-icon bi bi-view-list"></i>
-                                                <p>
-                                                    Masivo
-                                                </p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+                        
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -285,32 +288,51 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a th:href="@{/system/permission}" class="nav-link">
-                                        <i class="nav-icon bi bi-card-checklist"></i>
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-files"></i>
                                         <p>
-                                            Permisos
+                                            Catálogos
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
                                         </p>
                                     </a>
-                                </li>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a th:href="@{/system/permission}" class="nav-link">
+                                                <i class="nav-icon bi bi-card-checklist"></i>
+                                                <p>
+                                                    Permisos
+                                                </p>
+                                            </a>
+                                        </li>
 
-                                <li class="nav-item">
-                                    <a th:href="@{/system/profile}" class="nav-link">
-                                        <i class="nav-icon bi bi-people"></i>
-                                        <p>
-                                            Perfiles
-                                        </p>
-                                    </a>
-                                </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/system/profile}" class="nav-link">
+                                                <i class="nav-icon bi bi-people"></i>
+                                                <p>
+                                                    Perfiles
+                                                </p>
+                                            </a>
+                                        </li>
 
-                                <li class="nav-item">
-                                    <a th:href="@{/system/user}" class="nav-link">
-                                        <i class="nav-icon bi bi-people-fill"></i>
-                                        <p>
-                                            Usuarios
-                                        </p>
-                                    </a>
-                                </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/system/user}" class="nav-link">
+                                                <i class="nav-icon bi bi-people-fill"></i>
+                                                <p>
+                                                    Usuarios
+                                                </p>
+                                            </a>
+                                        </li>
 
+                                        <li class="nav-item">
+                                            <a th:href="@{/configuration/endpoint}" class="nav-link">
+                                                <i class="nav-icon fa fa-hexagon-nodes"></i>
+                                                <p>
+                                                    Endpoints
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                     </ul>

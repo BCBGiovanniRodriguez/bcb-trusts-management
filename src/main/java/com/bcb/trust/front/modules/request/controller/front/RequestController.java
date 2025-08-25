@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bcb.trust.front.model.trusts.enums.StatusEnum;
+import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
@@ -63,7 +64,7 @@ public class RequestController {
         List<TrustTrustTypeEntity> trustTypeEntityList = new ArrayList<>();
 
         try {
-            trustTypeEntityList = trustTypeRepository.findByStatus(StatusEnum.ENABLED);
+            trustTypeEntityList = trustTypeRepository.findByStatus(CommonEntity.STATUS_ENABLED);
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getLocalizedMessage());

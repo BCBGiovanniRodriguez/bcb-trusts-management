@@ -1,44 +1,34 @@
 package com.bcb.trust.front.modules.trust.controller.front;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bcb.trust.front.model.trusts.enums.StatusEnum;
-import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
+import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.repository.TrustTrustTypeRepository;
 
-@Controller
-@RequestMapping("/catalog/trust-type")
-public class TrustTypeController {
 
-    @Autowired
-    private SystemUserEntityRepository systemUserEntityRepository;
+@Controller
+@RequestMapping("/catalog")
+public class TrustTypeController {
 
     @Autowired
     private TrustTrustTypeRepository trustTypeRepository;
 
-    @GetMapping("/")
+    @GetMapping("/trust-type")
     public String index(Model model) {
 
         List<TrustTrustTypeEntity> trustTypeList = new ArrayList<>();
 
         try {
-            StatusEnum status = StatusEnum.ENABLED;
-            trustTypeList = trustTypeRepository.findByStatus(status);
+            trustTypeList = trustTypeRepository.findByStatus(CommonEntity.STATUS_ENABLED);
 
         } catch (Exception e) {
             System.out.println("Error on TrustTypeController::index " + e.getLocalizedMessage());
@@ -56,32 +46,20 @@ public class TrustTypeController {
         return "catalog/trust-type/create";
     }
 
-    @PostMapping("/create")
-    public String createSubmit(@ModelAttribute TrustTrustTypeEntity trustType) {
-        LocalDateTime now = LocalDateTime.now();
-
+    @GetMapping("/trust-type/detail/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        TrustTrustTypeEntity trustTypeEntity = null;
         try {
-            trustType.setStatus(StatusEnum.ENABLED);
-            trustType.setCreated(now);
+            trustTypeEntity = trustTypeRepository.findById(id).get();
+
         } catch (Exception e) {
-            System.out.println("Error on TrustTypeController::create " + e.getLocalizedMessage());
+            // TODO: handle exception
         }
-        
-        return "catalog/trust-type/create";
+
+        model.addAttribute("trustTypeEntity", trustTypeEntity);
+
+        return "catalog/trust-type/detail";
     }
     
-
-    @ModelAttribute("systemUserEntity")
-    public SystemUserEntity systemUserEntity(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        SystemUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
-        return systemUserEntity;
-    }
-
-    @ModelAttribute("systemProfileEntity")
-    public SystemProfileEntity systemProfileEntity(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        SystemUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
-        return systemUserEntity.getProfile();
-    }
+    
 }

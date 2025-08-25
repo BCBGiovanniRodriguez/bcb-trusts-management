@@ -3,9 +3,11 @@ package com.bcb.trust.front.modules.system.model.entity;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
+import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -14,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -42,6 +45,9 @@ public class SystemUserEntity extends CommonEntity {
     private Integer status;
 
     private LocalDateTime created;
+
+    @OneToMany(mappedBy = "registeredBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RequestRequestEntity> requestSet;
 
     public SystemUserEntity() {
     }

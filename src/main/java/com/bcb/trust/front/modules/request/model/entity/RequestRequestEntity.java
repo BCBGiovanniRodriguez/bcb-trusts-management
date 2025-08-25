@@ -10,7 +10,6 @@ import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -60,8 +58,8 @@ public class RequestRequestEntity extends CommonEntity {
     
     private LocalDateTime created;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "registeredBy", referencedColumnName = "userId")
+    @ManyToOne
+    @JoinColumn(name = "registered_by", nullable = false)
     private SystemUserEntity registeredBy;
 
     public RequestRequestEntity() {
@@ -204,7 +202,7 @@ public class RequestRequestEntity extends CommonEntity {
         return CommonEntity.simpleOptions[this.wasRefered];
     }
     
-    public Map<String, Object> toMap() {
+    public Map<String, Object> toMap() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("requestId", this.requestId);
         map.put("number", this.number);

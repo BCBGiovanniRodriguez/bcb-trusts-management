@@ -115,17 +115,17 @@ $(() => {
         }
     });
 
-    personTypeJQuery.on('change', function(this: any){
+    personTypeJQuery.on('change', function(this: any) {
         let self: JQuery = $(this),
             personType = Number(self.val());
 
-            if(PERSON_TYPE_PERSON == personType) {
-                $("#personTypePerson").removeAttr("hidden");
-                $("#personTypeEnterprise").attr("hidden", "hidden");
-            } else {
-                $("#personTypePerson").attr("hidden", "hidden");
-                $("#personTypeEnterprise").removeAttr("hidden");
-            }
+        if(PERSON_TYPE_PERSON == personType) {
+            $("#personTypePerson").removeAttr("hidden");
+            $("#personTypeEnterprise").attr("hidden", "hidden");
+        } else {
+            $("#personTypePerson").attr("hidden", "hidden");
+            $("#personTypeEnterprise").removeAttr("hidden");
+        }
     });
 
     zipcodeJQuery.on('change', function(this: any) {
@@ -159,9 +159,6 @@ $(() => {
                 }, 5000);
 
         }).then((result, textStatus, jqXHR) => {
-            console.log(textStatus);
-
-            console.log(jqXHR);
             if(result != undefined) {
                 if(result.state) {
                     let country = result.data.country,
@@ -436,7 +433,7 @@ $(() => {
             address.internalNumber = internalNumberJQuery.val()?.toString();
             address.zipcode = zipcodeJQuery.val()?.toString();
             address.colonyId = colonyJQuery.val()?.toString();
-            fullAddress = streetJQuery.val()+ ", " + internalNumberJQuery.val() + ", " + externalNumberJQuery.val() + ", Código Postal:" + zipcodeJQuery.val() + ", ";
+            fullAddress = streetJQuery.val()+ ", " + internalNumberJQuery.val() + ", " + externalNumberJQuery.val() + ", Código Postal: " + zipcodeJQuery.val() + ", ";
             fullAddress += colonyName + ", " + partialAddress;
             address.fullAddress = fullAddress;
 

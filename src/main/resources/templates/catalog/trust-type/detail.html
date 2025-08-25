@@ -13,7 +13,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <h4>Tipos de Fideicomiso</h4>
+                                <h4>Tipos de Fideicomiso :: Detalle de Tipo</h4>
                                 <hr>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-sm table-striped table-bordered" id="trustTypeTable">
+                                            <table class="table table-striped table-sm table-bordered" id="trustTypeEntityTable">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -40,14 +40,14 @@
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody th:each="trustType : ${trustTypeList}">
+                                                <tbody>
                                                     <tr>
-                                                        <td th:text="${trustType.trustTypeId}"></td>
-                                                        <td th:text="${trustType.name}"></td>
-                                                        <td th:text="${trustType.getStatusAsString}"></td>
-                                                        <td th:text="${#temporals.format(trustType.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                        <td th:text="${trustTypeEntity.trustTypeId}"></td>
+                                                        <td th:text="${trustTypeEntity.name}"></td>
+                                                        <td th:text="${#strings.capitalize(trustTypeEntity.status.getStringValue)}"></td>
+                                                        <td th:text="${#temporals.format(trustTypeEntity.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                         <td>
-                                                            <a th:href="@{/catalog/trust-type/detail/{id}(id=${trustType.trustTypeId})}" class="btn btn-sm btn-info" title="Ver Detalles">
+                                                            <a th:href="@{/catalog/trust-type/detail/{id}(id=${trustTypeEntity.trustTypeId})}" class="btn btn-sm btn-info" title="Ver Detalles">
                                                                 <i class="fa fa-search"></i>
                                                             </a>
                                                         </td>
