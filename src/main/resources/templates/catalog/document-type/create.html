@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Tipos de Documentación</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Tipos de Documentación Disponibles</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped table-bordered" id="personTypeTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Tipo de Persona</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha de Registro</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody th:each="personType : ${personTypeList}">
+                                                    <tr>
+                                                        <td th:text="${personType.personTypeId}"></td>
+                                                        <td th:text="${personType.name}"></td>
+                                                        <td th:text="${personType.status.getStringValue}"></td>
+                                                        <td th:text="${personType.created}"></td>
+                                                        <td>
+                                                            <a th:href="@{/catalog/person-type/{id}(id=${personType.personTypeId})}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

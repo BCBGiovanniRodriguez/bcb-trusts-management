@@ -2,12 +2,14 @@ package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustTrustEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -48,6 +50,9 @@ public class SystemUserEntity extends CommonEntity {
 
     @OneToMany(mappedBy = "registeredBy", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RequestRequestEntity> requestSet;
+
+    @OneToMany(mappedBy = "registeredBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrustEntity> trustSet;
 
     public SystemUserEntity() {
     }
@@ -143,4 +148,20 @@ public class SystemUserEntity extends CommonEntity {
 
         return map;
     }
+
+    public Set<RequestRequestEntity> getRequestSet() {
+        return requestSet;
+    }
+
+    public void setRequestSet(Set<RequestRequestEntity> requestSet) {
+        this.requestSet = requestSet;
+    }
+
+    public List<TrustTrustEntity> getTrustSet() {
+        return trustSet;
+    }
+
+    public void setTrustSet(List<TrustTrustEntity> trustSet) {
+        this.trustSet = trustSet;
+    }    
 }

@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BCB SAF</title>
         <link rel="icon" th:href="@{/public/img/favicon.ico}">
-        <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/bootstrap-5.3.6/css/bootstrap.min.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/plugins/fontawesome/css/all.min.css}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.11.0/styles/overlayscrollbars.min.css" integrity="sha512-PBzouFB1XtDMHX9kVQ3rh7MDwvHFyD5FflRNcuMk7Q9BR9v8DgwjZWu++yrIxOjsdW3j+sj9KnnY59Jjzx5hWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -59,7 +59,6 @@
                                     <br>
                                     <span id="spanCardProfile"></span>
                                     <small>Miembro desde 
-                                        <span th:if="${systemProfileEntity != null}" th:text="${#temporals.format(systemProfileEntity.created, 'yyyy-MM-dd HH:mm:ss')} ?: 'VALOR_NO_PRESENTE'" ></span>
                                         <span id="spanCardUserCreated"></span>
                                     </small>
                                 </p>
@@ -125,7 +124,7 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a th:href="@{/catalog/person-type}" class="nav-link">
+                                            <a th:href="@{/catalog/document-type}" class="nav-link">
                                                 <i class="nav-icon bi bi-archive"></i>
                                                 <p>
                                                     Documentación

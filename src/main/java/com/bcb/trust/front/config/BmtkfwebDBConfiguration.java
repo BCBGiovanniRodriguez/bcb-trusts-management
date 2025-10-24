@@ -1,7 +1,5 @@
 package com.bcb.trust.front.config;
 
-import java.util.HashMap;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,16 +19,16 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import jakarta.persistence.EntityManagerFactory;
-/*
-//@Configuration
-//@EnableTransactionManagement
+
+@Configuration
+@EnableTransactionManagement
 @EnableJpaRepositories(
     entityManagerFactoryRef = "bmtkfwebEntityManagerFactory",
     transactionManagerRef = "bmtkfwebTransactionManager",
     basePackages = {
         "com.bcb.trust.front.model.bmtkfweb.*"
     }
-)*/
+)
 public class BmtkfwebDBConfiguration {
 
     @Bean
@@ -46,20 +45,11 @@ public class BmtkfwebDBConfiguration {
     }
 
     @Bean(name = "bmtkfwebEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
+    public LocalContainerEntityManagerFactoryBean bmtkfwebEntityManagerFactory(EntityManagerFactoryBuilder builder,
         @Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
-        HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "update");
-        properties.put("hibernate.connection.username", "bursametrica");
-        properties.put("hibernate.connection.password", "bursametrica");
-        properties.put("jakarta.persistence.jdbc.url", "jdbc:oracle:thin:@10.20.50.200:1528:BMTKFWEB");
-        properties.put("jakarta.persistence.jdbc.driver", "oracle.jdbc.OracleDriver");
-        //properties.put("jakarta.persistence.jdbc.username", "bursametrica");
-        //properties.put("jakarta.persistence.jdbc.password", "bursametrica");
 
         return builder.dataSource(bmtkfwebDataSource)
-            .properties(properties)
-            .packages("com.bcb.trust.front.model.bmtkfweb.entity")
+            .packages("com.bcb.trust.front.model.bmtkfweb.*", "com.bcb.trust.front.modules.legacy.*")
             .persistenceUnit("bmtkfweb")
             .build();
     }
@@ -68,6 +58,12 @@ public class BmtkfwebDBConfiguration {
     public PlatformTransactionManager transactionManager(
         @Qualifier("bmtkfwebEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
             return new JpaTransactionManager(entityManagerFactory);
+    }
+
+    @Bean(name = "bmtkfwebJdbcTemplate")
+    @DependsOn("bmtkfwebDatasource")
+    public JdbcTemplate bmtkfwebJdbcTemplate(@Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
+        return new JdbcTemplate(bmtkfwebDataSource);
     }
 
     @Bean(name = "bmtkfwebNamedParameterJdbcTemplate")

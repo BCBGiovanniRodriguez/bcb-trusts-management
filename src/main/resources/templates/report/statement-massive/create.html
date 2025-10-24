@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Crear Proceso Emisión de Estados de Cuenta Masivos</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-success mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Crear proceso de Emisión de Estados de Cuenta</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a th:href="@{/report/statement-massive}" class="btn btn-primary btn-sm" role="button">
+                                                <i class="fa fa-arrow-circle-left"></i> Regresar a Procesos
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>
+                                            <div class="row g-3">
+                                                <div class="col-3">
+                                                    <label for="type" class="form-label"><strong>Tipo Fideicomiso</strong></label>
+                                                    <select id="type" name="type" class="form-select">
+                                                        <option value="0" selected disabled>Seleccione Opción</option>
+                                                        <option value="1">Fideicomiso de Administración</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label for="trustNumber" class="form-label"><strong>Fideicomiso</strong></label>
+                                                    <select id="trustNumber" name="trustNumber" class="form-select">
+                                                        <option value="0" selected disabled>Seleccione Opción</option>
+                                                        <option value="1045">Fideicomiso Sirjum Mérida</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label for="processType" class="form-label"><strong>Tipo Proceso</strong></label>
+                                                    <select id="processType" name="processType" class="form-select">
+                                                        <option value="0" selected disabled>Seleccione Opción</option>
+                                                        <option value="1">Emisión Masiva</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label for="processType" class="form-label text-white"><strong>Guardar Proceso</strong></label>
+                                                    <button id="btnCreate" class="btn btn-success" type="button">
+                                                        <i class="fa fa-save"></i> Guardar Proceso
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

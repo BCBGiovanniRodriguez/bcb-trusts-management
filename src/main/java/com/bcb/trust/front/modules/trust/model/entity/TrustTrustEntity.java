@@ -1,8 +1,12 @@
 package com.bcb.trust.front.modules.trust.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
+import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -10,6 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -25,8 +31,12 @@ public class TrustTrustEntity extends CommonEntity {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "trustTypeId", referencedColumnName = "trustTypeId")
+    @OneToOne
+    @JoinColumn(name = "requestId", referencedColumnName = "requestId")
+    private RequestRequestEntity requestEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "trustTypeId", nullable = false)
     private TrustTrustTypeEntity trustTypeEntity;
 
     private Integer state;
@@ -34,6 +44,16 @@ public class TrustTrustEntity extends CommonEntity {
     private Integer status;
 
     private LocalDateTime created;
+
+    @ManyToOne
+    @JoinColumn(name = "registered_by", nullable = false)
+    private SystemUserEntity registeredBy;
+
+    @OneToMany(mappedBy = "trust", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrustorEntity> trustorList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrusteeEntity> trusteeList = new ArrayList<>();
 
     public static final Integer STATE_STARTED = 1;
 
@@ -120,4 +140,41 @@ public class TrustTrustEntity extends CommonEntity {
 
         return CommonEntity.statuses[this.status];
     }
+
+    public String getStateAsString() {
+        return TrustTrustEntity.states[this.state];
+    }
+
+    public RequestRequestEntity getRequestEntity() {
+        return requestEntity;
+    }
+
+    public void setRequestEntity(RequestRequestEntity requestEntity) {
+        this.requestEntity = requestEntity;
+    }
+
+    public List<TrustTrustorEntity> getTrustorList() {
+        return trustorList;
+    }
+
+    public void setTrustorList(List<TrustTrustorEntity> trustorList) {
+        this.trustorList = trustorList;
+    }
+
+    public List<TrustTrusteeEntity> getTrusteeList() {
+        return trusteeList;
+    }
+
+    public void setTrusteeList(List<TrustTrusteeEntity> trusteeList) {
+        this.trusteeList = trusteeList;
+    }
+
+    public SystemUserEntity getRegisteredBy() {
+        return registeredBy;
+    }
+
+    public void setRegisteredBy(SystemUserEntity registeredBy) {
+        this.registeredBy = registeredBy;
+    }
+    
 }

@@ -1,7 +1,9 @@
 package com.bcb.trust.front.modules.request.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddressEntity;
@@ -9,7 +11,9 @@ import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +21,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -61,6 +66,40 @@ public class RequestRequestEntity extends CommonEntity {
     @ManyToOne
     @JoinColumn(name = "registered_by", nullable = false)
     private SystemUserEntity registeredBy;
+
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrustorEntity> trustorList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrustorEntity> trusteeList = new ArrayList<>();
+
+    public static final Integer WAS_REFERED_BY_UNKOWN = 0;
+
+    public static final Integer WAS_REFERED_BY_TRUST = 1;
+
+    public static final Integer WAS_REFERED_BY_LAW = 2;
+
+    public static final Integer WAS_REFERED_BY_CONSULTANT = 3;
+
+    public static final Integer WAS_REFERED_BY_SPONSOR = 4;
+
+    public static final Integer WAS_REFERED_BY_OTHER = 5;
+
+    public static String[] wasRefereredBy = {"Seleccione Opción", "Fiduciario", "Legal", "Asesor", "Promotor", "Otro"};
+
+    public static final Integer STATE_REGISTERED = 1;
+
+    public static final Integer STATE_PLD_VALIDATION = 2;
+
+    public static final Integer STATE_PLD_VALIDATED = 3;
+
+    public static final Integer STATE_NEXT_A = 4;
+
+    public static final Integer STATE_NEXT_B = 4;
+
+    public static final Integer STATE_NEXT_C = 4;
+
+    public static final Integer STATE_NEXT_D = 4;
 
     public RequestRequestEntity() {
     }
@@ -196,10 +235,18 @@ public class RequestRequestEntity extends CommonEntity {
     
     public String getWasReferedAsString() throws Exception {
         if (this.wasRefered < 0 || (this.wasRefered > CommonEntity.simpleOptions.length)) {
-            throw new Exception("RequestRequestEntity::getWasReferedAsString::Valor de wasRefered fuera del rango");
+            throw new Exception("RequestRequestEntity::getWasReferedAsString::Valor de referido fuera del rango");
         }
 
         return CommonEntity.simpleOptions[this.wasRefered];
+    }
+
+    public String getWasReferedByAsString() throws Exception {
+        if (this.wasReferedBy < 0 || (this.wasReferedBy > RequestRequestEntity.wasRefereredBy.length)) {
+            throw new Exception("RequestRequestEntity::getWasReferedByAsString::Valor de referido por fuera del rango");
+        }
+
+        return RequestRequestEntity.wasRefereredBy[this.wasReferedBy];
     }
     
     public Map<String, Object> toMap() throws Exception {

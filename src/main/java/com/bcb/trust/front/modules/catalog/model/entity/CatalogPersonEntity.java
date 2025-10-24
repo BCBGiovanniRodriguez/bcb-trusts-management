@@ -2,13 +2,17 @@ package com.bcb.trust.front.modules.catalog.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -55,11 +59,17 @@ public class CatalogPersonEntity extends CommonEntity {
     @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RequestRequestEntity> requestSet;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrustorEntity> trustorList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrusteeEntity> trusteeList = new ArrayList<>();
+
     public static final Integer GENDER_FEMALE = 1;
 
     public static final Integer GENDER_MALE = 2;
 
-    public static final Integer GENDER_UNKWON = 2;
+    public static final Integer GENDER_UNKWON = 3;
 
     public static final String[] genders = {"Seleccione Opción", "Femenino", "Masculino", "No especificado"};
 
@@ -254,4 +264,29 @@ public class CatalogPersonEntity extends CommonEntity {
 
         return CatalogPersonEntity.foreignStatuses[this.foreignStatus];
     }
+
+    public Set<RequestRequestEntity> getRequestSet() {
+        return requestSet;
+    }
+
+    public void setRequestSet(Set<RequestRequestEntity> requestSet) {
+        this.requestSet = requestSet;
+    }
+
+    public List<TrustTrustorEntity> getTrustorList() {
+        return trustorList;
+    }
+
+    public void setTrustorList(List<TrustTrustorEntity> trustorList) {
+        this.trustorList = trustorList;
+    }
+
+    public List<TrustTrusteeEntity> getTrusteeList() {
+        return trusteeList;
+    }
+
+    public void setTrusteeList(List<TrustTrusteeEntity> trusteeList) {
+        this.trusteeList = trusteeList;
+    }
+
 }

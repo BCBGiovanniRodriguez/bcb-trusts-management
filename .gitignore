@@ -8,7 +8,7 @@ typescript/package-lock.json
 # Client dependencies
 src/main/resources/static/public/adminlte/
 # Database files
-schema/
+schema/*
 
 ### STS ###
 .apt_generated

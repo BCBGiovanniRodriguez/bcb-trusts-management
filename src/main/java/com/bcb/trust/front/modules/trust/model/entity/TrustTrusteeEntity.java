@@ -3,14 +3,14 @@ package com.bcb.trust.front.modules.trust.model.entity;
 import java.time.LocalDateTime;
 
 import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
+import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,17 +21,21 @@ public class TrustTrusteeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trusteeId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "personId", referencedColumnName = "personId")
+    @ManyToOne
+    @JoinColumn(name = "personId", nullable = false)
     private CatalogPersonEntity personEntity;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "trustId", referencedColumnName = "trustId")
+    @ManyToOne
+    @JoinColumn(name = "trustId", nullable = true)
     private TrustTrustEntity trustEntity;
 
     private Integer status;
 
     private LocalDateTime created;
+
+    @ManyToOne
+    @JoinColumn(name = "requestId", nullable = false)
+    private RequestRequestEntity request;
 
     public TrustTrusteeEntity() {
     }
@@ -81,5 +85,15 @@ public class TrustTrusteeEntity {
         return "TrustTrusteeEntity [trusteeId=" + trusteeId + ", personEntity=" + personEntity + ", trustEntity="
                 + trustEntity + ", status=" + status + ", created=" + created + "]";
     }
+
+    public RequestRequestEntity getRequest() {
+        return request;
+    }
+
+    public void setRequest(RequestRequestEntity request) {
+        this.request = request;
+    }
+
+    
     
 }

@@ -3,6 +3,7 @@ package com.bcb.trust.front.modules.trust.model.entity;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,6 +35,9 @@ public class TrustTrustTypeEntity extends CommonEntity {
 
     @OneToMany(mappedBy = "trustTypeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RequestRequestEntity> requestSet;
+
+    @OneToMany(mappedBy = "trustTypeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustTrustEntity> trustList;
 
     public TrustTrustTypeEntity() {
         requestSet = new HashSet<>();

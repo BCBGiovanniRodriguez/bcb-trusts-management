@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                            <h4>Detalle de Fideicomiso</h4>
+                            <br />
+                            <h5><strong th:text="${trust.number}"> - </strong> <strong th:text="${trust.name}"></strong></h5>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Detalle de Fideicomiso</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a class="btn btn-sm btn-info" th:href="@{/}">
+                                                <i class="fa fa-arrow-circle-left"></i> Regresar
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs mb-3" id="trustTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="general-data-tab" data-bs-toggle="tab" data-bs-target="#general-data-tab-pane" 
+                                                type="button" role="tab" aria-controls="general-data-tab-pane" aria-selected="true" tabindex="0">
+                                                    <i class="bi bi-clipboard2-check-fill"></i> <strong>Datos Generales Fideicomiso</strong>
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane" 
+                                                type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false" tabindex="-1">
+                                                    <i class="bi bi-geo-alt-fill"></i> <strong>Datos Generales Solicitud</strong>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade active show" id="general-data-tab-pane" role="tabpanel" aria-labelledby="general-data-tab" tabindex="0">
+                                                <div class="row g-3">
+                                                    <div class="col-4">
+                                                        <strong>Número Fideicomiso</strong>
+                                                        <span th:text="${trust.number}"></span>
+                                                    </div>
+
+                                                    
+
+                                                    <div class="col-3">
+                                                        <strong>Tipo de Fideicomiso</strong>
+                                                        <span th:text="${trust.getTrustTypeEntity().getName()}"></span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row g-3">
+                                                    <div class="col-12">
+                                                        <strong>Nombre Fideicomiso</strong>
+                                                        <span th:text="${trust.name}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="1">
+                                                <h5>Datos Generales</h5>
+                                                <div class="row g-3">
+                                                    <div class="col-3">
+                                                        <strong>Es cambio de fiduciario</strong>
+                                                        <span th:text="${requestEntity.getTrustChangeAsString()}"></span>
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <strong for="trustChangeTrust">Fiduciario Anterior</strong>
+                                                        <span th:text="${requestEntity.trustChangeTrust}"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row g-3">
+                                                    <div class="col-3">
+                                                        <strong>Fue recomendado?</strong>
+                                                        <span th:text="${requestEntity.getWasReferedAsString()}"></span>
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <strong>Recomendado por</strong>
+                                                        <span th:text="${requestEntity.getWasReferedByAsString()}"></span>
+                                                    </div>
+                                                    
+                                                    <div class="col-3">
+                                                        <strong>Nombre Completo</strong>
+                                                        <span th:text="${requestEntity.wasReferedByFullName}"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <h5>Datos Personales</h5>
+                                                    <div class="col-3">
+                                                        <label for="type">Tipo de Persona</label>
+                                                        <strong th:text="${personEntity.getTypeAsString()}"></strong>
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <label for="type">Estatus Migratorio</label>
+                                                        <strong th:text="${personEntity.getForeignStatusAsString()}"></strong>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <label for="firstName">Primer Nombre</label>
+                                                        <strong th:text="${personEntity.firstName}"></strong>
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <label for="secondName">Segundo Nombre</label>
+                                                        <strong th:text="${personEntity.secondName}"></strong>
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <label for="lastName">Apellido Paterno</label>
+                                                        <strong th:text="${personEntity.lastName}"></strong>
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <label for="secondLastName">Apellido Materno</label>
+                                                        <strong th:text="${personEntity.secondLastName}"></strong>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <label for="gender">Género</label>
+                                                        <strong th:text="${personEntity.getGenderAsString()}"></strong>
+                                                    </div>
+                                                </div>
+
+                                                <h5>Domicilio</h5>
+
+                                                <h5>Contacto</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

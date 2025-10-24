@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Procesos de migración de información disponibles</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Migraciones disponibles</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Proceso</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Migrar Prospectos a Solicitudes</td>
+                                                        <td>
+                                                            <a th:href="@{/migration/migrate-requests}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-cogs"></i> Ejecutar
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Migrar Fideicomitentes & Fideicomisario</td>
+                                                        <td>
+                                                            <a th:href="@{/migration/migrate-trustors-trustees}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-cogs"></i> Ejecutar
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Migrar Fideicomisos</td>
+                                                        <td>
+                                                            <a th:href="@{/migration/migrate-trusts}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-cogs"></i> Ejecutar
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SIRJUM Generar Periodos</td>
+                                                        <td>
+                                                            <a th:href="@{/migration/sirjum-generate-periods}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-cogs"></i> Ejecutar
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SIRJUM Migrar Trabajadores</td>
+                                                        <td>
+                                                            <a th:href="@{/migration/sirjum-migrate-workers}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-cogs"></i> Ejecutar
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SIRJUM Migrar Movimientos Trabajadores</td>
+                                                        <td>
+                                                            <a th:href="@{/migration/sirjum-migrate-worker-movements}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-cogs"></i> Ejecutar
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

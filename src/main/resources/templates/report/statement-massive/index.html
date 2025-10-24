@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Procesos de Emisión de Estados de Cuenta Masivos</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Procesos realizados anteriormente</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a th:href="@{/report/statement-massive/create}" class="btn btn-success btn-sm">
+                                                <i class="fa fa-plus"></i> Nuevo Proceso
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped table-bordered" id="processTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Fecha Proceso</th>
+                                                        <th>Estado</th>
+                                                        <th>Total a Procesar</th>
+                                                        <th>Total Procesados</th>
+                                                        <th>% de Avance</th>
+                                                        <th>Fecha de Registro</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody th:each="process : ${processList}">
+                                                    <tr>
+                                                        <td th:text="${process.processId}"></td>
+                                                        <td th:text="${#temporals.format(process.created, 'yyyy-MM-dd')}"></td>
+                                                        <td th:text="${process.name}"></td>
+                                                        <td th:text="${process.status.getStringValue}"></td>
+                                                        <td th:text="${process.created}"></td>
+                                                        <td>
+                                                            <a th:href="@{/catalog/process/{id}(id=${process.processId})}" class="btn btn-sm btn-info">
+                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>
