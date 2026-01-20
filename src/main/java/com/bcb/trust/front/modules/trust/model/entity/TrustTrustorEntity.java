@@ -2,9 +2,10 @@ package com.bcb.trust.front.modules.trust.model.entity;
 
 import java.time.LocalDateTime;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "trust_trustors")
+@Table(name = "trust_trust_trustors")
 public class TrustTrustorEntity {
 
     @Id
@@ -22,20 +23,21 @@ public class TrustTrustorEntity {
     private Long trustorId;
 
     @ManyToOne
-    @JoinColumn(name = "personId", nullable = false)
-    private CatalogPersonEntity person;
+    @JoinColumn(name = "trustId", nullable = true)
+    private TrustTrustEntity trust;
 
     @ManyToOne
     @JoinColumn(name = "requestId", nullable = false)
     private RequestRequestEntity request;
 
     @ManyToOne
-    @JoinColumn(name = "trustId", nullable = true)
-    private TrustTrustEntity trust;
+    @JoinColumn(name = "personId", nullable = false)
+    private CatalogPersonEntity person;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     public TrustTrustorEntity() {
     }
@@ -72,18 +74,18 @@ public class TrustTrustorEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     @Override
     public String toString() {
         return "TrustTrustorEntity [trustorId=" + trustorId + ", person=" + person + ", Trust=" + trust + ", status="
-                + status + ", created=" + created + "]";
+                + status + ", created=" + createdAt + "]";
     }
 
     public RequestRequestEntity getRequest() {

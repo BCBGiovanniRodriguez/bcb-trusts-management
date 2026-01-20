@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
-import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.repository.TrustTrustTypeRepository;
-
 
 @Controller
 @RequestMapping("/catalog")
@@ -25,7 +24,7 @@ public class TrustTypeController {
     @GetMapping("/trust-type")
     public String index(Model model) {
 
-        List<TrustTrustTypeEntity> trustTypeList = new ArrayList<>();
+        List<TrustCatalogTrustTypeEntity> trustTypeList = new ArrayList<>();
 
         try {
             trustTypeList = trustTypeRepository.findByStatus(CommonEntity.STATUS_ENABLED);
@@ -41,14 +40,14 @@ public class TrustTypeController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("trustType", new TrustTrustTypeEntity());
+        model.addAttribute("trustType", new TrustCatalogTrustTypeEntity());
 
         return "catalog/trust-type/create";
     }
 
     @GetMapping("/trust-type/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        TrustTrustTypeEntity trustTypeEntity = null;
+        TrustCatalogTrustTypeEntity trustTypeEntity = null;
         try {
             trustTypeEntity = trustTypeRepository.findById(id).get();
 
@@ -60,6 +59,5 @@ public class TrustTypeController {
 
         return "catalog/trust-type/detail";
     }
-    
-    
+
 }

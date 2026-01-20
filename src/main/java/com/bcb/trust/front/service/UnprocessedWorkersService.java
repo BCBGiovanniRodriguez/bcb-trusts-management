@@ -96,7 +96,7 @@ public class UnprocessedWorkersService {
         parameters.addValue("status", "INACTIVO");
 
         totalWorkers = (int) namedParameterJdbcTemplate.getJdbcTemplate()
-            .queryForObject(sqlQuery, Integer.class);
+                .queryForObject(sqlQuery, Integer.class);
 
         return totalWorkers;
     }
@@ -104,13 +104,14 @@ public class UnprocessedWorkersService {
     public List<PercentageRightsAcquired> getRightsPercentageList() {
         String sql = "SELECT * FROM FID_DER_ADQ";
         List<PercentageRightsAcquired> percentageRightsAcquiredList = new ArrayList<>();
-        
+
         try {
-            percentageRightsAcquiredList = namedParameterJdbcTemplate.getJdbcTemplate().query(sql, new PercentageRightsAcquiredMapper());
+            percentageRightsAcquiredList = namedParameterJdbcTemplate.getJdbcTemplate().query(sql,
+                    new PercentageRightsAcquiredMapper());
         } catch (Exception e) {
             System.out.println("Error en LegacyService:: getRightsPercentageList" + e.getLocalizedMessage());
         }
-        
+
         return percentageRightsAcquiredList;
     }
 
@@ -134,10 +135,10 @@ public class UnprocessedWorkersService {
 
             parametersOne.addValue("limit", limit);
             sqlQuery += " LIMIT :limit";
-            
-            workerForProcessList = namedParameterJdbcTemplate.query(sqlQuery, parametersOne, new WorkersForProcessMapper());
+
+            workerForProcessList = namedParameterJdbcTemplate.query(sqlQuery, parametersOne,
+                    new WorkersForProcessMapper());
             System.out.println("Workers: " + workerForProcessList.size());
-            
 
             StringBuilder subaccountsStringBuilder = new StringBuilder();
             for (WorkerForProcess workerForProcess : workerForProcessList) {
@@ -153,9 +154,9 @@ public class UnprocessedWorkersService {
             MapSqlParameterSource parameters = new MapSqlParameterSource();
             parameters.addValue("contract", contractNumber);
             parameters.addValue("level", 2);
-            //parameters.addValue("status", "INACTIVO");
-            //parameters.addValue("limit", limit);
-            //parameters.addValue("subaccounts", subaccountsStringBuilder.toString());
+            // parameters.addValue("status", "INACTIVO");
+            // parameters.addValue("limit", limit);
+            // parameters.addValue("subaccounts", subaccountsStringBuilder.toString());
 
             workerList = namedParameterJdbcTemplate.query(sqlQuery, parameters, new WorkerDetailRowMapper());
         } catch (Exception e) {
@@ -167,7 +168,8 @@ public class UnprocessedWorkersService {
 
     public void process(int trustNumber) {
         LocalDateTime now = LocalDateTime.now();
-        //String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + now.format(filedateFormatter);
+        // String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath +
+        // now.format(filedateFormatter);
         String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + "20250604233255/pending/pendientes";
         String fileName;
         Integer workersProcessed = 0;
@@ -183,7 +185,7 @@ public class UnprocessedWorkersService {
 
             totalWorkers = getTotalWorkers();
             System.out.println("Workers for process: " + totalWorkers);
-            //String account = ""; // null or empty on first iteration
+            // String account = ""; // null or empty on first iteration
             String account = "1000201650"; // null or empty on first iteration
             List<WorkerDetail> workerList = getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
             individualReportService.setPercentageRightsAcquiredList(getRightsPercentageList());
@@ -193,12 +195,12 @@ public class UnprocessedWorkersService {
 
             // Create main process
             ProcessEntity process = new ProcessEntity();
-            process.setProcessType(ProcessTypeEnum.MASSIVE_REPORT_GENERATION);
-            process.setProcessState(ProcessStateEnum.STARTED);
+            process.setType(ProcessTypeEnum.MASSIVE_REPORT_GENERATION);
+            process.setState(ProcessStateEnum.STARTED);
             process.setTotalElements(totalWorkers);
             process.setElementsProcessed(0L);
-            process.setProcessPercentage(processPercentage);
-            process.setCreated(new Date());
+            process.setProcessPercent(processPercentage);
+            process.setCreatedAt(new Date());
             // Save the main process
             processRepository.saveAndFlush(process);
 
@@ -209,44 +211,46 @@ public class UnprocessedWorkersService {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("worker", workerDetail.getDatDato());
                         jsonObject.put("workerAccount", workerDetail.getDatClave());
-                        
+
                         ProcessDetailEntity processDetail = new ProcessDetailEntity();
                         processDetail.setProcess(process);
 
                         try {
-                            // 
+                            //
                             individualReportService.setSubaccountWorker(workerDetail.getDatClave());
                             individualReportService.setStartDate(periodList.get(0));
                             individualReportService.setEndDate(periodList.get(1));
                             individualReportService.setWorkerDetail(workerDetail);
-                            
+
                             individualReportService.generate();
 
                             Map<String, Object> parameters = individualReportService.getParameters();
                             String jsonData = convertListToJson(individualReportService.getWorkerMovementList());
                             ByteArrayInputStream jsonDataInputStream = new ByteArrayInputStream(jsonData.getBytes());
                             JsonDataSource jsonDataSource = new JsonDataSource(jsonDataInputStream);
-                            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jsonDataSource);
-                            
-                            fileName = workerDetail.getDatClave() + "_" + workerDetail.getDatDato().replace(" ", "_") + "_" + now.format(filedateFormatter) + ".pdf";
+                            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,
+                                    jsonDataSource);
+
+                            fileName = workerDetail.getDatClave() + "_" + workerDetail.getDatDato().replace(" ", "_")
+                                    + "_" + now.format(filedateFormatter) + ".pdf";
                             JasperExportManager.exportReportToPdfFile(jasperPrint, outputPath + "/" + fileName);
 
                             System.out.println("Filename: " + fileName + " generated");
 
-                            processDetail.setProcessDetailState(ProcessDetailStateEnum.PROCESSED);
-                            processDetail.setFileName(fileName);
+                            processDetail.setState(1);
+                            processDetail.setFilename(fileName);
                             jsonObject.put("status", 1);
                         } catch (Exception e) {
                             System.out.println("UnprocessedWorkersService:: " + e.getLocalizedMessage());
                             // Get worker detail and save result
-                            processDetail.setProcessDetailState(ProcessDetailStateEnum.ERROR);
+                            processDetail.setState(2);
                             jsonObject.put("status", 2);
                             System.out.println("Error Detail: " + e.getMessage());
                         }
 
                         // Save the detail of the worker
                         processDetail.setDetail(jsonObject.toString());
-                        processDetail.setCreated(new Date());
+                        processDetail.setCreatedAt(new Date());
                         processDetailRepository.saveAndFlush(processDetail);
 
                         workersProcessed++;
@@ -258,26 +262,25 @@ public class UnprocessedWorkersService {
 
                     // Update the main process
                     processPercentage = (workersProcessed * 100) / totalWorkers;
-                    process.setProcessPercentage(processPercentage);
+                    process.setProcessPercent(processPercentage);
                     process.setElementsProcessed(workersProcessed);
                     processRepository.saveAndFlush(process);
 
-                    //break; // Validar que se obtienen los siguientes trabajadores
+                    // break; // Validar que se obtienen los siguientes trabajadores
                 }
-                
+
                 // End of process
-                process.setProcessState(ProcessStateEnum.FINISHED);
+                process.setState(ProcessStateEnum.FINISHED);
                 processRepository.saveAndFlush(process);
 
             }
-            
+
         } catch (Exception e) {
             System.out.println("UnprocessedWorkersService::process" + e.getLocalizedMessage());
         }
 
         System.out.println("UnprocessedWorkersService::process finished!!!");
     }
-
 
     public static String convertListToJson(List<?> list) throws Exception {
         ObjectMapper mapper = new ObjectMapper();

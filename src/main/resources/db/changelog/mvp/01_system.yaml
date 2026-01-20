@@ -1,0 +1,638 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup for system module
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - createTable:
+            tableName: system_catalog_endpoints
+            columns:
+              - column:
+                  name: endpoint_id
+                  type: BIGINT
+                  remarks: "Identificador único para el endpoint"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: url
+                  type: VARCHAR(250)
+                  remarks: "URL del endpoint"
+              - column:
+                  name: port
+                  type: VARCHAR(10)
+                  remarks: "Puerto del endpoint"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado del endpoint [Activo o Inactivo]"
+                  defaultValue: 1
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_persons
+            columns:
+              - column:
+                  name: person_id
+                  type: BIGINT
+                  remarks: "Identificador único para la persona"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: VARCHAR(100)
+                  remarks: "Primer nombre de la persona"
+              - column:
+                  name: second_name
+                  type: VARCHAR(100)
+                  remarks: "Segundo nombre de la persona"
+              - column:
+                  name: last_name
+                  type: VARCHAR(100)
+                  remarks: "Apellido paterno de la persona"
+              - column:
+                  name: second_last_name
+                  type: VARCHAR(100)
+                  remarks: "Apellido materno de la persona"
+              - column:
+                  name: full_name
+                  type: VARCHAR(250)
+                  remarks: "Nombre completo de la persona"
+              - column:
+                  name: gender
+                  type: TINYINT
+                  remarks: "Género de la persona [0 Indefinido, 1 Femenino, 2 Masculino]"
+                  defaultValue: 0
+              - column:
+                  name: birthdate
+                  type: DATE
+                  remarks: "Fecha de nacimiento de la persona"
+              - column:
+                  name: foreign_status
+                  type: TINYINT
+                  remarks: "Estatus migratorio de la persona [0 Indefinido, 1 Nacional, 2 Naturalizado, 3 Extranjero]"
+                  defaultValue: 0
+              - column:
+                  name: nationality_id
+                  type: BIGINT
+                  remarks: "Identificador de la nacionalidad [Microservicio Nacionalidades]"
+              - column:
+                  name: curp
+                  type: VARCHAR(18)
+                  remarks: "Clave Única de Registro de Población"
+                  defaultValue: "XAXX000000XXXXXX00"
+              - column:
+                  name: rfc
+                  type: VARCHAR(13)
+                  remarks: "Registro Federal de Contribuyentes"
+                  defaultValue: "XAXX000000XX0"
+              - column:
+                  name: marital_status
+                  type: TINYINT
+                  remarks: "Estado civil de la persona [0 Indefinido, 1 Soltero, 2 Casado, 3 Divorciado, 4 Viudo, 5 Unión Libre]"
+                  defaultValue: 0
+              - column:
+                  name: type
+                  type: TINYINT
+                  remarks: "Tipo de persona [0 Indefinido, 1 Física, 2 Moral]"
+                  defaultValue: 1
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_phones
+            columns:
+              - column:
+                  name: phone_id
+                  type: BIGINT
+                  remarks: "Identificador único para el teléfono"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: number
+                  type: INT
+                  remarks: "Número telefónico"
+              - column:
+                  name: type
+                  type: INT
+                  remarks: "Tipo de teléfono [0 Indefinido, 1 Fijo, 2 Móvil]"
+                  defaultValue: 0
+              - column:
+                  name: own
+                  type: INT
+                  remarks: "Indica si el teléfono es propio o de trabajo [0 Indefinido, 1 Propio, 2 Trabajo]"
+                  defaultValue: 0
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_emails
+            columns:
+              - column:
+                  name: email_id
+                  type: BIGINT
+                  remarks: "Identificador único para el correo electrónico"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: email
+                  type: VARCHAR(250)
+                  remarks: "Dirección de correo electrónico"
+              - column:
+                  name: own
+                  type: INT
+                  remarks: "Indica si el correo es propio o de trabajo [0 Indefinido, 1 Propio, 2 Trabajo]"
+                  defaultValue: 0
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_addresses
+            columns:
+              - column:
+                  name: address_id
+                  type: BIGINT
+                  remarks: "Identificador único para la dirección"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: colony_id
+                  type: BIGINT
+                  remarks: "Identificador de la colonia"
+              - column:
+                  name: street
+                  type: VARCHAR(250)
+                  remarks: "Calle de la dirección"
+              - column:
+                  name: internal_number
+                  type: VARCHAR(250)
+                  remarks: "Número interior de la dirección"
+              - column:
+                  name: external_number
+                  type: VARCHAR(250)
+                  remarks: "Número exterior de la dirección"
+              - column:
+                  name: zipcode
+                  type: VARCHAR(5)
+                  remarks: "Código postal de la dirección"
+              - column:
+                  name: full_address
+                  type: VARCHAR(250)
+                  remarks: "Dirección completa en formato de texto"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_file_types
+            columns:
+              - column:
+                  name: file_type_id
+                  type: BIGINT
+                  remarks: "Identificador único para el tipo de archivo"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre del tipo de archivo"
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción del tipo de archivo"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_file_subtypes
+            columns:
+              - column:
+                  name: file_subtype_id
+                  type: BIGINT
+                  remarks: "Identificador único para el subtipo de archivo"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: file_type_id
+                  type: BIGINT
+                  remarks: "Identificador del tipo de archivo asociado"
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre del subtipo de archivo"
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción del subtipo de archivo"
+              - column:
+                  name: mime_type
+                  type: TINYINT
+                  remarks: "Tipo MIME del subtipo de archivo"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_zones
+            columns:
+              - column:
+                  name: zone_id
+                  type: BIGINT
+                  remarks: "Identificador único para la zona"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre de la zona"
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción de la zona"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado de la zona"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_branches
+            columns:
+              - column:
+                  name: branch_id
+                  type: BIGINT
+                  remarks: "Identificador único para la sucursal"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: zone_id
+                  type: BIGINT
+                  remarks: "Identificador de la zona asociada"
+              - column:
+                  name: address_id
+                  type: BIGINT
+                  remarks: "Identificador de dirección asociada"
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre de la sucursal"
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción de la sucursal"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado de la sucursal"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: system_catalog_branches
+            baseColumnNames: zone_id
+            referencedTableName: system_catalog_zones
+            referencedColumnNames: zone_id
+            constraintName: system_catalog_branches_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: system_catalog_branches
+            baseColumnNames: address_id
+            referencedTableName: system_catalog_addresses
+            referencedColumnNames: address_id
+            constraintName: system_catalog_branches_fk_2
+
+        - createTable:
+            tableName: system_catalog_groups
+            columns:
+              - column:
+                  name: group_id
+                  type: BIGINT
+                  remarks: "Identificador único para el grupo"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: branch_id
+                  type: BIGINT
+                  remarks: "Identificador de la sucursal asociada"
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre del grupo"
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción del grupo"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado del grupo"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_resources
+            columns:
+              - column:
+                  name: resource_id
+                  type: BIGINT
+                  remarks: "Identificador único para el recurso"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: module
+                  type: TINYINT
+                  remarks: "Módulo al que pertenece el recurso"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: code
+                  type: VARCHAR(10)
+                  remarks: "Código único del recurso"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: element
+                  type: VARCHAR(250)
+                  remarks: "Elemento del recurso"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: action
+                  type: VARCHAR(250)
+                  remarks: "Acción del recurso"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  remarks: "Identificador único para el perfil"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre del perfil"
+              - column:
+                  name: members
+                  type: INT
+                  remarks: "Número de miembros"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: system_catalog_users
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  remarks: "Identificador único para el usuario"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: person_id
+                  type: BIGINT
+                  remarks: "Identificador de la persona asociada al usuario"
+              - column:
+                  name: nickname
+                  type: VARCHAR(100)
+                  remarks: "Nombre de usuario o alias"
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+                  remarks: "Correo electrónico del usuario"
+              - column:
+                  name: access
+                  type: VARCHAR(150)
+                  remarks: "Identificador de acceso del usuario"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado del usuario"
+                  defaultValue: 1
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: system_catalog_users
+            baseColumnNames: person_id
+            referencedTableName: system_catalog_persons
+            referencedColumnNames: person_id
+            constraintName: system_catalog_users_fk_1
+
+        - createTable:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column:
+                  name: profile_resource_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: profile_id
+                  type: BIGINT
+              - column:
+                  name: resource_id
+                  type: BIGINT
+              - column:
+                  name: permission_type
+                  type: TINYINT
+              - column:
+                  name: active
+                  type: TINYINT
+              - column:
+                  name: assigned_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: assigned_by
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: system_configuration_profile_resources
+            baseColumnNames: profile_id
+            referencedTableName: system_catalog_profiles
+            referencedColumnNames: profile_id
+            constraintName: system_configuration_profile_resources_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: system_configuration_profile_resources
+            baseColumnNames: resource_id
+            referencedTableName: system_catalog_resources
+            referencedColumnNames: resource_id
+            constraintName: system_configuration_profile_resources_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: system_configuration_profile_resources
+            baseColumnNames: assigned_by
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: system_configuration_profile_resources_fk_3
+
+        - createTable:
+            tableName: system_configuration_user_profiles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: profile_id
+                  type: BIGINT
+              - column:
+                  name: assigned_by
+                  type: BIGINT
+              - column:
+                  name: assigned_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: system_configuration_user_profiles
+            baseColumnNames: user_id
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: system_configuration_user_profiles_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: system_configuration_user_profiles
+            baseColumnNames: profile_id
+            referencedTableName: system_catalog_profiles
+            referencedColumnNames: profile_id
+            constraintName: system_configuration_user_profiles_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: system_configuration_user_profiles
+            baseColumnNames: assigned_by
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: system_configuration_user_profiles_fk_3
+
+        - createTable:
+            tableName: system_user_sessions
+            columns:
+              - column:
+                  name: user_session_id
+                  type: BIGINT
+                  remarks: "Identificador único para la sesión del usuario"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  remarks: "Identificador del usuario"
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre de la sesión"
+              - column:
+                  name: address
+                  type: VARCHAR(250)
+                  remarks: "Dirección de la sesión"
+              - column:
+                  name: user_agent
+                  type: VARCHAR(250)
+                  remarks: "Agente del usuario"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: system_user_sessions
+            baseColumnNames: user_id
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: system_user_sessions_fk_1
+
+        - createTable:
+            tableName: system_user_activities
+            columns:
+              - column:
+                  name: user_activity_id
+                  type: BIGINT
+                  remarks: "Identificador único para la actividad del usuario"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  remarks: "Identificador del usuario"
+              - column:
+                  name: resource_id
+                  type: BIGINT
+                  remarks: "Identificador del recurso"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado de la actividad"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP

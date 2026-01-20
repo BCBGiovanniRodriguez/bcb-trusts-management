@@ -3,8 +3,10 @@ package com.bcb.trust.front.modules.catalog.model.entity;
 import java.time.LocalDateTime;
 
 import com.bcb.trust.front.model.trusts.enums.StatusEnum;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +16,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "catalog_consultants")
+@Table(name = "admin_catalog_consultants")
 public class CatalogConsultantEntity {
 
     @Id
@@ -25,9 +27,10 @@ public class CatalogConsultantEntity {
     @JoinColumn(name = "PersonId", referencedColumnName = "PersonId")
     private CatalogPersonEntity person;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private StatusEnum status;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     public CatalogConsultantEntity() {
     }
@@ -56,18 +59,18 @@ public class CatalogConsultantEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     @Override
     public String toString() {
         return "Consultant [consultantId=" + consultantId + ", person=" + person + ", status=" + status + ", created="
-                + created + "]";
+                + createdAt + "]";
     }
 
 }

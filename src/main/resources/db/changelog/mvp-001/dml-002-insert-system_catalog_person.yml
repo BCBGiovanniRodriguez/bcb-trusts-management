@@ -1,0 +1,298 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup inserts for system_catalog_persons
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "1" }
+              - column: { name: first_name, value: "Héctor" }
+              - column: { name: second_name, value: "Giovanni" }
+              - column: { name: last_name, value: "Rodríguez" }
+              - column: { name: second_last_name, value: "Ramos" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-19" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "2" }
+              - column: { name: first_name, value: "Katia" }
+              - column: { name: second_name, value: "Georgina" }
+              - column: { name: last_name, value: "Melo" }
+              - column: { name: second_last_name, value: "Guzmán" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "3" }
+              - column: { name: first_name, value: "Guillermo" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "González" }
+              - column: { name: second_last_name, value: "Pérez" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "4" }
+              - column: { name: first_name, value: "Claudia" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Vázquez" }
+              - column: { name: second_last_name, value: "Luna" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "5" }
+              - column: { name: first_name, value: "Anaid" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Santillán" }
+              - column: { name: second_last_name, value: "Guzmán" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "6" }
+              - column: { name: first_name, value: "Juan Jose" }
+              - column: { name: second_name, value: "Isaias" }
+              - column: { name: last_name, value: "Padilla" }
+              - column: { name: second_last_name, value: "Callejas" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "7" }
+              - column: { name: first_name, value: "Bernardo" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Alcocer" }
+              - column: { name: second_last_name, value: "Estrada" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "8" }
+              - column: { name: first_name, value: "Herminio" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Fierros" }
+              - column: { name: second_last_name, value: "Ortuño" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "9" }
+              - column: { name: first_name, value: "Alfredo" }
+              - column: { name: second_name, value: "Alexander" }
+              - column: { name: last_name, value: "Hernández" }
+              - column: { name: second_last_name, value: "Caldera" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "10" }
+              - column: { name: first_name, value: "Conrado" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Tamayo" }
+              - column: { name: second_last_name, value: "Zazueta" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "11" }
+              - column: { name: first_name, value: "Nery" }
+              - column: { name: second_name, value: "Dalia" }
+              - column: { name: last_name, value: "De la Cruz" }
+              - column: { name: second_last_name, value: "Velasco" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "12" }
+              - column: { name: first_name, value: "Leonardo" }
+              - column: { name: second_name, value: "Daniel" }
+              - column: { name: last_name, value: "Arreola" }
+              - column: { name: second_last_name, value: "Peralta" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "13" }
+              - column: { name: first_name, value: "Maria" }
+              - column: { name: second_name, value: "Fernanda" }
+              - column: { name: last_name, value: "Nieto" }
+              - column: { name: second_last_name, value: "Albarran" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "14" }
+              - column: { name: first_name, value: "Berenice" }
+              - column: { name: second_name, value: "Guadalupe" }
+              - column: { name: last_name, value: "Resendiz" }
+              - column: { name: second_last_name, value: "Zamora" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "15" }
+              - column: { name: first_name, value: "Brian" }
+              - column: { name: second_name, value: "Daniel" }
+              - column: { name: last_name, value: "De la Cruz" }
+              - column: { name: second_last_name, value: "Islas" }
+              - column: { name: gender, value: "2" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "16" }
+              - column: { name: first_name, value: "Erika" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Aguilar" }
+              - column: { name: second_last_name, value: "Matehuala" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "17" }
+              - column: { name: first_name, value: "Estefanía" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Vilchis" }
+              - column: { name: second_last_name, value: "Ibarra" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "18" }
+              - column: { name: first_name, value: "Sandra" }
+              - column: { name: second_name, value: "Erika" }
+              - column: { name: last_name, value: "Alatorre" }
+              - column: { name: second_last_name, value: "Esquivel" }
+              - column: { name: gender, value: "1" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+              - column: { name: birthdate, value: "1990-01-01" }

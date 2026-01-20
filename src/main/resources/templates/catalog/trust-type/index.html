@@ -45,7 +45,7 @@
                                                         <td th:text="${trustType.trustTypeId}"></td>
                                                         <td th:text="${trustType.name}"></td>
                                                         <td th:text="${trustType.getStatusAsString}"></td>
-                                                        <td th:text="${#temporals.format(trustType.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                        <td th:text="${#temporals.format(trustType.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                         <td>
                                                             <a th:href="@{/catalog/trust-type/detail/{id}(id=${trustType.trustTypeId})}" class="btn btn-sm btn-info" title="Ver Detalles">
                                                                 <i class="fa fa-search"></i>

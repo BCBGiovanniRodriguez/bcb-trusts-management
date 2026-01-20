@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Recursos del Sistema</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <form th:action="@{/system/resource}" method="get">
+                                    <div class="card card-outline card-info mb-4">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Consulta de Recursos Registrados en el Sistema</strong></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-3">
+                                                    <label for="module" class="form-label">Módulo</label>
+                                                    <select name="module" id="module" class="form-select">
+                                                        <option th:each="moduleName, iteration : ${moduleNames}"
+                                                            th:value="${iteration.index}" th:text="${moduleName}"
+                                                            th:selected="${moduleQueryParam == iteration.index}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <button class="btn btn-info" type="submit">
+                                                <i class="fa fa-search"></i> Búsqueda
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Recursos Registrados en el Sistema</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped table-bordered" id="resourceTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Módulo</th>
+                                                        <th>Código</th>
+                                                        <th>Elemento</th>
+                                                        <th>Actividad</th>
+                                                        <th>Fecha de Creación</th>
+                                                        <th hidden>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody th:each="resource : ${resourceList}">
+                                                    <tr>
+                                                        <td th:text="${resource.resourceId}"></td>
+                                                        <td th:text="${resource.moduleAsString}"></td>
+                                                        <td th:text="${resource.code}"></td>
+                                                        <td th:text="${resource.element}"></td>
+                                                        <td th:text="${resource.action}"></td>
+                                                        <td th:text="${#temporals.format(resource.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                        <td hidden>
+                                                            <a th:href="@{/system/resource/{id}(id=${resource.resourceId})}" class="btn btn-sm btn-info" hidden>
+                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
+    </body>
+</html>

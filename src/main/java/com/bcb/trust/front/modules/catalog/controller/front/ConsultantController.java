@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddressEntity;
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 
 @Controller
 @RequestMapping("/catalog/consultant")

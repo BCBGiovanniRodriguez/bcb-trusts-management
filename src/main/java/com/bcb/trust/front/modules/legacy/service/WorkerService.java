@@ -13,18 +13,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddressEntity;
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogAddressEntityRepository;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonEntityRepository;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
 import com.bcb.trust.front.modules.trust.model.entity.TrustQuarterEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustEntity;
-import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustWorkerEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
@@ -78,7 +78,7 @@ public class WorkerService {
     WorkerService(RequestEntityRepository requestEntityRepository) {
         this.requestEntityRepository = requestEntityRepository;
     }
-    
+
     public void migrateRequest(SystemUserEntity userEntity) {
         String sql;
         List<Map<String, Object>> resultList;
@@ -86,12 +86,12 @@ public class WorkerService {
         String migrationStandardText = "MIGRACION";
 
         try {
-            TrustTrustTypeEntity trustTypeEntity = trustTypeRepository.findById(1L).get();
+            TrustCatalogTrustTypeEntity trustTypeEntity = trustTypeRepository.findById(1L).get();
 
             sql = "SELECT * FROM PROSPECT p ORDER BY p.PRS_NUM_PROSPECTO ";
             resultList = jdbcTemplate.queryForList(sql);
 
-            // Get default type 
+            // Get default type
 
             Integer requestNumber;
             Integer trustChange = 1;
@@ -100,12 +100,12 @@ public class WorkerService {
             String wasReferedByFullName;
             CatalogAddressEntity addressEntity;
             CatalogPersonEntity personEntity;
-            //Integer state;
+            // Integer state;
             Integer status;
             LocalDateTime created;
-            // -- 
+            // --
             String fullName;
-            Integer gender = CatalogPersonEntity.GENDER_UNKWON;
+            Integer gender = CatalogPersonEntity.GENDER_UNKNOWN;
             LocalDate birthDate;
             String curp;
             String rfc;
@@ -118,17 +118,16 @@ public class WorkerService {
             String state;
             String country;
             String zipcode;
-            //Long colonyId;
+            // Long colonyId;
             String fullAddress;
             String trustChangeTrust;
             Optional<CatalogPersonEntity> result;
 
-            for (Map<String,Object> map : resultList) {
+            for (Map<String, Object> map : resultList) {
                 requestNumber = Integer.parseInt(map.get("PRS_NUM_PROSPECTO").toString());
 
                 rfc = map.get("PRS_RFC").toString();
-                
-                
+
                 fullName = map.get("PRS_NOM_PROSPECTO").toString();
                 if (map.get("PRS_TIPO_PERS").toString().equals("FISICA NACIONAL")) {
                     type = CatalogPersonEntity.TYPE_PERSON;
@@ -147,28 +146,33 @@ public class WorkerService {
                     personEntity.setLastName(migrationStandardText);
                     personEntity.setSecondLastName(migrationStandardText);
                     personEntity.setFullName(fullName);
-                    personEntity.setGender(CatalogPersonEntity.GENDER_UNKWON);
-                    personEntity.setBirthDate(LocalDate.parse("1900-01-01"));
+                    personEntity.setGender(CatalogPersonEntity.GENDER_UNKNOWN);
+                    personEntity.setBirthdate(LocalDate.parse("1900-01-01"));
                     personEntity.setCurp(null);
                     personEntity.setRfc(rfc);
                     personEntity.setForeignStatus(CatalogPersonEntity.FOREIGN_STATUS_CITIZEN);
                     personEntity.setType(type);
-                    personEntity.setStatus(CommonEntity.STATUS_ENABLED);
-                    personEntity.setCreated(LocalDateTime.now());
+                    personEntity.setMaritalStatus(CommonEntity.STATUS_ENABLED);
+                    personEntity.setCreatedAt(LocalDateTime.now());
 
                     personEntityRepository.saveAndFlush(personEntity);
                 }
 
                 street = map.get("PRS_NOM_CALLE") != null ? map.get("PRS_NOM_CALLE").toString() : migrationStandardText;
-                colony = map.get("PRS_NOM_COLONIA") != null ? map.get("PRS_NOM_COLONIA").toString() : migrationStandardText;
-                township = map.get("PRS_NOM_POBLACION") != null ? map.get("PRS_NOM_POBLACION").toString() : migrationStandardText;
-                state = map.get("PRS_NOM_ESTADO") != null ? map.get("PRS_NOM_ESTADO").toString() : migrationStandardText;
-                zipcode = map.get("PRS_CODIGO_POSTAL") != null ? map.get("PRS_CODIGO_POSTAL").toString() : migrationStandardText;
+                colony = map.get("PRS_NOM_COLONIA") != null ? map.get("PRS_NOM_COLONIA").toString()
+                        : migrationStandardText;
+                township = map.get("PRS_NOM_POBLACION") != null ? map.get("PRS_NOM_POBLACION").toString()
+                        : migrationStandardText;
+                state = map.get("PRS_NOM_ESTADO") != null ? map.get("PRS_NOM_ESTADO").toString()
+                        : migrationStandardText;
+                zipcode = map.get("PRS_CODIGO_POSTAL") != null ? map.get("PRS_CODIGO_POSTAL").toString()
+                        : migrationStandardText;
                 if (zipcode.length() > 4) {
                     zipcode = "0" + zipcode;
                 }
-                
-                fullAddress = "CALLE: " + street + ", NUMERO INTERIOR: N/A, NUMERO EXTERIOR: N/A, CODIGO POSTAL: " + zipcode;
+
+                fullAddress = "CALLE: " + street + ", NUMERO INTERIOR: N/A, NUMERO EXTERIOR: N/A, CODIGO POSTAL: "
+                        + zipcode;
                 fullAddress += ", COLONIA: " + colony + ", MUNICIPIO: " + township + ", ESTADO: " + state;
 
                 addressEntity = new CatalogAddressEntity();
@@ -178,28 +182,27 @@ public class WorkerService {
                 addressEntity.setZipcode(zipcode);
                 addressEntity.setColonyId(null);
                 addressEntity.setFullAddress(fullAddress);
-                addressEntity.setCreated(LocalDateTime.now());
+                addressEntity.setCreatedAt(LocalDateTime.now());
                 addressEntityRepository.saveAndFlush(addressEntity);
 
                 trustChangeTrust = map.get("PRS_NUM_CONTRATO").toString();
                 requestEntity = new RequestRequestEntity();
                 requestEntity.setNumber(requestNumber);
-                requestEntity.setTrustChange(CommonEntity.SIMPLE_OPTION_NO);
-                requestEntity.setTrustChangeTrust(migrationStandardText);
-                requestEntity.setWasRefered(CommonEntity.SIMPLE_OPTION_NO);
-                requestEntity.setWasReferedBy(RequestRequestEntity.WAS_REFERED_BY_UNKOWN);
-                requestEntity.setWasReferedByFullName(migrationStandardText);
+                requestEntity.setIsTrustChange(CommonEntity.SIMPLE_OPTION_NO);
+                requestEntity.setTrustChangeName(migrationStandardText);
+                // requestEntity.setWasRefered(CommonEntity.SIMPLE_OPTION_NO);
+                // requestEntity.setWasReferedBy(RequestRequestEntity.WAS_REFERED_BY_UNKOWN);
+                // requestEntity.setWasReferedByFullName(migrationStandardText);
                 requestEntity.setTrustTypeEntity(trustTypeEntity);
                 requestEntity.setAddressEntity(addressEntity);
                 requestEntity.setPersonEntity(personEntity);
                 requestEntity.setState(RequestRequestEntity.STATE_REGISTERED);
                 requestEntity.setStatus(CommonEntity.STATUS_ENABLED);
-                requestEntity.setCreated(LocalDateTime.now());
+                requestEntity.setCreatedAt(LocalDateTime.now());
                 requestEntity.setRegisteredBy(userEntity);
                 requestEntityRepository.saveAndFlush(requestEntity);
-                
-            }
 
+            }
 
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
@@ -226,16 +229,16 @@ public class WorkerService {
             Optional<RequestRequestEntity> resultRequest;
             RequestRequestEntity request;
 
-            for (Map<String,Object> map : resultList) {
+            for (Map<String, Object> map : resultList) {
                 requestNumber = Integer.parseInt(map.get("FID_NUM_PROSPECTO").toString());
                 resultRequest = requestEntityRepository.findOneByNumber(requestNumber);
-                
+
                 if (resultRequest.isPresent()) { // Load trustors and trustees only if request exist
                     request = resultRequest.get();
-                    
+
                     rfc = map.get("FID_RFC_PERSONA") != null ? map.get("FID_RFC_PERSONA").toString() : "";
                     result = personEntityRepository.findOneByRfc(rfc);
-    
+
                     if (result.isPresent()) {
                         personEntity = result.get();
                     } else {
@@ -243,45 +246,45 @@ public class WorkerService {
                         lastName = map.get("FID_AP_PATERNO") != null ? map.get("FID_AP_PATERNO").toString() : "";
                         secondLastName = map.get("FID_AP_MATERNO") != null ? map.get("FID_AP_MATERNO").toString() : "";
                         curp = map.get("FID_CURP_PERSONA") != null ? map.get("FID_CURP_PERSONA").toString() : "";
-                        
+
                         personEntity = new CatalogPersonEntity();
                         personEntity.setFirstName(firstName);
                         personEntity.setSecondName(null);
                         personEntity.setLastName(lastName);
                         personEntity.setSecondLastName(secondLastName);
                         personEntity.setFullName(null);
-                        personEntity.setGender(CatalogPersonEntity.GENDER_UNKWON);
+                        personEntity.setGender(CatalogPersonEntity.GENDER_UNKNOWN);
                         personEntity.setCurp(curp);
                         personEntity.setRfc(rfc);
-                        personEntity.setBirthDate(LocalDate.parse("1900-01-01"));
+                        personEntity.setBirthdate(LocalDate.parse("1900-01-01"));
                         personEntity.setForeignStatus(CatalogPersonEntity.FOREIGN_STATUS_CITIZEN);
                         if (personEntity.getRfc().length() == 11) {
                             personEntity.setType(CatalogPersonEntity.TYPE_ENTERPRISE);
                         } else {
                             personEntity.setType(CatalogPersonEntity.TYPE_PERSON);
                         }
-                        personEntity.setStatus(CommonEntity.STATUS_ENABLED);
+                        personEntity.setMaritalStatus(CommonEntity.STATUS_ENABLED);
                         personEntityRepository.saveAndFlush(personEntity);
                     }
-    
+
                     cvePersonType = map.get("FID_CVE_PERSONA") != null ? map.get("FID_CVE_PERSONA").toString() : "";
                     if (cvePersonType.equals("FIDEICOMITENTE")) {
                         TrustTrustorEntity trustorEntity = new TrustTrustorEntity();
-                        trustorEntity.setCreated(LocalDateTime.now());
+                        trustorEntity.setCreatedAt(LocalDateTime.now());
                         trustorEntity.setPerson(personEntity);
                         trustorEntity.setStatus(CommonEntity.STATUS_ENABLED);
                         trustorEntity.setTrust(null);
                         trustorEntity.setRequest(request);
-    
+
                         trustTrustorRepository.saveAndFlush(trustorEntity);
-                    } else if(cvePersonType.equals("FIDEICOMISARIO")) {
+                    } else if (cvePersonType.equals("FIDEICOMISARIO")) {
                         TrustTrusteeEntity trusteeEntity = new TrustTrusteeEntity();
                         trusteeEntity.setPersonEntity(personEntity);
-                        trusteeEntity.setCreated(LocalDateTime.now());
+                        trusteeEntity.setCreatedAt(LocalDateTime.now());
                         trusteeEntity.setStatus(CommonEntity.STATUS_ENABLED);
                         trusteeEntity.setTrustEntity(null);
                         trusteeEntity.setRequest(request);
-    
+
                         trustTrusteeRepository.saveAndFlush(trusteeEntity);
                     }
                 }
@@ -296,18 +299,18 @@ public class WorkerService {
         List<Map<String, Object>> resultList;
 
         try {
-            TrustTrustTypeEntity trustTypeEntity = trustTypeRepository.findById(1L).get();
-            
+            TrustCatalogTrustTypeEntity trustTypeEntity = trustTypeRepository.findById(1L).get();
+
             sql = "SELECT * FROM ANTEPROY a ORDER BY a.ANT_NUM_PROSPECTO";
             resultList = jdbcTemplate.queryForList(sql);
-            
+
             Optional<RequestRequestEntity> resultRequest;
             RequestRequestEntity requestEntity;
             Integer requestNumber;
             Integer trustNumber;
             String trustName;
 
-            for (Map<String,Object> map : resultList) {
+            for (Map<String, Object> map : resultList) {
                 requestNumber = Integer.parseInt(map.get("ANT_NUM_PROSPECTO").toString());
                 resultRequest = requestEntityRepository.findOneByNumber(requestNumber);
                 trustName = map.get("ANT_NOM_NEGOCIO").toString();
@@ -315,7 +318,7 @@ public class WorkerService {
                 if (resultRequest.isPresent()) {
                     requestEntity = resultRequest.get();
                     trustNumber = Integer.parseInt(map.get("ANT_NUM_CONTRATO").toString());
-                    
+
                     TrustTrustEntity trustEntity = new TrustTrustEntity();
                     trustEntity.setName(trustName);
                     trustEntity.setNumber(trustNumber);
@@ -323,19 +326,19 @@ public class WorkerService {
                     trustEntity.setTrustTypeEntity(trustTypeEntity);
                     trustEntity.setState(TrustTrustEntity.STATE_ACTIVE);
                     trustEntity.setStatus(CommonEntity.STATUS_ENABLED);
-                    trustEntity.setCreated(LocalDateTime.now());
+                    trustEntity.setCreatedAt(LocalDateTime.now());
                     trustEntity.setRegisteredBy(userEntity);
 
                     trustRepository.saveAndFlush(trustEntity);
                 }
             }
-            // 
+            //
             String migrationText = "MIGRACION";
             sql = "SELECT * FROM CONTRATO c ORDER BY c.CTO_NUM_CONTRATO ";
             resultList = jdbcTemplate.queryForList(sql);
             Optional<TrustTrustEntity> resultTrust;
 
-            for (Map<String,Object> map : resultList) {
+            for (Map<String, Object> map : resultList) {
                 trustNumber = Integer.parseInt(map.get("CTO_NUM_CONTRATO").toString());
                 resultTrust = trustRepository.findOneByNumber(trustNumber);
 
@@ -348,12 +351,12 @@ public class WorkerService {
                     newPerson.setSecondLastName(migrationText);
                     newPerson.setCurp("");
                     newPerson.setRfc("");
-                    newPerson.setBirthDate(LocalDate.parse("1900-01-01"));
+                    newPerson.setBirthdate(LocalDate.parse("1900-01-01"));
                     newPerson.setForeignStatus(CatalogPersonEntity.FOREIGN_STATUS_CITIZEN);
-                    newPerson.setStatus(CommonEntity.STATUS_ENABLED);
-                    newPerson.setGender(CatalogPersonEntity.GENDER_UNKWON);
+                    newPerson.setMaritalStatus(CommonEntity.STATUS_ENABLED);
+                    newPerson.setGender(CatalogPersonEntity.GENDER_UNKNOWN);
                     newPerson.setType(CatalogPersonEntity.TYPE_PERSON);
-                    newPerson.setCreated(LocalDateTime.now());
+                    newPerson.setCreatedAt(LocalDateTime.now());
                     personEntityRepository.saveAndFlush(newPerson);
 
                     CatalogAddressEntity newAddress = new CatalogAddressEntity();
@@ -363,27 +366,27 @@ public class WorkerService {
                     newAddress.setStreet(migrationText);
                     newAddress.setZipcode(migrationText);
                     newAddress.setFullAddress(migrationText);
-                    newAddress.setCreated(LocalDateTime.now());
+                    newAddress.setCreatedAt(LocalDateTime.now());
                     addressEntityRepository.saveAndFlush(newAddress);
 
                     RequestRequestEntity newRequest = new RequestRequestEntity();
-                    newRequest.setNumber(trustNumber); // get last 
+                    newRequest.setNumber(trustNumber); // get last
                     newRequest.setPersonEntity(newPerson);
                     newRequest.setAddressEntity(newAddress);
                     newRequest.setTrustTypeEntity(trustTypeEntity);
                     newRequest.setRegisteredBy(userEntity);
-                    newRequest.setCreated(LocalDateTime.now());
+                    newRequest.setCreatedAt(LocalDateTime.now());
                     newRequest.setState(1);
                     newRequest.setStatus(CommonEntity.STATUS_ENABLED);
-                    newRequest.setTrustChange(CommonEntity.SIMPLE_OPTION_NO);
-                    newRequest.setTrustChangeTrust(migrationText);
-                    newRequest.setWasRefered(CommonEntity.SIMPLE_OPTION_NO);
-                    newRequest.setWasReferedBy(RequestRequestEntity.WAS_REFERED_BY_UNKOWN);
-                    newRequest.setWasReferedByFullName(migrationText);
+                    newRequest.setIsTrustChange(CommonEntity.SIMPLE_OPTION_NO);
+                    newRequest.setTrustChangeName(migrationText);
+                    // newRequest.setWasRefered(CommonEntity.SIMPLE_OPTION_NO);
+                    // newRequest.setWasReferedBy(RequestRequestEntity.WAS_REFERED_BY_UNKOWN);
+                    // newRequest.setWasReferedByFullName(migrationText);
                     requestEntityRepository.saveAndFlush(newRequest);
 
                     trustName = map.get("CTO_NOM_CONTRATO").toString();
-                    
+
                     TrustTrustEntity trustEntity = new TrustTrustEntity();
                     trustEntity.setName(trustName);
                     trustEntity.setNumber(trustNumber);
@@ -391,7 +394,7 @@ public class WorkerService {
                     trustEntity.setTrustTypeEntity(trustTypeEntity);
                     trustEntity.setState(TrustTrustEntity.STATE_ACTIVE);
                     trustEntity.setStatus(CommonEntity.STATUS_ENABLED);
-                    trustEntity.setCreated(LocalDateTime.now());
+                    trustEntity.setCreatedAt(LocalDateTime.now());
                     trustEntity.setRegisteredBy(userEntity);
 
                     trustRepository.saveAndFlush(trustEntity);
@@ -419,8 +422,8 @@ public class WorkerService {
             sql += "ORDER BY DEPARTMENT_ID ";
 
             resultList = jdbcTemplate.queryForList(sql);
-            
-            for (Map<String,Object> map : resultList) {
+
+            for (Map<String, Object> map : resultList) {
                 departmentNumber = map.get("DEPARTMENT_ID").toString();
 
                 workerDepartmentEntity = workerDepartmentRepository.findByNumber(departmentNumber).get();
@@ -429,7 +432,7 @@ public class WorkerService {
                     TrustWorkerDepartmentEntity workerDepartmentEntityNew = new TrustWorkerDepartmentEntity();
                     workerDepartmentEntityNew.setName(map.get("DEPARTMENT_NAME").toString());
                     workerDepartmentEntityNew.setNumber(departmentNumber);
-                    workerDepartmentEntityNew.setCreated(now);
+                    workerDepartmentEntityNew.setCreatedAt(now);
 
                     workerDepartmentRepository.saveAndFlush(workerDepartmentEntityNew);
                 }
@@ -477,28 +480,28 @@ public class WorkerService {
                 quarterOne.setFixed(1);
                 quarterOne.setStartDate(LocalDate.of(i, 1, 1));
                 quarterOne.setStartDate(LocalDate.of(i, 3, 31));
-                quarterOne.setCreated(now);
+                quarterOne.setCreatedAt(now);
 
                 quarterTwo.setYear(i);
                 quarterTwo.setName(i + "2T");
                 quarterTwo.setFixed(1);
                 quarterTwo.setStartDate(LocalDate.of(i, 4, 1));
                 quarterTwo.setStartDate(LocalDate.of(i, 6, 30));
-                quarterTwo.setCreated(now);
+                quarterTwo.setCreatedAt(now);
 
                 quarterThree.setYear(i);
                 quarterThree.setName(i + "3T");
                 quarterThree.setFixed(1);
                 quarterThree.setStartDate(LocalDate.of(i, 7, 1));
                 quarterThree.setStartDate(LocalDate.of(i, 9, 30));
-                quarterThree.setCreated(now);
+                quarterThree.setCreatedAt(now);
 
                 quarterFour.setYear(i);
                 quarterFour.setName(i + "4T");
                 quarterFour.setFixed(1);
                 quarterFour.setStartDate(LocalDate.of(i, 10, 1));
                 quarterFour.setStartDate(LocalDate.of(i, 12, 31));
-                quarterFour.setCreated(now);
+                quarterFour.setCreatedAt(now);
 
                 trustQuarterRepository.save(quarterOne);
                 trustQuarterRepository.save(quarterTwo);
@@ -513,11 +516,12 @@ public class WorkerService {
             System.out.println("" + e.getLocalizedMessage());
         }
     }
-    
+
     public void migrateWorkers(String trustNumber) {
         String sql;
         List<Map<String, Object>> resultList;
-        Optional<TrustTrustEntity> resultTrust;;
+        Optional<TrustTrustEntity> resultTrust;
+        ;
         TrustTrustEntity trust;
         Integer workerAccount = null;
 
@@ -525,7 +529,7 @@ public class WorkerService {
             resultTrust = trustRepository.findOneByNumber(Integer.parseInt(trustNumber));
 
             if (!resultTrust.isPresent()) {
-                
+
             } else {
                 // Ensure first if already has workers migrated
                 long totalWorkers = trustWorkerRepository.count();
@@ -535,7 +539,7 @@ public class WorkerService {
                     TrustTrustWorkerEntity lastWorker = trustWorkerRepository.findEntityWithMaxNumber();
                     workerAccount = lastWorker.getAccount();
                 } else {
-                    workerAccount = 1000001440; // Very first 
+                    workerAccount = 1000001440; // Very first
                 }
 
                 trust = resultTrust.get();
@@ -546,7 +550,7 @@ public class WorkerService {
                 LocalDate registerDate;
                 LocalDate endDate;
 
-                for(int counter = 0; counter < offset; counter++) {
+                for (int counter = 0; counter < offset; counter++) {
 
                     sql = "SELECT * FROM FID_DATOS_EST_CTAS fdec ";
                     sql += "WHERE fdec.DAT_CONTRATO = '" + trustNumber + "' ";
@@ -558,52 +562,50 @@ public class WorkerService {
 
                     sql += "ORDER BY fdec.DAT_CLAVE ";
                     sql += "FETCH NEXT 950 ROWS ONLY ";
-        
+
                     resultList = jdbcTemplate.queryForList(sql);
 
-                    for (Map<String,Object> map : resultList) {
+                    for (Map<String, Object> map : resultList) {
                         account = Integer.parseInt(map.get("DAT_CLAVE").toString());
                         number = Integer.parseInt(map.get("DAT_CLAVE").toString());
                         name = map.get("DAT_DATO").toString();
                         status = map.get("DAT_ESTATUS").toString().equals("ACTIVO") ? 1 : 0;
                         registerDate = LocalDate.parse(map.get("DAT_FEC_ALTA").toString(), isoShortFormatter);
                         endDate = LocalDate.parse(map.get("DAT_FEC_BAJA").toString(), isoShortFormatter);
-        
+
                         TrustTrustWorkerEntity trustTrustWorkerEntity = new TrustTrustWorkerEntity();
                         trustTrustWorkerEntity.setTrust(trust);
                         trustTrustWorkerEntity.setNumber(number);
                         trustTrustWorkerEntity.setAccount(account);
-                        trustTrustWorkerEntity.setName(name);
+                        trustTrustWorkerEntity.setFullname(name);
                         trustTrustWorkerEntity.setStatus(status);
                         trustTrustWorkerEntity.setRegisterDate(registerDate);
                         trustTrustWorkerEntity.setEndDate(endDate);
-                        trustTrustWorkerEntity.setCreated(LocalDateTime.now());
-        
+                        trustTrustWorkerEntity.setCreatedAt(LocalDateTime.now());
+
                         trustWorkerRepository.saveAndFlush(trustTrustWorkerEntity);
                     }
                 }
 
             }
-            
+
         } catch (Exception e) {
             // TODO: handle exception
-        } 
+        }
     }
-
 
     public void migrateMovements() {
         String sql;
         try {
-           // Get periods
-           List<TrustQuarterEntity> quarterList = trustQuarterRepository.findAll();
+            // Get periods
+            List<TrustQuarterEntity> quarterList = trustQuarterRepository.findAll();
 
-           LocalDate starDate;
-           LocalDate endDate;
-           sql = "SELECT * FROM ";
-           for (TrustQuarterEntity trustQuarterEntity : quarterList) {
-                
-           }
-           
+            LocalDate starDate;
+            LocalDate endDate;
+            sql = "SELECT * FROM ";
+            for (TrustQuarterEntity trustQuarterEntity : quarterList) {
+
+            }
 
         } catch (Exception e) {
             System.out.println("" + e.getLocalizedMessage());

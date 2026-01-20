@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class TrustTrustWorkerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long trustWorkerId;
+    private Long workerId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trustId", referencedColumnName = "trustId")
@@ -26,27 +27,28 @@ public class TrustTrustWorkerEntity {
 
     private Integer number;
 
+    private String fullname;
+    
     private Integer account;
 
-    private String name;
-
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
 
     private LocalDate registerDate;
 
     private LocalDate endDate;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     public TrustTrustWorkerEntity() {
     }
 
-    public Long getTrustWorkerId() {
-        return trustWorkerId;
+    public Long getWorkerId() {
+        return workerId;
     }
 
-    public void setTrustWorkerId(Long trustWorkerId) {
-        this.trustWorkerId = trustWorkerId;
+    public void setWorkerId(Long trustWorkerId) {
+        this.workerId = trustWorkerId;
     }
 
     public TrustTrustEntity getTrust() {
@@ -73,12 +75,12 @@ public class TrustTrustWorkerEntity {
         this.account = account;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String name) {
+        this.fullname = name;
     }
 
     public Integer getStatus() {
@@ -105,12 +107,12 @@ public class TrustTrustWorkerEntity {
         this.endDate = endDate;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     

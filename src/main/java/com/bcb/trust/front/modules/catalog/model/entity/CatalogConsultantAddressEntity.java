@@ -2,7 +2,10 @@ package com.bcb.trust.front.modules.catalog.model.entity;
 
 import java.time.LocalDateTime;
 
+import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,8 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "catalog_consultant_addresses")
+//@Entity
+//@Table(name = "admin_catalog_consultant_addresses")
 public class CatalogConsultantAddressEntity {
 
     @Id
@@ -27,11 +30,13 @@ public class CatalogConsultantAddressEntity {
     @JoinColumn(name = "address_id")
     private CatalogAddressEntity addressEntity;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer type;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     public CatalogConsultantAddressEntity() {
     }
@@ -76,19 +81,19 @@ public class CatalogConsultantAddressEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     @Override
     public String toString() {
         return "CatalogConsultantAddressEntity [consultantAddressId=" + consultantAddressId + ", consultantEntity="
                 + consultantEntity + ", addressEntity=" + addressEntity + ", type=" + type + ", status=" + status
-                + ", created=" + created + "]";
+                + ", created=" + createdAt + "]";
     }
     
 }

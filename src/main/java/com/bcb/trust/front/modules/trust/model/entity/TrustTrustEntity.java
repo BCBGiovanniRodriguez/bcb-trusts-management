@@ -9,6 +9,7 @@ import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "trust_trusts")
+@Table(name = "trust_catalog_trusts")
 public class TrustTrustEntity extends CommonEntity {
 
     @Id
@@ -37,13 +38,15 @@ public class TrustTrustEntity extends CommonEntity {
 
     @ManyToOne
     @JoinColumn(name = "trustTypeId", nullable = false)
-    private TrustTrustTypeEntity trustTypeEntity;
+    private TrustCatalogTrustTypeEntity trustTypeEntity;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer state;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "registered_by", nullable = false)
@@ -55,6 +58,12 @@ public class TrustTrustEntity extends CommonEntity {
     @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrustTrusteeEntity> trusteeList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustWorkerDepartmentEntity> workerDepartmentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustWorkerMovementType> workerMovementTypeList = new ArrayList<>();
+
     public static final Integer STATE_STARTED = 1;
 
     public static final Integer STATE_PAUSED = 2;
@@ -65,7 +74,8 @@ public class TrustTrustEntity extends CommonEntity {
 
     public static final Integer STATE_FINISHED = 5;
 
-    public static String[] states = {"Seleccione Opción", "Iniciado", "Pausado", "Bloqueado", "Constituido", "Finalizado"};
+    public static String[] states = { "Seleccione Opción", "Iniciado", "Pausado", "Bloqueado", "Constituido",
+            "Finalizado" };
 
     public TrustTrustEntity() {
     }
@@ -94,11 +104,11 @@ public class TrustTrustEntity extends CommonEntity {
         this.name = name;
     }
 
-    public TrustTrustTypeEntity getTrustTypeEntity() {
+    public TrustCatalogTrustTypeEntity getTrustTypeEntity() {
         return trustTypeEntity;
     }
 
-    public void setTrustTypeEntity(TrustTrustTypeEntity trustTypeEntity) {
+    public void setTrustTypeEntity(TrustCatalogTrustTypeEntity trustTypeEntity) {
         this.trustTypeEntity = trustTypeEntity;
     }
 
@@ -118,18 +128,18 @@ public class TrustTrustEntity extends CommonEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     @Override
     public String toString() {
         return "TrustTrustEntity [trustId=" + trustId + ", number=" + number + ", name=" + name + ", trustTypeEntity="
-                + trustTypeEntity + ", state=" + state + ", status=" + status + ", created=" + created + "]";
+                + trustTypeEntity + ", state=" + state + ", status=" + status + ", created=" + createdAt + "]";
     }
 
     @Override
@@ -176,5 +186,5 @@ public class TrustTrustEntity extends CommonEntity {
     public void setRegisteredBy(SystemUserEntity registeredBy) {
         this.registeredBy = registeredBy;
     }
-    
+
 }

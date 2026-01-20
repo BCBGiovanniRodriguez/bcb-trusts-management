@@ -1,0 +1,138 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup for admin module
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - createTable:
+            tableName: admin_catalog_document_types
+            columns:
+              - column:
+                  name: document_type_id
+                  type: BIGINT
+                  remarks: "Identificador único para el tipo de documento"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre del tipo de documento"
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción del tipo de documento"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado del tipo de documento"
+              - column:
+                  name: owner_type
+                  type: TINYINT
+                  remarks: "Tipo de propietario del documento"
+              - column:
+                  name: person_type
+                  type: TINYINT
+                  remarks: "Tipo de persona asociada al documento"
+              - column:
+                  name: foreign_status
+                  type: TINYINT
+                  remarks: "Estatus migratorio asociado al documento"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: admin_catalog_consultants
+            columns:
+              - column:
+                  name: consultant_id
+                  type: BIGINT
+                  remarks: "Identificador único para el consultor"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: person_id
+                  type: BIGINT
+                  remarks: "Identificador único para la persona"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado del consultor"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: admin_catalog_consultants
+            baseColumnNames: person_id
+            referencedTableName: system_catalog_persons
+            referencedColumnNames: person_id
+            constraintName: admin_catalog_consultants_fk_1
+
+        - createTable:
+            tableName: admin_configuration_group_users
+            columns:
+              - column:
+                  name: group_id
+                  type: BIGINT
+                  remarks: "Identificador único para del grupo"
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  remarks: "Identificador único del usuario"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estatus del usuario en el grupo"
+              - column:
+                  name: boss_id
+                  type: BIGINT
+                  remarks: "Identificador único del jefe del usuario en el grupo"
+              - column:
+                  name: assigned_by
+                  type: BIGINT
+                  remarks: "Usuario que asignó al usuario en el grupo"
+              - column:
+                  name: assigned_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de asignación del usuario al grupo"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: admin_configuration_group_users
+            baseColumnNames: group_id
+            referencedTableName: system_catalog_groups
+            referencedColumnNames: group_id
+            constraintName: admin_configuration_group_users_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: admin_configuration_group_users
+            baseColumnNames: user_id
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: admin_configuration_group_users_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: admin_configuration_group_users
+            baseColumnNames: boss_id
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: admin_configuration_group_users_fk_3
+
+        - addForeignKeyConstraint:
+            baseTableName: admin_configuration_group_users
+            baseColumnNames: assigned_by
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: admin_configuration_group_users_fk_4

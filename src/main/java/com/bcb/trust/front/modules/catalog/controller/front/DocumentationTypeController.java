@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogDocumentTypeEntity;
-import com.bcb.trust.front.modules.catalog.model.repository.CatalogDocumentTypeEntityRepository;
+import com.bcb.trust.front.modules.admin.model.entity.CatalogDocumentTypeEntity;
+import com.bcb.trust.front.modules.admin.model.repository.CatalogDocumentTypeEntityRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -37,9 +37,8 @@ public class DocumentationTypeController {
 
     @GetMapping("/document-type/create")
     public String create(@RequestParam(required = false) String param) {
-        
+
         return "catalog/document-type/create";
     }
-    
-    
+
 }

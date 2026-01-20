@@ -1,0 +1,200 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup inserts for system_catalog_profiles
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Administrador de Sistema"
+              - column:
+                  name: members
+                  value: "2"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Subdirector de Sistemas"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Oficial Seguridad de la Información"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Analista Seguridad de la Información"
+              - column:
+                  name: members
+                  value: "2"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Director Jurídico y Fiduciario"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Subdirector Jurídico y Fiduciario"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Coordinador Mesa Fiduciaria"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Analista Mesa Fiduciaria"
+              - column:
+                  name: members
+                  value: "10"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Coordinador Operación Fiduciario"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Analista Operación Fiduciario"
+              - column:
+                  name: members
+                  value: "10"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Subdirector Jurídico"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Analista Jurídico"
+              - column:
+                  name: members
+                  value: "10"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Gerente PLD"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Auxiliar PLD"
+              - column:
+                  name: members
+                  value: "10"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Subdirector Métodos y Procedimientos"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Gerente de Métodos y Procedimientos"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Subdirector de Soporte a Produccion y Proyectos"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Director de Operaciones"
+              - column:
+                  name: members
+                  value: "1"
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column:
+                  name: name
+                  value: "Director General Adjunto"
+              - column:
+                  name: members
+                  value: "1"

@@ -4,35 +4,30 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogMovementType;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustEntity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "system_users")
+@Table(name = "system_catalog_users")
 public class SystemUserEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
-    @ManyToOne
-    @JoinColumn(name = "profile_id", nullable = false)
-    private SystemProfileEntity profile;
 
     private String nickname;
 
@@ -41,18 +36,25 @@ public class SystemUserEntity extends CommonEntity {
     private String email;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "PersonId", referencedColumnName = "PersonId")
+    @JoinColumn(name = "personId", referencedColumnName = "personId")
     private CatalogPersonEntity person;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "registeredBy", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RequestRequestEntity> requestSet;
+    private List<RequestRequestEntity> requestList;
 
     @OneToMany(mappedBy = "registeredBy", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TrustTrustEntity> trustSet;
+    private List<TrustTrustEntity> trustList;
+
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustCatalogMovementType> movementTypeList;
+
+    @OneToMany(mappedBy = "assignedBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ConfigurationProfileResourceEntity> profileResourceList;
 
     public SystemUserEntity() {
     }
@@ -63,14 +65,6 @@ public class SystemUserEntity extends CommonEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public SystemProfileEntity getProfile() {
-        return profile;
-    }
-
-    public void setProfile(SystemProfileEntity profile) {
-        this.profile = profile;
     }
 
     public String getNickname() {
@@ -113,18 +107,18 @@ public class SystemUserEntity extends CommonEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     @Override
     public String toString() {
-        return "SystemUser [userId=" + userId + ", profile=" + profile + ", nickname=" + nickname + ", access=" + access
-                + ", email=" + email + ", person=" + person + ", status=" + status + ", created=" + created + "]";
+        return "SystemUser [userId=" + userId + ", nickname=" + nickname + ", access=" + access
+                + ", email=" + email + ", person=" + person + ", status=" + status + ", created=" + createdAt + "]";
     }
 
     @Override
@@ -135,33 +129,32 @@ public class SystemUserEntity extends CommonEntity {
 
         return CommonEntity.statuses[this.status];
     }
-    
+
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
         map.put("userId", this.userId);
         map.put("nickname", this.nickname);
         map.put("email", this.email);
-        map.put("profile", this.profile.toMap());
         map.put("person", this.person.toMap());
         map.put("status", this.status);
-        map.put("created", this.created);
+        map.put("created", this.createdAt);
 
         return map;
     }
 
-    public Set<RequestRequestEntity> getRequestSet() {
-        return requestSet;
+    public List<RequestRequestEntity> getRequestList() {
+        return requestList;
     }
 
-    public void setRequestSet(Set<RequestRequestEntity> requestSet) {
-        this.requestSet = requestSet;
+    public void setRequestList(List<RequestRequestEntity> requestList) {
+        this.requestList = requestList;
     }
 
-    public List<TrustTrustEntity> getTrustSet() {
-        return trustSet;
+    public List<TrustTrustEntity> getTrustList() {
+        return trustList;
     }
 
-    public void setTrustSet(List<TrustTrustEntity> trustSet) {
-        this.trustSet = trustSet;
-    }    
+    public void setTrustList(List<TrustTrustEntity> trustList) {
+        this.trustList = trustList;
+    }
 }

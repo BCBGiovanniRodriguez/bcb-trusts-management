@@ -16,7 +16,6 @@ import com.bcb.trust.front.service.LegacyService;
 import com.bcb.trust.front.service.MassiveReportService;
 import com.bcb.trust.front.service.ReportService;
 
-
 @Controller
 public class DashboardController {
 
@@ -41,16 +40,16 @@ public class DashboardController {
         model.addAttribute("workersForProcess", "Usuario Fiduciario");
 
         try {
-            //reportService.generateReport();
+            // reportService.generateReport();
             massiveReportService.process(1045);
-            //partialBalanceService.calculatePartialBalance(1045);
+            // partialBalanceService.calculatePartialBalance(1045);
         } catch (Exception e) {
             System.out.println("DashboardControllerMessage: " + e.getMessage());
         }
 
         return "dashboard/index";
     }
-    
+
     @ModelAttribute("systemUserEntity")
     public SystemUserEntity systemUserEntity(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -58,10 +57,14 @@ public class DashboardController {
         return systemUserEntity;
     }
 
-    @ModelAttribute("systemProfileEntity")
-    public SystemProfileEntity systemProfileEntity(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        SystemUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
-        return systemUserEntity.getProfile();
-    }
+    /*
+     * @ModelAttribute("systemProfileEntity")
+     * public SystemProfileEntity systemProfileEntity(Authentication authentication)
+     * {
+     * UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+     * SystemUserEntity systemUserEntity =
+     * systemUserEntityRepository.findByNickname(userDetails.getUsername());
+     * return systemUserEntity.getProfile();
+     * }
+     */
 }

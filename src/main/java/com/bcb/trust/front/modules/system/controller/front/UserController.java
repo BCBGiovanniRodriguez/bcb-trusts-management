@@ -17,7 +17,6 @@ import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 import com.bcb.trust.front.modules.system.model.repository.SystemProfileRepository;
 import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
 
-
 @Controller
 @RequestMapping("/system")
 public class UserController {
@@ -38,7 +37,7 @@ public class UserController {
                 userEntityList = systemUserEntityRepository.findByStatus(status);
             }
 
-            profileEntityList = systemProfileRepository.findByStatus(1);
+            profileEntityList = systemProfileRepository.findAll();
         } catch (Exception e) {
             System.out.println("" + e.getLocalizedMessage());
         }
@@ -56,7 +55,7 @@ public class UserController {
         List<SystemProfileEntity> profileEntityList = null;
 
         try {
-            profileEntityList = systemProfileRepository.findByStatus(1);
+            profileEntityList = systemProfileRepository.findAll();
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
@@ -73,7 +72,7 @@ public class UserController {
             Optional<SystemUserEntity> result = systemUserEntityRepository.findById(id);
 
             if (!result.isPresent()) {
-                
+
             } else {
                 userEntity = result.get();
             }
@@ -85,5 +84,5 @@ public class UserController {
 
         return "system/user/detail";
     }
-    
+
 }

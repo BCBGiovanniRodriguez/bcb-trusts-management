@@ -1,7 +1,6 @@
 package com.bcb.trust.front.modules.system.model.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,6 +10,6 @@ import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
 @Repository
 public interface SystemProfileRepository extends JpaRepository<SystemProfileEntity, Long> {
 
-    List<SystemProfileEntity> findByStatus(Integer status);
-    
+    // List<SystemProfileEntity> findByStatus(Integer status);
+
 }

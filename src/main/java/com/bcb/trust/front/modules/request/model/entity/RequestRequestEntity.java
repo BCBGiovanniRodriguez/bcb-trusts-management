@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddressEntity;
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
 
 import jakarta.persistence.CascadeType;
@@ -25,43 +26,42 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "request_requests")
+@Table(name = "request_catalog_requests")
 public class RequestRequestEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long requestId;
 
-    @Column(nullable = false)
-    private Integer number;
-
-    private Integer trustChange;
-
-    private String trustChangeTrust;
-
-    private Integer wasRefered;
-
-    private Integer wasReferedBy;
-
-    private String wasReferedByFullName;
-
     @ManyToOne
     @JoinColumn(name = "trust_type_id", nullable = false)
-    private TrustTrustTypeEntity trustTypeEntity;
+    private TrustCatalogTrustTypeEntity trustTypeEntity;
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
     private CatalogAddressEntity addressEntity;
 
+    @Column(nullable = false)
+    private Integer number;
+
+    private String name;
+
     @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @JoinColumn(name = "personId", nullable = false)
     private CatalogPersonEntity personEntity;
 
+    @Column(columnDefinition = "TINYINT(1)")
+    private Integer isTrustChange;
+
+    private String trustChangeName;
+
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer state;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
-    
-    private LocalDateTime created;
+
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "registered_by", nullable = false)
@@ -71,7 +71,7 @@ public class RequestRequestEntity extends CommonEntity {
     private List<TrustTrustorEntity> trustorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TrustTrustorEntity> trusteeList = new ArrayList<>();
+    private List<TrustTrusteeEntity> trusteeList = new ArrayList<>();
 
     public static final Integer WAS_REFERED_BY_UNKOWN = 0;
 
@@ -85,7 +85,8 @@ public class RequestRequestEntity extends CommonEntity {
 
     public static final Integer WAS_REFERED_BY_OTHER = 5;
 
-    public static String[] wasRefereredBy = {"Seleccione Opción", "Fiduciario", "Legal", "Asesor", "Promotor", "Otro"};
+    public static String[] wasRefereredBy = { "Seleccione Opción", "Fiduciario", "Legal", "Asesor", "Promotor",
+            "Otro" };
 
     public static final Integer STATE_REGISTERED = 1;
 
@@ -120,51 +121,35 @@ public class RequestRequestEntity extends CommonEntity {
         this.number = number;
     }
 
-    public Integer getTrustChange() {
-        return trustChange;
+    public String getName() {
+        return name;
     }
 
-    public void setTrustChange(Integer trustChange) {
-        this.trustChange = trustChange;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getTrustChangeTrust() {
-        return trustChangeTrust;
+    public Integer getIsTrustChange() {
+        return isTrustChange;
     }
 
-    public void setTrustChangeTrust(String trustChangeName) {
-        this.trustChangeTrust = trustChangeName;
+    public void setIsTrustChange(Integer trustChange) {
+        this.isTrustChange = trustChange;
     }
 
-    public Integer getWasRefered() {
-        return wasRefered;
+    public String getTrustChangeName() {
+        return trustChangeName;
     }
 
-    public void setWasRefered(Integer wasRefered) {
-        this.wasRefered = wasRefered;
+    public void setTrustChangeName(String trustChangeName) {
+        this.trustChangeName = trustChangeName;
     }
 
-    public Integer getWasReferedBy() {
-        return wasReferedBy;
-    }
-
-    public void setWasReferedBy(Integer wasReferedBy) {
-        this.wasReferedBy = wasReferedBy;
-    }
-
-    public String getWasReferedByFullName() {
-        return wasReferedByFullName;
-    }
-
-    public void setWasReferedByFullName(String wasReferedByFullName) {
-        this.wasReferedByFullName = wasReferedByFullName;
-    }
-
-    public TrustTrustTypeEntity getTrustTypeEntity() {
+    public TrustCatalogTrustTypeEntity getTrustTypeEntity() {
         return trustTypeEntity;
     }
 
-    public void setTrustTypeEntity(TrustTrustTypeEntity trustTypeEntity) {
+    public void setTrustTypeEntity(TrustCatalogTrustTypeEntity trustTypeEntity) {
         this.trustTypeEntity = trustTypeEntity;
     }
 
@@ -200,12 +185,12 @@ public class RequestRequestEntity extends CommonEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     public SystemUserEntity getRegisteredBy() {
@@ -226,47 +211,28 @@ public class RequestRequestEntity extends CommonEntity {
     }
 
     public String getTrustChangeAsString() throws Exception {
-        if (this.trustChange < 0 || (this.trustChange > CommonEntity.simpleOptions.length)) {
+        if (this.isTrustChange < 0 || (this.isTrustChange > CommonEntity.simpleOptions.length)) {
             throw new Exception("RequestRequestEntity::getTrustChangeAsString::Valor de trustChange fuera del rango");
         }
 
-        return CommonEntity.simpleOptions[this.trustChange];
-    }
-    
-    public String getWasReferedAsString() throws Exception {
-        if (this.wasRefered < 0 || (this.wasRefered > CommonEntity.simpleOptions.length)) {
-            throw new Exception("RequestRequestEntity::getWasReferedAsString::Valor de referido fuera del rango");
-        }
-
-        return CommonEntity.simpleOptions[this.wasRefered];
+        return CommonEntity.simpleOptions[this.isTrustChange];
     }
 
-    public String getWasReferedByAsString() throws Exception {
-        if (this.wasReferedBy < 0 || (this.wasReferedBy > RequestRequestEntity.wasRefereredBy.length)) {
-            throw new Exception("RequestRequestEntity::getWasReferedByAsString::Valor de referido por fuera del rango");
-        }
-
-        return RequestRequestEntity.wasRefereredBy[this.wasReferedBy];
-    }
-    
     public Map<String, Object> toMap() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("requestId", this.requestId);
         map.put("number", this.number);
-        map.put("trustChange", this.trustChange);
-        map.put("trustChangeName", this.trustChangeTrust);
-        map.put("wasRefered", this.wasRefered);
-        map.put("wasReferedBy", this.wasReferedBy);
-        map.put("wasReferedByFullName", this.wasReferedByFullName);
+        map.put("name", this.name);
+        map.put("trustChange", this.isTrustChange);
+        map.put("trustChangeName", this.trustChangeName);
         map.put("trustType", this.trustTypeEntity.toMap());
         map.put("address", this.addressEntity.toMap());
         map.put("person", this.personEntity.toMap());
         map.put("state", this.state);
         map.put("status", this.status);
-        map.put("created", this.created);
+        map.put("created", this.createdAt);
 
         return map;
     }
-    
-    
+
 }

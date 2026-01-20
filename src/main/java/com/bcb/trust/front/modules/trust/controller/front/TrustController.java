@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustEntity;
 import com.bcb.trust.front.modules.trust.model.repository.TrustTrustRepository;
 

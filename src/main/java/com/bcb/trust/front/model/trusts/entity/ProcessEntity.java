@@ -6,6 +6,7 @@ import java.util.Set;
 import com.bcb.trust.front.model.trusts.enums.ProcessStateEnum;
 import com.bcb.trust.front.model.trusts.enums.ProcessTypeEnum;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,28 +15,29 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "trust_process")
+@Table(name = "trust_trust_processes")
 public class ProcessEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long processId;
 
-    private ProcessTypeEnum processType;
+    private ProcessTypeEnum type;
 
-    private ProcessStateEnum processState;
+    private ProcessStateEnum state;
 
     private long totalElements;
-    
+
     private long elementsProcessed;
 
-    private double processPercentage; 
+    @Column(columnDefinition = "DECIMAL(5,2)")
+    private double processPercent;
 
     private String path;
 
+    private Date createdAt;
+
     @OneToMany(mappedBy = "process")
     private Set<ProcessDetailEntity> details;
-
-    private Date created;
 
     public ProcessEntity() {
     }
@@ -48,20 +50,20 @@ public class ProcessEntity {
         this.processId = processId;
     }
 
-    public ProcessTypeEnum getProcessType() {
-        return processType;
+    public ProcessTypeEnum getType() {
+        return type;
     }
 
-    public void setProcessType(ProcessTypeEnum processType) {
-        this.processType = processType;
+    public void setType(ProcessTypeEnum processType) {
+        this.type = processType;
     }
 
-    public ProcessStateEnum getProcessState() {
-        return processState;
+    public ProcessStateEnum getState() {
+        return state;
     }
 
-    public void setProcessState(ProcessStateEnum processState) {
-        this.processState = processState;
+    public void setState(ProcessStateEnum processState) {
+        this.state = processState;
     }
 
     public long getTotalElements() {
@@ -80,12 +82,12 @@ public class ProcessEntity {
         this.elementsProcessed = elementsProcessed;
     }
 
-    public double getProcessPercentage() {
-        return processPercentage;
+    public double getProcessPercent() {
+        return processPercent;
     }
 
-    public void setProcessPercentage(double processPercentage) {
-        this.processPercentage = processPercentage;
+    public void setProcessPercent(double processPercentage) {
+        this.processPercent = processPercentage;
     }
 
     public String getPath() {
@@ -102,13 +104,14 @@ public class ProcessEntity {
 
     public void setDetails(Set<ProcessDetailEntity> details) {
         this.details = details;
-    }    
-
-    public Date getCreated() {
-        return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public Date getCreatedAt() {
+        return createdAt;
     }
+
+    public void setCreatedAt(Date created) {
+        this.createdAt = created;
+    }
+
 }

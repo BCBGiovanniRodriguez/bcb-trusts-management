@@ -2,13 +2,13 @@ package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,13 +19,14 @@ public class SystemUserActivityEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userActivityId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "permissionId", referencedColumnName = "permissionId")
-    private SystemPermissionEntity permissionEntity;
+    @ManyToOne
+    @JoinColumn(name = "resourceId", referencedColumnName = "resourceId")
+    private SystemResourceEntity resourceEntity;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     public SystemUserActivityEntity() {
     }
@@ -38,12 +39,12 @@ public class SystemUserActivityEntity {
         this.userActivityId = userActivityId;
     }
 
-    public SystemPermissionEntity getPermissionEntity() {
-        return permissionEntity;
+    public SystemResourceEntity getResourceEntity() {
+        return resourceEntity;
     }
 
-    public void setPermissionEntity(SystemPermissionEntity permissionEntity) {
-        this.permissionEntity = permissionEntity;
+    public void setResourceEntity(SystemResourceEntity resourceEntity) {
+        this.resourceEntity = resourceEntity;
     }
 
     public Integer getStatus() {
@@ -54,18 +55,18 @@ public class SystemUserActivityEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     @Override
     public String toString() {
-        return "SystemUserActivityEntity [userActivityId=" + userActivityId + ", permissionEntity=" + permissionEntity
-                + ", status=" + status + ", created=" + created + "]";
+        return "SystemUserActivityEntity [userActivityId=" + userActivityId + ", resourceEntity=" + resourceEntity
+                + ", status=" + status + ", created=" + createdAt + "]";
     }
 
 }

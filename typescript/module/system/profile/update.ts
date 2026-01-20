@@ -7,14 +7,14 @@ $(() => {
         nameJQuery: JQuery = $("#name"),
         membersJQuery: JQuery = $("#members"),
         localApiSystem: string = "/api/system",
-        permissionIds: string[] = [],
-        permissionTable = $("#permissionTable"),
+        resourceIds: string[] = [],
+        resourceTable = $("#resourceTable"),
         confirmOperationModal: JQuery = $("#confirmOperationModal");
 
         type SystemProfileObj = {
             name: string | undefined,
             members: string | undefined,
-            permissionIds: string[]
+            resourceIds: string[]
         };
 
         btnUpdateProfileJQuery.on('click', function(this: any) {
@@ -22,15 +22,15 @@ $(() => {
                 endpointProfile: string = localApiSystem + "/profile/" + profileIdJQuery.val(),
                 profileObject = {} as SystemProfileObj;
 
-            permissionTable.find("tbody tr td input.permission:checked").each(function(this: any) {
-                let value = String($(this).attr("permission"));
+            resourceTable.find("tbody tr td input.resource:checked").each(function(this: any) {
+                let value = String($(this).attr("resource"));
 
-                permissionIds.push(value);
+                resourceIds.push(value);
             });
 
             profileObject.name = nameJQuery.val()?.toString();
             profileObject.members = membersJQuery.val()?.toString();
-            profileObject.permissionIds = permissionIds;
+            profileObject.resourceIds = resourceIds;
 
             $.ajax({
                 method: 'PUT',

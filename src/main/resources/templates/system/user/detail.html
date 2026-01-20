@@ -22,11 +22,12 @@
 
                 <div class="app-content">
                     <div class="container-fluid">
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="card card-outline card-primary mb-4">
                                     <div class="card-header">
-                                        <h3 class="card-title"><strong>Detalle de Usuario</strong></h3>
+                                        <h3 class="card-title"><strong>Usuario de Sistema</strong></h3>
 
                                         <div class="card-tools">
                                             <a class="btn btn-sm btn-info" th:href="@{/system/user}">
@@ -35,7 +36,6 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <h5>Perfil de Usuario</h5>
                                         <div class="table-responsive">
                                             <table class="table table-sm table-striped table-bordered" id="userProfileTable">
                                                 <thead>
@@ -43,10 +43,10 @@
                                                         <th>#</th>
                                                         <th>Nickname</th>
                                                         <th>Correo Electrónico</th>
-                                                        <th>Perfil</th>
+                                                        <th>Nombre</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
-                                                        <th hidden>Acciones</th>
+                                                        <th>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -54,40 +54,14 @@
                                                         <td th:text="${userEntity.userId}"></td>
                                                         <td th:text="${userEntity.nickname}"></td>
                                                         <td th:text="${userEntity.email}"></td>
-                                                        <td th:text="${userEntity.profile.name}"></td>
+                                                        <td th:text="${userEntity.person.getFullName()}"></td>
                                                         <td th:text="${userEntity.statusAsString}"></td>
-                                                        <td th:text="${#temporals.format(userEntity.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                                        <td hidden></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <hr>
-                                        <h5>Datos Personales</h5>
-                                        <div class="table-responsive">
-                                            <table class="table table-sm table-striped table-bordered" id="userProfileTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Primer Nombre</th>
-                                                        <th>Segundo Nombre</th>
-                                                        <th>Apellido Paterno</th>
-                                                        <th>Apellido Materno</th>
-                                                        <th>Estado</th>
-                                                        <th>Fecha de Registro</th>
-                                                        <th hidden>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td th:text="${userEntity.person.personId}"></td>
-                                                        <td th:text="${userEntity.person.firstName}"></td>
-                                                        <td th:text="${userEntity.person.secondName}"></td>
-                                                        <td th:text="${userEntity.person.lastName}"></td>
-                                                        <td th:text="${userEntity.person.secondLastName}"></td>
-                                                        <td th:text="${userEntity.statusAsString}"></td>
-                                                        <td th:text="${#temporals.format(userEntity.person.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                                        <td hidden></td>
+                                                        <td th:text="${#temporals.format(userEntity.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                        <td>
+                                                            <a class="btn btn-sm btn-warning" th:href="@{/system/user/edit/{id}(id=${userEntity.userId})}">
+                                                                <i class="fa fa-edit"></i> Editar
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -95,6 +69,178 @@
                                     </div>
                                 </div>
                                 
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Perfiles Asignados</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a class="btn btn-sm btn-success" th:href="@{/system/user/profiles/{id}(id=${userEntity.userId})}">
+                                                <i class="fa fa-plus"></i> Agregar Perfil
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-sm table-striped table-bordered" id="userAssignedProfilesTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Perfil</th>
+                                                    <th>Asignado Por</th>
+                                                    <th>Fecha de Asignación</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Datos Personales</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-sm table-striped table-bordered" id="userProfilesTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Primer Nombre</th>
+                                                    <th>Segundo Nombre</th>
+                                                    <th>Apellido Paterno</th>
+                                                    <th>Apellido Materno</th>
+                                                    <th>Fecha de Nacimiento</th>
+                                                    <th>Género</th>
+                                                    <th>CURP</th>
+                                                    <th>RFC</th>
+                                                    <th>Tipo Persona</th>
+                                                    <th>Estado Migratorio</th>
+                                                    <th>Estado</th>
+                                                    <th>Fecha de Creación</th>
+                                                    <th hidden>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td th:text="${userEntity.person.personId}"></td>
+                                                    <td th:text="${userEntity.person.firstName}"></td>
+                                                    <td th:text="${userEntity.person.secondName}"></td>
+                                                    <td th:text="${userEntity.person.lastName}"></td>
+                                                    <td th:text="${userEntity.person.secondLastName}"></td>
+                                                    <td th:text="${#temporals.format(userEntity.person.birthdate, 'yyyy-MM-dd')}"></td>
+                                                    <td th:text="${userEntity.person.genderAsString}"></td>
+                                                    <td th:text="${userEntity.person.curp}"></td>
+                                                    <td th:text="${userEntity.person.rfc}"></td>
+                                                    <td th:text="${userEntity.person.typeAsString}"></td>
+                                                    <td th:text="${userEntity.person.foreignStatusAsString}"></td>
+                                                    <td th:text="${userEntity.person.statusAsString}"></td>
+                                                    <td th:text="${#temporals.format(userEntity.person.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td hidden></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Direcciones</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-sm table-striped table-bordered" id="userAddressesTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Dirección</th>
+                                                    <th>Fecha de Creación</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Teléfonos</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-sm table-striped table-bordered" id="userPhonesTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Telefono</th>
+                                                    <th>Tipo</th>
+                                                    <th>Fecha de Creación</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="card card-outline card-primary mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Correos</strong></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-sm table-striped table-bordered" id="userEmailsTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Correo</th>
+                                                    <th>Tipo</th>
+                                                    <th>Fecha de Creación</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

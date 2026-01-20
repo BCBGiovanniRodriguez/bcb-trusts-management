@@ -3,6 +3,7 @@ package com.bcb.trust.front.modules.trust.model.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "trust_quarters")
+@Table(name = "trust_trust_quarters")
 public class TrustQuarterEntity {
 
     @Id
@@ -21,13 +22,14 @@ public class TrustQuarterEntity {
 
     private Integer year;
 
+    @Column(columnDefinition = "TINYINT")
     private Integer fixed;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     public TrustQuarterEntity() {
     }
@@ -80,14 +82,12 @@ public class TrustQuarterEntity {
         this.endDate = endDate;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
-
-    
 
 }

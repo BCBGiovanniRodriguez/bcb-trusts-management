@@ -17,7 +17,7 @@ import com.bcb.trust.front.model.trusts.enums.StatusEnum;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
-import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.repository.TrustTrustTypeRepository;
 
 @Controller
@@ -46,22 +46,20 @@ public class RequestController {
 
     @GetMapping("/request/detail/{id}")
     public String detail(@PathVariable Long id) {
-        
+
         return "request/request/detail";
     }
-    
 
     @PostMapping("/request")
     public String querySubmit(@RequestBody(required = false) String entity) {
-        //TODO: process POST request
-        
+        // TODO: process POST request
+
         return "request/request/index";
     }
-    
 
     @GetMapping("/request/create")
     public String requestCreateForm(@RequestParam(required = false) String param, Model model) {
-        List<TrustTrustTypeEntity> trustTypeEntityList = new ArrayList<>();
+        List<TrustCatalogTrustTypeEntity> trustTypeEntityList = new ArrayList<>();
 
         try {
             trustTypeEntityList = trustTypeRepository.findByStatus(CommonEntity.STATUS_ENABLED);
@@ -77,8 +75,8 @@ public class RequestController {
 
     @PostMapping("/request/create")
     public String requestCreateSubmit(@RequestBody(required = false) String entity) {
-        
+
         return "request/request/create";
     }
-    
+
 }

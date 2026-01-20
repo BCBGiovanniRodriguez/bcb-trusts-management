@@ -42,13 +42,13 @@ $(() => {
         nickname: string | undefined,
         person: Person | undefined,
         profileId: number | undefined,
-        permissionList: number[]
+        resourceList: number[]
     }
 
     btnValidateJQuery.on('click', function() {
         errorList = [];
 
-        if(validateProfileAndPermissions() && validatePerson()) {
+        if(validateProfileAndResources() && validatePerson()) {
             // @ts-ignore
             successValidationModalJQuery.modal('show');
             btnSaveUserJQuery.removeAttr('hidden');
@@ -68,13 +68,13 @@ $(() => {
     profileJQuery.on('change', function(this: any) {
         let self = $(this),
             profileId = Number(self.val()),
-            tbody = $("#profilePermissionTable").find("tbody");
+            tbody = $("#profileResourceTable").find("tbody");
 
         $.ajax({
             method: 'GET',
             contentType: 'application/json',
             cache: false,
-            url: localApiSystem + '/profile/permission/' + profileId
+            url: localApiSystem + '/profile/resource/' + profileId
         }).fail((jqXHR, textStatus, error) => {
             console.log(jqXHR);
             console.log(textStatus);
@@ -95,7 +95,7 @@ $(() => {
                     $.each(data, function(i, item) {
     
                         let tr = $('<tr>'), 
-                            tdId = $('<td>', {'text': item.permissionId}),
+                            tdId = $('<td>', {'text': item.resourceId}),
                             tdModule = $('<td>', {'text': item.moduleAsString}),
                             tdCode = $('<td>', {'text': item.code}),
                             tdName = $('<td>', {'text': item.name});
@@ -169,7 +169,7 @@ $(() => {
         return valid;
     }
     
-    function validateProfileAndPermissions() {
+    function validateProfileAndResources() {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const validateEmail = (email: string) => emailRegex.test(email);
 
@@ -207,7 +207,7 @@ $(() => {
     });
 
     btnSaveUserJQuery.on('click', function() {
-        if(validatePerson() && validateProfileAndPermissions()) {
+        if(validatePerson() && validateProfileAndResources()) {
             let endpointUser: string = localApiSystem + "/user",
                 personJson: Person = {} as Person,
                 userJson: User = {} as User;

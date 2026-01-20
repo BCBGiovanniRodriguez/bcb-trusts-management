@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changelog/mvp/01_system.yaml
+  - include:
+      file: classpath:db/changelog/mvp/02_admin.yaml
+  - include:
+      file: classpath:db/changelog/mvp/03_request.yaml
+  - include:
+      file: classpath:db/changelog/mvp/04_trust.yaml
+  - include:
+      file: classpath:db/changelog/mvp/05_sisbur.yaml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-001-insert-catalog_profiles.yml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-002-insert-system_catalog_person.yml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-003-insert-system_catalog_users.yml

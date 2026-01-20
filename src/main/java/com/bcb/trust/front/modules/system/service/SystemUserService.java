@@ -14,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 import com.bcb.trust.front.modules.system.model.repository.SystemProfileRepository;
@@ -67,12 +67,12 @@ public class SystemUserService {
                 catalogPersonEntity.setGender(Integer.parseInt(personMap.get("gender").toString()));
 
                 String birthDateString = personMap.get("birthDate").toString();
-                catalogPersonEntity.setBirthDate(LocalDate.parse(birthDateString, isoFormatter));
+                catalogPersonEntity.setBirthdate(LocalDate.parse(birthDateString, isoFormatter));
                 
                 catalogPersonEntity.setRfc(personMap.get("rfc").toString());
                 catalogPersonEntity.setCurp(personMap.get("curp").toString());
                 catalogPersonEntity.setType(CatalogPersonEntity.TYPE_PERSON);
-                catalogPersonEntity.setCreated(now);
+                catalogPersonEntity.setCreatedAt(now);
                 
                 catalogPersonEntityRepository.save(catalogPersonEntity);
 
@@ -80,10 +80,10 @@ public class SystemUserService {
                 systemUserEntity.setEmail(data.get("email").toString());
                 systemUserEntity.setNickname(data.get("nickname").toString());
                 systemUserEntity.setAccess(encoder.encode("test"));
-                systemUserEntity.setProfile(profileEntity);
+                //systemUserEntity.setProfile(profileEntity);
                 systemUserEntity.setPerson(catalogPersonEntity);
                 systemUserEntity.setStatus(SystemUserEntity.STATUS_ENABLED);
-                systemUserEntity.setCreated(now);
+                systemUserEntity.setCreatedAt(now);
                 systemUserEntityRepository.save(systemUserEntity);
 
                 logger.info("[SystemUserService][createUser][Usuario de Sistema registrado: " + systemUserEntity.getNickname() + "]");

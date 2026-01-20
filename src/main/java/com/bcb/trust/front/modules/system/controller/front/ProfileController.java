@@ -1,6 +1,7 @@
 package com.bcb.trust.front.modules.system.controller.front;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemPermissionEntity;
+import com.bcb.trust.front.modules.system.model.entity.SystemResourceEntity;
+import com.bcb.trust.front.modules.system.model.entity.ConfigurationProfileResourceEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemPermissionRepository;
+import com.bcb.trust.front.modules.system.model.repository.SystemResourceRepository;
 import com.bcb.trust.front.modules.system.model.repository.SystemProfileRepository;
 
 @Controller
@@ -27,22 +29,23 @@ public class ProfileController {
     private SystemProfileRepository systemProfileRepository;
 
     @Autowired
-    private SystemPermissionRepository systemPermissionRepository;
+    private SystemResourceRepository systemResourceRepository;
 
     @GetMapping("/profile")
     public String index(@RequestParam(required = false) Integer status, Model model) {
-        List<SystemProfileEntity> profileEntityList = null;
+        List<SystemProfileEntity> profileEntityList = new ArrayList<>();
         String[] statuses = null;
 
         try {
             statuses = CommonEntity.statuses;
 
             if (status != null) {
-                profileEntityList = systemProfileRepository.findByStatus(status);
+                // profileEntityList = systemProfileRepository.findByStatus(status);
+                profileEntityList = systemProfileRepository.findAll();
             } else if (status == null) {
                 status = 0;
             }
-            
+
         } catch (Exception e) {
             System.out.println("" + e.getLocalizedMessage());
         }
@@ -58,9 +61,9 @@ public class ProfileController {
     public String create() {
 
         try {
-            
+
         } catch (Exception e) {
-            
+
         }
 
         return "system/profile/create";
@@ -69,35 +72,53 @@ public class ProfileController {
     @GetMapping("/profile/update/{id}")
     public String update(@PathVariable Long id, Model model) {
         SystemProfileEntity systemProfileEntity = null;
-        Set<SystemPermissionEntity> systemProfilePermissionEntityList = null;
-        List<SystemPermissionEntity> systemPermissionList = new ArrayList<>();
-        try {
-            systemPermissionList = systemPermissionRepository.findAll();
-            Optional<SystemProfileEntity> result = systemProfileRepository.findById(id);
-            
-            if (!result.isPresent()) {
-                throw new Exception("");
-            } else {
-                systemProfileEntity = result.get();
-                systemProfilePermissionEntityList = systemProfileEntity.getPermissions();
-                for (SystemPermissionEntity systemPermissionEntity : systemProfilePermissionEntityList) {
-                    System.out.println("PermisoDelPerfil:" + systemPermissionEntity.getName() );
-                }
+        List<ConfigurationProfileResourceEntity> profileResourceList = new ArrayList<>();
 
-                for (SystemPermissionEntity systemPermissionEntity : systemPermissionList) {
-                    if (systemProfilePermissionEntityList.contains(systemPermissionEntity)) {
-                        System.out.println("Contenido en lista principal: " + systemPermissionEntity.getName());
-                    }
-                }
+        Set<SystemResourceEntity> systemProfileResourceEntityList = new HashSet<>();
+        List<SystemResourceEntity> systemResourceList = new ArrayList<>();
+        String resultMessage = "";
+        Integer resultStatus = 0;
+
+        try {
+            systemResourceList = systemResourceRepository.findAll();
+            Optional<SystemProfileEntity> result = systemProfileRepository.findById(id);
+
+            if (!result.isPresent()) {
+                resultMessage = "Perfil no encontrado";
+                resultStatus = 0;
+            } else {
+                resultStatus = 1;
+                systemProfileEntity = result.get();
+                resultMessage = "Perfil encontrado";
+
+                profileResourceList = systemProfileEntity.getProfileResourceList();
+                /*
+                 * systemProfileResourceEntityList = systemProfileEntity.getResources();
+                 * for (SystemResourceEntity systemResourceEntity :
+                 * systemProfileResourceEntityList) {
+                 * System.out.println("RecursoDelPerfil:" + systemResourceEntity.getName() );
+                 * }
+                 * 
+                 * for (SystemResourceEntity systemResourceEntity : systemResourceList) {
+                 * if (systemProfileResourceEntityList.contains(systemResourceEntity)) {
+                 * System.out.println("Contenido en lista principal: " +
+                 * systemResourceEntity.getName());
+                 * }
+                 * }
+                 */
             }
 
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
 
+        model.addAttribute("resultStatus", resultStatus);
+        model.addAttribute("resultMessage", resultMessage);
+
+        model.addAttribute("profileResourceList", profileResourceList);
         model.addAttribute("systemProfileEntity", systemProfileEntity);
-        model.addAttribute("systemProfilePermissionEntityList", systemProfilePermissionEntityList);
-        model.addAttribute("systemPermissionList", systemPermissionList);
+        model.addAttribute("systemProfileResourceEntityList", systemProfileResourceEntityList);
+        model.addAttribute("systemResourceList", systemResourceList);
 
         return "system/profile/update";
     }

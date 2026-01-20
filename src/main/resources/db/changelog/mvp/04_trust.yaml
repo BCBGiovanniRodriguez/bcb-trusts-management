@@ -1,0 +1,456 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup for trust module
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - createTable:
+            tableName: trust_catalog_movement_types
+            columns:
+              - column:
+                  name: movement_type_id
+                  type: BIGINT
+                  remarks: "Identificador único para el tipo de movimiento"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(150)
+                  remarks: "Nombre del tipo de movimiento"
+              - column:
+                  name: balance_effect
+                  type: TINYINT
+                  remarks: "Indica el tipo de afectación al saldo"
+              - column:
+                  name: inventory_effect
+                  type: TINYINT
+                  remarks: "Indica el tipo de afectación al inventario"
+              - column:
+                  name: created_by
+                  type: BIGINT
+                  remarks: "Usuario que creó el tipo de movimiento"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha de creación del registro"
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_catalog_movement_types
+            baseColumnNames: created_by
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: trust_catalog_movement_types_fk_1
+
+        - createTable:
+            tableName: trust_catalog_trusts
+            columns:
+              - column:
+                  name: trust_id
+                  type: BIGINT
+                  remarks: "Identificador único para el Fideicomiso"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: number
+                  type: INT
+                  remarks: "Número del Fideicomiso"
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  remarks: "Nombre del Fideicomiso"
+              - column:
+                  name: request_id
+                  type: BIGINT
+                  remarks: "Identificador de la Solicitud"
+              - column:
+                  name: trust_type_id
+                  type: BIGINT
+                  remarks: "Identificador del tipo de Fideicomiso"
+              - column:
+                  name: state
+                  type: TINYINT
+                  remarks: "Estado del Fideicomiso"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado del Fideicomiso"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha de creación del Fideicomiso"
+              - column:
+                  name: registered_by
+                  type: BIGINT
+                  remarks: "Usuario que registro el Fideicomiso"
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_catalog_trusts
+            baseColumnNames: request_id
+            referencedTableName: request_catalog_requests
+            referencedColumnNames: request_id
+            constraintName: trust_catalog_trusts_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_catalog_trusts
+            baseColumnNames: trust_type_id
+            referencedTableName: trust_catalog_trust_types
+            referencedColumnNames: trust_type_id
+            constraintName: trust_catalog_trusts_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_catalog_trusts
+            baseColumnNames: registered_by
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: trust_catalog_trusts_fk_3
+
+        - createTable:
+            tableName: trust_trust_processes
+            columns:
+              - column:
+                  name: process_id
+                  type: BIGINT
+                  remarks: "Identificador único para el proceso"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: type
+                  type: TINYINT
+                  remarks: "Tipo de proceso"
+              - column:
+                  name: state
+                  type: TINYINT
+                  remarks: "Estado del proceso"
+              - column:
+                  name: total_elements
+                  type: BIGINT
+                  remarks: "Total de elementos"
+              - column:
+                  name: elements_processed
+                  type: BIGINT
+                  remarks: "Elementos procesados"
+              - column:
+                  name: process_percent
+                  type: DECIMAL(5,2)
+                  remarks: "Porcentaje de procesamiento"
+              - column:
+                  name: path
+                  type: VARCHAR(250)
+                  remarks: "Ruta del proceso"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha de creación del proceso"
+
+        - createTable:
+            tableName: trust_trust_process_details
+            columns:
+              - column:
+                  name: process_detail_id
+                  type: BIGINT
+                  remarks: "Identificador único para el detalle del proceso"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: process_id
+                  type: BIGINT
+                  remarks: "Identificador del proceso"
+              - column:
+                  name: detail
+                  type: VARCHAR(250)
+                  remarks: "Detalle del proceso"
+              - column:
+                  name: state
+                  type: TINYINT
+                  remarks: "Estado del proceso"
+              - column:
+                  name: filename
+                  type: VARCHAR(255)
+                  remarks: "Nombre del archivo"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha de creación del detalle del proceso"
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_process_details
+            baseColumnNames: process_id
+            referencedTableName: trust_trust_processes
+            referencedColumnNames: process_id
+            constraintName: trust_trust_process_details_fk_1
+
+        - createTable:
+            tableName: trust_trust_quarters
+            columns:
+              - column:
+                  name: quarter_id
+                  type: BIGINT
+                  remarks: "Identificador único para el trimestre"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  remarks: "Nombre del trimestre"
+              - column:
+                  name: year
+                  type: INT
+                  remarks: "Año del trimestre"
+              - column:
+                  name: fixed
+                  type: TINYINT
+                  remarks: "Indicador de fijo"
+              - column:
+                  name: start_date
+                  type: DATE
+                  remarks: "Fecha de inicio del trimestre"
+              - column:
+                  name: end_date
+                  type: DATE
+                  remarks: "Fecha de fin del trimestre"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: trust_trust_workers
+            columns:
+              - column:
+                  name: worker_id
+                  type: BIGINT
+                  remarks: "Identificador único para el trabajador"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: trust_id
+                  type: BIGINT
+                  remarks: "Identificador del Fideicomiso"
+              - column:
+                  name: number
+                  type: INT
+                  remarks: "Número del trabajador"
+              - column:
+                  name: fullname
+                  type: VARCHAR(255)
+                  remarks: "Nombre del trabajador"
+              - column:
+                  name: account
+                  type: INTEGER
+                  remarks: "Nombre del trabajador"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estatus del trabajador"
+              - column:
+                  name: register_date
+                  type: DATE
+                  remarks: "Fecha de alta del trabajador"
+              - column:
+                  name: end_date
+                  type: DATE
+                  remarks: "Fecha de baja del trabajador"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_workers
+            baseColumnNames: trust_id
+            referencedTableName: trust_catalog_trusts
+            referencedColumnNames: trust_id
+            constraintName: trust_trust_workers_fk_1
+
+        - createTable:
+            tableName: trust_trust_worker_deparments
+            columns:
+              - column:
+                  name: department_id
+                  type: BIGINT
+                  remarks: "Identificador único para el departamento"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: trust_id
+                  type: BIGINT
+                  remarks: "Identificador del Fideicomiso"
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  remarks: "Nombre del departamento"
+              - column:
+                  name: number
+                  type: VARCHAR(255)
+                  remarks: "Número del departamento"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_worker_deparments
+            baseColumnNames: trust_id
+            referencedTableName: trust_catalog_trusts
+            referencedColumnNames: trust_id
+            constraintName: trust_trust_worker_deparments_fk_1
+
+        - createTable:
+            tableName: trust_trust_trustees
+            columns:
+              - column:
+                  name: trustee_id
+                  type: BIGINT
+                  remarks: "Identificador único para el proceso"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: trust_id
+                  type: BIGINT
+                  remarks: "Identificador del Fideicomiso"
+              - column:
+                  name: request_id
+                  type: BIGINT
+                  remarks: "Identificador de la Solicitud"
+              - column:
+                  name: person_id
+                  type: BIGINT
+                  remarks: "Identificador de la persona"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Indicador de fijo"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_trustees
+            baseColumnNames: trust_id
+            referencedTableName: trust_catalog_trusts
+            referencedColumnNames: trust_id
+            constraintName: trust_trust_trustees_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_trustees
+            baseColumnNames: request_id
+            referencedTableName: request_catalog_requests
+            referencedColumnNames: request_id
+            constraintName: trust_trust_trustees_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_trustees
+            baseColumnNames: person_id
+            referencedTableName: system_catalog_persons
+            referencedColumnNames: person_id
+            constraintName: trust_trust_trustees_fk_3
+
+        - createTable:
+            tableName: trust_trust_trustors
+            columns:
+              - column:
+                  name: trustor_id
+                  type: BIGINT
+                  remarks: "Identificador único para el Fideicomitente"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: trust_id
+                  type: BIGINT
+                  remarks: "Identificador del Fideicomiso asociado al Fideicomitente"
+              - column:
+                  name: request_id
+                  type: BIGINT
+                  remarks: "Identificador de la solicitud asociada al Fideicomitente"
+              - column:
+                  name: person_id
+                  type: BIGINT
+                  remarks: "Identificador de la persona asociada al Fideicomitente"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estatus del Fideicomitente"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_trustors
+            baseColumnNames: trust_id
+            referencedTableName: trust_catalog_trusts
+            referencedColumnNames: trust_id
+            constraintName: trust_trust_trustors_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_trustors
+            baseColumnNames: request_id
+            referencedTableName: request_catalog_requests
+            referencedColumnNames: request_id
+            constraintName: trust_trust_trustors_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_trustors
+            baseColumnNames: person_id
+            referencedTableName: system_catalog_persons
+            referencedColumnNames: person_id
+            constraintName: trust_trust_trustors_fk_3
+
+        - createTable:
+            tableName: trust_worker_movement_types
+            columns:
+              - column:
+                  name: worker_movement_type_id
+                  type: BIGINT
+                  remarks: "Identificador único para el tipo de movimiento del trabajador"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: trust_id
+                  type: BIGINT
+                  remarks: "Identificador del Fideicomiso"
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  remarks: "Nombre del tipo de movimiento del trabajador"
+              - column:
+                  name: balance_effect
+                  type: TINYINT
+                  remarks: "Indica el tipo de efecto sobre el saldo"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estatus del tipo de movimiento del trabajador"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_worker_movement_types
+            baseColumnNames: trust_id
+            referencedTableName: trust_catalog_trusts
+            referencedColumnNames: trust_id
+            constraintName: trust_worker_movement_types_fk_1

@@ -6,31 +6,37 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "trust_worker_departments")
+@Table(name = "trust_trust_worker_deparments")
 public class TrustWorkerDepartmentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long workerDepartmentId;
+    private Long departmentId;
 
     private String name;
 
     private String number;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "trust_id", nullable = false)
+    private TrustTrustEntity trustEntity;
 
     public TrustWorkerDepartmentEntity() {
     }
 
-    public Long getWorkerDepartmentId() {
-        return workerDepartmentId;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setWorkerDepartmentId(Long workerDepartmentId) {
-        this.workerDepartmentId = workerDepartmentId;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getName() {
@@ -49,13 +55,19 @@ public class TrustWorkerDepartmentEntity {
         this.number = number;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
-    
+    public TrustTrustEntity getTrustEntity() {
+        return trustEntity;
+    }
+
+    public void setTrustEntity(TrustTrustEntity trust) {
+        this.trustEntity = trust;
+    }
 }

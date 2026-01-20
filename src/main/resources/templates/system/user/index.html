@@ -74,8 +74,8 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Nickname</th>
+                                                        <th>Correo Electronico</th>
                                                         <th>Nombre Completo</th>
-                                                        <th>Perfil</th>
                                                         <th>Estado</th>
                                                         <th>Fecha de Registro</th>
                                                         <th>Acciones</th>
@@ -85,10 +85,10 @@
                                                     <tr>
                                                         <td th:text="${user.userId}"></td>
                                                         <td th:text="${user.nickname}"></td>
+                                                        <td th:text="${user.email}"></td>
                                                         <td th:text="${user.person.fullName}"></td>
-                                                        <td th:text="${user.profile.name}"></td>
                                                         <td th:text="${user.statusAsString}"></td>
-                                                        <td th:text="${user.created}"></td>
+                                                        <td th:text="${user.createdAt}"></td>
                                                         <td>
                                                             <a th:href="@{/system/user/detail/{id}(id=${user.userId})}" class="btn btn-sm btn-info">
                                                                 <i class="fa fa-search"></i> Ver Detalles

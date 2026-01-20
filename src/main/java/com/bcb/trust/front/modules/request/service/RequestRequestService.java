@@ -15,16 +15,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogAddressEntity;
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogAddressEntityRepository;
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonEntityRepository;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
 import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
-import com.bcb.trust.front.modules.trust.model.entity.TrustTrustTypeEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.repository.TrustTrustTypeRepository;
 
 @Service
@@ -52,7 +52,6 @@ public class RequestRequestService {
     public RequestRequestService() {
         configureLogger();
     }
-
 
     @Transactional
     public RequestRequestEntity saveRequest(Map<String, Object> data, Authentication authentication) {
@@ -82,28 +81,28 @@ public class RequestRequestService {
                 personEntity.setSecondName((String) personMap.get("secondName"));
                 personEntity.setLastName((String) personMap.get("lastName"));
                 personEntity.setSecondLastName((String) personMap.get("secondLastName"));
-                
+
                 Integer gender = Integer.parseInt(personMap.get("gender").toString());
                 personEntity.setGender(gender);
-                
+
                 String birthDateString = personMap.get("birthDate").toString();
-                personEntity.setBirthDate(LocalDate.parse(birthDateString, isoFormatter));
-                
+                personEntity.setBirthdate(LocalDate.parse(birthDateString, isoFormatter));
+
                 personEntity.setCurp((String) personMap.get("curp"));
-            } else if(CatalogPersonEntity.TYPE_ENTERPRISE == personType) {
+            } else if (CatalogPersonEntity.TYPE_ENTERPRISE == personType) {
                 personEntity.setFirstName("");
                 personEntity.setSecondName("");
                 personEntity.setLastName("");
                 personEntity.setSecondLastName("");
                 personEntity.setFullName((String) personMap.get("fullName"));
-                personEntity.setGender(CatalogPersonEntity.GENDER_UNKWON);
-                personEntity.setBirthDate(LocalDate.now());
+                personEntity.setGender(CatalogPersonEntity.GENDER_UNKNOWN);
+                personEntity.setBirthdate(LocalDate.now());
                 personEntity.setCurp("XAXX000000XXXXXX00");
-                
+
             }
             personEntity.setRfc((String) personMap.get("rfc"));
             personEntity.setType(personType);
-            personEntity.setCreated(now);
+            personEntity.setCreatedAt(now);
             catalogPersonEntityRepository.save(personEntity);
 
             CatalogAddressEntity addressEntity = new CatalogAddressEntity();
@@ -113,34 +112,24 @@ public class RequestRequestService {
             addressEntity.setZipcode(addressMap.get("zipcode").toString());
             addressEntity.setColonyId(Long.parseLong(addressMap.get("colonyId").toString()));
             addressEntity.setFullAddress(addressMap.get("fullAddress").toString());
-            addressEntity.setCreated(now);
+            addressEntity.setCreatedAt(now);
             addressEntityRepository.save(addressEntity);
 
             requestEntity = new RequestRequestEntity();
             requestEntity.setNumber(currentRequestNumber);
 
             Integer trustChange = Integer.parseInt(data.get("trustChange").toString());
-            requestEntity.setTrustChange(trustChange);
+            requestEntity.setIsTrustChange(trustChange);
             if (CommonEntity.SIMPLE_OPTION_YES == trustChange) {
-                requestEntity.setTrustChangeTrust(data.get("trustChangeTrust").toString());
+                requestEntity.setTrustChangeName(data.get("trustChangeTrust").toString());
             } else {
-                requestEntity.setTrustChangeTrust(null);
-            }
-
-            Integer wasRefered = Integer.parseInt(data.get("wasRefered").toString());
-            requestEntity.setWasRefered(wasRefered);
-            if (CommonEntity.SIMPLE_OPTION_YES == wasRefered) {
-                requestEntity.setWasReferedBy(Integer.parseInt(data.get("wasReferedBy").toString()));
-                requestEntity.setWasReferedByFullName(data.get("wasReferedByFullName").toString());
-            } else {
-                requestEntity.setWasReferedBy(null);
-                requestEntity.setWasReferedByFullName(null);
+                requestEntity.setTrustChangeName(null);
             }
 
             Long trustTypeId = Long.parseLong(data.get("type").toString());
-            Optional<TrustTrustTypeEntity> result = trustTypeRepository.findById(trustTypeId);
+            Optional<TrustCatalogTrustTypeEntity> result = trustTypeRepository.findById(trustTypeId);
             if (result.isPresent()) {
-                TrustTrustTypeEntity trustTypeEntity = result.get();
+                TrustCatalogTrustTypeEntity trustTypeEntity = result.get();
                 requestEntity.setTrustTypeEntity(trustTypeEntity);
             }
             requestEntity.setAddressEntity(addressEntity);
@@ -148,7 +137,7 @@ public class RequestRequestService {
             requestEntity.setState(1);
             requestEntity.setStatus(RequestRequestEntity.STATUS_ENABLED);
             requestEntity.setRegisteredBy(systemUserEntity);
-            requestEntity.setCreated(now);
+            requestEntity.setCreatedAt(now);
 
             requestEntityRepository.save(requestEntity);
         } catch (Exception e) {
@@ -157,7 +146,6 @@ public class RequestRequestService {
 
         return requestEntity;
     }
-
 
     private void configureLogger() {
         ConsoleHandler consoleHandler = new ConsoleHandler();

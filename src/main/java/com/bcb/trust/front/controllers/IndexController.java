@@ -24,7 +24,7 @@ public class IndexController {
             SystemUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
 
             model.addAttribute("systemUserEntity", systemUserEntity);
-            model.addAttribute("systemProfileEntity", systemUserEntity.getProfile());
+            //model.addAttribute("systemProfileEntity", systemUserEntity.getProfile());
         }
         
         return "welcome";

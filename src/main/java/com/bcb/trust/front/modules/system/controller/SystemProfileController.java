@@ -2,8 +2,6 @@ package com.bcb.trust.front.modules.system.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,21 +11,20 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcb.trust.front.modules.system.model.entity.SystemPermissionEntity;
 import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemPermissionRepository;
+import com.bcb.trust.front.modules.system.model.entity.SystemResourceEntity;
 import com.bcb.trust.front.modules.system.model.repository.SystemProfileRepository;
+import com.bcb.trust.front.modules.system.model.repository.SystemResourceRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -36,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SystemProfileController {
 
     @Autowired
-    private SystemPermissionRepository systemPermissionRepository;
+    private SystemResourceRepository systemResourceRepository;
 
     @Autowired
     private SystemProfileRepository systemProfileRepository;
@@ -68,31 +65,32 @@ public class SystemProfileController {
         return jsonResponse;
     }
 
-    @GetMapping("/profile/permission/{id}")
+    @GetMapping("/profile/resource/{id}")
     public String getMethodName(@PathVariable Long id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
         Map<String, Object> resultMap = new HashMap<>();
 
-        Set<SystemPermissionEntity> permissionSet = new HashSet<>();
-        List<Map> permissionList = new ArrayList<>();
+        Set<SystemResourceEntity> resourceSet = new HashSet<>();
+        List<Map> resourceList = new ArrayList<>();
 
         try {
             Optional<SystemProfileEntity> result = systemProfileRepository.findById(id);
 
             if (result.isPresent()) {
                 SystemProfileEntity profileEntity = result.get();
-                //permissionSet = profileEntity.getPermissions();
 
-                for (SystemPermissionEntity systemPermissionEntity : profileEntity.getPermissions()) {
-                    permissionList.add(systemPermissionEntity.toMap());
+                /*
+                for (SystemResourceEntity systemResourceEntity : profileEntity.getResources()) {
+                    resourceList.add(systemResourceEntity.toMap());
                 }
+                */
             }
 
             resultMap.put("status", 1);
             resultMap.put("message", "Petición Correcta");
-            resultMap.put("data", permissionList);
+            resultMap.put("data", resourceList);
             
             jsonResponse = mapper.writeValueAsString(resultMap);
 
@@ -130,12 +128,12 @@ public class SystemProfileController {
             members = data.get("members").toString();
             //System.out.println(members);
             if (members != null) {
-                profileEntity.setMembers(Integer.parseInt(members));
+                //profileEntity.setDescription(Integer.parseInt(members));
             }
 
             profileEntity.setName(data.get("name").toString());
-            profileEntity.setStatus(SystemProfileEntity.STATUS_ENABLED);
-            profileEntity.setCreated(LocalDateTime.now());
+            //profileEntity.setStatus(SystemProfileEntity.STATUS_ENABLED);
+            profileEntity.setCreatedAt(LocalDateTime.now());
 
             systemProfileRepository.saveAndFlush(profileEntity);
 
@@ -174,7 +172,7 @@ public class SystemProfileController {
                 String name = data.get("name").toString();
                 Integer members = null;
                 Object membersObj = data.get("members");
-                List<Long> permissionList = (ArrayList<Long>) data.get("permissionIds");
+                List<Long> resourceList = (ArrayList<Long>) data.get("resourceIds");
 
                 if (membersObj != null) {
                     members = Integer.parseInt(membersObj.toString());
@@ -182,15 +180,15 @@ public class SystemProfileController {
                 
                 profileEntity = result.get();
                 profileEntity.setName(name);
-                profileEntity.setMembers(members);
+                //profileEntity.setDescription(members);
                 
-                if (permissionList.size() > 0) {
-                    List<SystemPermissionEntity> permissionEntityList = systemPermissionRepository.findAllById(permissionList);
+                if (resourceList.size() > 0) {
+                    List<SystemResourceEntity> resourceEntityList = systemResourceRepository.findAllById(resourceList);
                     
-                    profileEntity.setPermissions(new HashSet<>());
+                    //profileEntity.setResources(new HashSet<>());
                     
-                    for (SystemPermissionEntity permissionEntity : permissionEntityList) {
-                        profileEntity.getPermissions().add(permissionEntity);
+                    for (SystemResourceEntity resourceEntity : resourceEntityList) {
+                        //profileEntity.getResources().add(resourceEntity);
                     }
                 }
 

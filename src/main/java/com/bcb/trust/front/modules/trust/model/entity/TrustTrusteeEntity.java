@@ -2,9 +2,10 @@ package com.bcb.trust.front.modules.trust.model.entity;
 
 import java.time.LocalDateTime;
 
-import com.bcb.trust.front.modules.catalog.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "trust_trustees")
+@Table(name = "trust_trust_trustees")
 public class TrustTrusteeEntity {
 
     @Id
@@ -22,19 +23,20 @@ public class TrustTrusteeEntity {
     private Long trusteeId;
 
     @ManyToOne
-    @JoinColumn(name = "personId", nullable = false)
-    private CatalogPersonEntity personEntity;
-
-    @ManyToOne
     @JoinColumn(name = "trustId", nullable = true)
     private TrustTrustEntity trustEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "personId", nullable = false)
+    private CatalogPersonEntity personEntity;
+
+    @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
 
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "requestId", nullable = false)
+    @JoinColumn(name = "request_id", nullable = false)
     private RequestRequestEntity request;
 
     public TrustTrusteeEntity() {
@@ -72,18 +74,18 @@ public class TrustTrusteeEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
     @Override
     public String toString() {
         return "TrustTrusteeEntity [trusteeId=" + trusteeId + ", personEntity=" + personEntity + ", trustEntity="
-                + trustEntity + ", status=" + status + ", created=" + created + "]";
+                + trustEntity + ", status=" + status + ", created=" + createdAt + "]";
     }
 
     public RequestRequestEntity getRequest() {
@@ -94,6 +96,4 @@ public class TrustTrusteeEntity {
         this.request = request;
     }
 
-    
-    
 }

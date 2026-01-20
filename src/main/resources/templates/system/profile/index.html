@@ -70,7 +70,7 @@
                                                     <tr>
                                                         <th class="text-center">#</th>
                                                         <th>Perfiles</th>
-                                                        <th>Estado</th>
+                                                        <th>Miembros</th>
                                                         <th>Fecha de Registro</th>
                                                         <th>Acciones</th>
                                                     </tr>
@@ -79,8 +79,8 @@
                                                     <tr>
                                                         <td class="text-center" th:text="${profile.profileId}"></td>
                                                         <td th:text="${profile.name}"></td>
-                                                        <td th:text="${profile.statusAsString}"></td>
-                                                        <td th:text="${profile.created}"></td>
+                                                        <td th:text="${profile.members}"></td>
+                                                        <td th:text="${profile.createdAt}"></td>
                                                         <td>
                                                             <a th:href="@{/system/profile/update/{id}(id=${profile.profileId})}" class="btn btn-sm btn-info">
                                                                 <i class="fa fa-search"></i> Ver Detalles

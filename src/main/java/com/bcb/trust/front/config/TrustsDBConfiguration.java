@@ -1,7 +1,5 @@
 package com.bcb.trust.front.config;
 
-import java.util.HashMap;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,19 +21,16 @@ import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(
-    entityManagerFactoryRef = "trustsEntityManagerFactory",
-    transactionManagerRef = "trustsTransactionManager",
-    basePackages = {
+@EnableJpaRepositories(entityManagerFactoryRef = "trustsEntityManagerFactory", transactionManagerRef = "trustsTransactionManager", basePackages = {
         "com.bcb.trust.front.model.trusts.*",
         "com.bcb.trust.front.modules.catalog.model.*",
-        //"com.bcb.trust.front.modules.catalog.model.*",
+        "com.bcb.trust.front.modules.admin.model.*",
         "com.bcb.trust.front.modules.request.model.*",
         "com.bcb.trust.front.modules.system.model.*",
         "com.bcb.trust.front.modules.trust.model.*",
+        "com.bcb.trust.front.modules.sisbur.model.*",
         "com.bcb.trust.front.modules.configuration.model.*",
-    }
-)
+})
 public class TrustsDBConfiguration {
 
     @Primary
@@ -48,41 +43,34 @@ public class TrustsDBConfiguration {
     @Primary
     @Bean(name = "trustsEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
-        @Qualifier("trustsDatasource") DataSource trustDataSource) {
-        //HashMap<String, Object> properties = new HashMap<>();
-        //properties.put("hibernate.hbm2ddl.auto", "update");
-        //properties.put("jakarta.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
-        //properties.put("hibernate.connection.username", "root");
-        //properties.put("hibernate.connection.password", "root");
-        //properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://db:3306/trust");
-        //properties.put("hibernate.connection.username", "gralrodriguez");
-        //properties.put("hibernate.connection.password", "Hrodriguezr0800/+");
-        //properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/trusts");
-        
+            @Qualifier("trustsDatasource") DataSource trustDataSource) {
+
         return builder.dataSource(trustDataSource)
-                //.properties(properties)
                 .packages(
-                    "com.bcb.trust.front.model.trusts.entity", 
-                    "com.bcb.trust.front.modules.catalog.model.entity",
-                    "com.bcb.trust.front.modules.request.model.entity",
-                    "com.bcb.trust.front.modules.system.model.entity",
-                    "com.bcb.trust.front.modules.trust.model.entity",
-                    "com.bcb.trust.front.modules.configuration.model.entity"
-                ).persistenceUnit("trusts")
+                        "com.bcb.trust.front.model.trusts.entity",
+                        "com.bcb.trust.front.modules.catalog.model.entity",
+                        "com.bcb.trust.front.modules.admin.model.entity",
+                        "com.bcb.trust.front.modules.request.model.entity",
+                        "com.bcb.trust.front.modules.system.model.entity",
+                        "com.bcb.trust.front.modules.trust.model.entity",
+                        "com.bcb.trust.front.modules.sisbur.model.entity",
+                        "com.bcb.trust.front.modules.configuration.model.entity")
+                .persistenceUnit("trusts")
                 .build();
     }
 
     @Primary
     @Bean(name = "trustsTransactionManager")
     public PlatformTransactionManager transactionManager(
-        @Qualifier("trustsEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
-            return new JpaTransactionManager(entityManagerFactory);
+            @Qualifier("trustsEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Primary
     @Bean(name = "trustNamedParameterJdbcTemplate")
     @DependsOn("trustsDatasource")
-    public NamedParameterJdbcTemplate trustNamedParameterJdbcTemplate(@Qualifier("trustsDatasource") DataSource trustDataSource) {
+    public NamedParameterJdbcTemplate trustNamedParameterJdbcTemplate(
+            @Qualifier("trustsDatasource") DataSource trustDataSource) {
         return new NamedParameterJdbcTemplate(trustDataSource);
     }
 

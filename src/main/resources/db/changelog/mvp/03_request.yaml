@@ -1,0 +1,126 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup for request module
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - createTable:
+            tableName: trust_catalog_trust_types
+            columns:
+              - column:
+                  name: trust_type_id
+                  type: BIGINT
+                  remarks: "Identificador único para el tipo de Fideicomiso"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre del tipo de Fideicomiso"
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción del tipo de Fideicomiso"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estatus de la solicitud"
+                  defaultValue: 1
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: request_catalog_requests
+            columns:
+              - column:
+                  name: request_id
+                  type: BIGINT
+                  remarks: "Identificador único para la solicitud"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: trust_type_id
+                  type: BIGINT
+                  remarks: "Tipo de Fideicomiso asociado a la solicitud"
+              - column:
+                  name: address_id
+                  type: BIGINT
+                  remarks: "Dirección asociada a la solicitud"
+              - column:
+                  name: number
+                  type: BIGINT
+                  remarks: "Número de la solicitud"
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+                  remarks: "Nombre de la solicitud"
+              - column:
+                  name: person_id
+                  type: BIGINT
+                  remarks: "Persona asociada a la solicitud"
+              - column:
+                  name: is_trust_change
+                  type: TINYINT
+                  remarks: "Indica si la solicitud es un cambio de fideicomiso"
+                  defaultValue: 2
+              - column:
+                  name: trust_change_name
+                  type: VARCHAR(250)
+                  remarks: "Nombre del nuevo fideicomiso en caso de cambio"
+              - column:
+                  name: state
+                  type: TINYINT
+                  remarks: "Estado de la solicitud"
+                  defaultValue: 1
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estatus de la solicitud"
+                  defaultValue: 1
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: registered_by
+                  type: BIGINT
+                  remarks: "Usuario que registró la solicitud"
+
+        - addForeignKeyConstraint:
+            baseTableName: request_catalog_requests
+            baseColumnNames: trust_type_id
+            referencedTableName: trust_catalog_trust_types
+            referencedColumnNames: trust_type_id
+            constraintName: request_catalog_requests_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: request_catalog_requests
+            baseColumnNames: address_id
+            referencedTableName: system_catalog_addresses
+            referencedColumnNames: address_id
+            constraintName: request_catalog_requests_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: request_catalog_requests
+            baseColumnNames: person_id
+            referencedTableName: system_catalog_persons
+            referencedColumnNames: person_id
+            constraintName: request_catalog_requests_fk_3
+
+        - addForeignKeyConstraint:
+            baseTableName: request_catalog_requests
+            baseColumnNames: registered_by
+            referencedTableName: system_catalog_users
+            referencedColumnNames: user_id
+            constraintName: request_catalog_requests_fk_4

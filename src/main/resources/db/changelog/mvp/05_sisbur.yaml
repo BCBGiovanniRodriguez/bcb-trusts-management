@@ -1,0 +1,193 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup for sisbur module
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - createTable:
+            tableName: sisbur_catalog_value_types
+            columns:
+              - column:
+                  name: value_type_id
+                  type: BIGINT
+                  remarks: "Identificador único para el tipo de valor"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  remarks: "Nombre del tipo de valor"
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+                  remarks: "Descripción del tipo de valor"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado del tipo de valor"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: sisbur_catalog_emmiters
+            columns:
+              - column:
+                  name: emmiter_id
+                  type: BIGINT
+                  remarks: "Identificador único para la emisora"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  remarks: "Nombre de la emisora"
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+                  remarks: "Descripción de la emisora"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado de la emisora"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: sisbur_catalog_series
+            columns:
+              - column:
+                  name: serie_id
+                  type: BIGINT
+                  remarks: "Identificador único para la serie"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  remarks: "Nombre de la serie"
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+                  remarks: "Descripción de la serie"
+              - column:
+                  name: status
+                  type: TINYINT
+                  remarks: "Estado de la serie"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: sisbur_catalog_instruments
+            columns:
+              - column:
+                  name: instrument_id
+                  type: BIGINT
+                  remarks: "Identificador único para el instrumento"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: value_type_id
+                  type: BIGINT
+                  remarks: "Identificador del tipo de valor"
+              - column:
+                  name: emmiter_id
+                  type: BIGINT
+                  remarks: "Identificador de la emisora"
+              - column:
+                  name: serie_id
+                  type: BIGINT
+                  remarks: "Identificador de la serie"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: sisbur_catalog_instruments
+            baseColumnNames: value_type_id
+            referencedTableName: sisbur_catalog_value_types
+            referencedColumnNames: value_type_id
+            constraintName: sisbur_catalog_instruments_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: sisbur_catalog_instruments
+            baseColumnNames: emmiter_id
+            referencedTableName: sisbur_catalog_emmiters
+            referencedColumnNames: emmiter_id
+            constraintName: sisbur_catalog_instruments_fk_2
+
+        - addForeignKeyConstraint:
+            baseTableName: sisbur_catalog_instruments
+            baseColumnNames: serie_id
+            referencedTableName: sisbur_catalog_series
+            referencedColumnNames: serie_id
+            constraintName: sisbur_catalog_instruments_fk_3
+
+        - createTable:
+            tableName: trust_trust_movements
+            columns:
+              - column:
+                  name: trust_movement_id
+                  type: BIGINT
+                  remarks: "Identificador único para el movimiento del Fideicomiso"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: trust_id
+                  type: BIGINT
+                  remarks: "Identificador del Fideicomiso asociado al movimiento"
+              - column:
+                  name: instrument_id
+                  type: BIGINT
+                  remarks: "Identificador del instrumento asociado al movimiento"
+              - column:
+                  name: securities
+                  type: INT
+                  remarks: "Cantidad de títulos"
+              - column:
+                  name: total_amount
+                  type: DECIMAL(15,2)
+                  remarks: "Monto total del movimiento"
+              - column:
+                  name: movement_date
+                  type: TIMESTAMP
+                  remarks: "Fecha del movimiento"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: "Fecha y hora de creación del registro"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_movements
+            baseColumnNames: trust_id
+            referencedTableName: trust_catalog_trusts
+            referencedColumnNames: trust_id
+            constraintName: trust_trust_movements_fk_1
+
+        - addForeignKeyConstraint:
+            baseTableName: trust_trust_movements
+            baseColumnNames: instrument_id
+            referencedTableName: sisbur_catalog_instruments
+            referencedColumnNames: instrument_id
+            constraintName: trust_trust_movements_fk_2

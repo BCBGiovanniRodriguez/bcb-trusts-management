@@ -1,11 +1,8 @@
 package com.bcb.trust.front.model.trusts.entity;
 
 import java.util.Date;
-import java.util.Set;
 
-import com.bcb.trust.front.entity.enums.ProcessDetailStateEnum;
-import com.bcb.trust.front.model.trusts.enums.ProcessTypeEnum;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "trust_process_detail")
+@Table(name = "trust_trust_process_details")
 public class ProcessDetailEntity {
 
     @Id
@@ -28,11 +25,12 @@ public class ProcessDetailEntity {
 
     private String detail;
 
-    private ProcessDetailStateEnum processDetailState;
+    @Column(columnDefinition = "TINYINT")
+    private Integer state;
 
-    private String fileName;
+    private String filename;
 
-    private Date created;
+    private Date createdAt;
 
     public ProcessDetailEntity() {
     }
@@ -61,28 +59,28 @@ public class ProcessDetailEntity {
         this.detail = detail;
     }
 
-    public ProcessDetailStateEnum getProcessDetailState() {
-        return processDetailState;
+    public Integer getState() {
+        return state;
     }
 
-    public void setProcessDetailState(ProcessDetailStateEnum processDetailState) {
-        this.processDetailState = processDetailState;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFilename(String fileName) {
+        this.filename = fileName;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreatedAt(Date created) {
+        this.createdAt = created;
     }
-        
+
 }

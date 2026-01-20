@@ -1,0 +1,280 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup inserts for system_catalog_users
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "1" }
+              - column: { name: person_id, value: "1" }
+              - column: { name: nickname, value: "grodriguez" }
+              - column: { name: email, value: "grodriguez@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "2" }
+              - column: { name: person_id, value: "2" }
+              - column: { name: nickname, value: "kmelo" }
+              - column: { name: email, value: "kmelo@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "3" }
+              - column: { name: person_id, value: "3" }
+              - column: { name: nickname, value: "ggonzalez" }
+              - column: { name: email, value: "ggonzalez@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "4" }
+              - column: { name: person_id, value: "4" }
+              - column: { name: nickname, value: "cvazquez" }
+              - column: { name: email, value: "cvazquez@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "5" }
+              - column: { name: person_id, value: "5" }
+              - column: { name: nickname, value: "asantillan" }
+              - column: { name: email, value: "asantillan@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "6" }
+              - column: { name: person_id, value: "6" }
+              - column: { name: nickname, value: "jpadilla" }
+              - column: { name: email, value: "jpadilla@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "7" }
+              - column: { name: person_id, value: "7" }
+              - column: { name: nickname, value: "balcocer" }
+              - column: { name: email, value: "balcocer@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "8" }
+              - column: { name: person_id, value: "8" }
+              - column: { name: nickname, value: "hfierros" }
+              - column: { name: email, value: "hfierros@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "9" }
+              - column: { name: person_id, value: "9" }
+              - column: { name: nickname, value: "ahernandez" }
+              - column: { name: email, value: "ahernandez@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "10" }
+              - column: { name: person_id, value: "10" }
+              - column: { name: nickname, value: "ctamayo" }
+              - column: { name: email, value: "ctamayo@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "11" }
+              - column: { name: person_id, value: "11" }
+              - column: { name: nickname, value: "ndelacruz" }
+              - column: { name: email, value: "ndelacruz@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "12" }
+              - column: { name: person_id, value: "12" }
+              - column: { name: nickname, value: "larreola" }
+              - column: { name: email, value: "larreola@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "13" }
+              - column: { name: person_id, value: "13" }
+              - column: { name: nickname, value: "mnieto" }
+              - column: { name: email, value: "mnieto@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "14" }
+              - column: { name: person_id, value: "14" }
+              - column: { name: nickname, value: "bresendiz" }
+              - column: { name: email, value: "bresendiz@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "15" }
+              - column: { name: person_id, value: "15" }
+              - column: { name: nickname, value: "bdelacruz" }
+              - column: { name: email, value: "bdelacruz@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "16" }
+              - column: { name: person_id, value: "16" }
+              - column: { name: nickname, value: "eaguilar" }
+              - column: { name: email, value: "eaguilar@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "17" }
+              - column: { name: person_id, value: "17" }
+              - column: { name: nickname, value: "evilchis" }
+              - column: { name: email, value: "evilchis@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "18" }
+              - column: { name: person_id, value: "18" }
+              - column: { name: nickname, value: "salatorre" }
+              - column: { name: email, value: "salatorre@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
