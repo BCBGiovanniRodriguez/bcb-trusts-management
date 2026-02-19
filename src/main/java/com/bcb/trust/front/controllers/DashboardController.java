@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.bcb.trust.front.model.bmtkfweb.service.PartialBalanceService;
-import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogProfileEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
+import com.bcb.trust.front.modules.system.model.repository.UserEntityRepository;
 import com.bcb.trust.front.service.LegacyService;
 import com.bcb.trust.front.service.MassiveReportService;
 import com.bcb.trust.front.service.ReportService;
@@ -20,7 +20,7 @@ import com.bcb.trust.front.service.ReportService;
 public class DashboardController {
 
     @Autowired
-    private SystemUserEntityRepository systemUserEntityRepository;
+    private UserEntityRepository systemUserEntityRepository;
 
     @Autowired
     ReportService reportService;
@@ -41,7 +41,7 @@ public class DashboardController {
 
         try {
             // reportService.generateReport();
-            massiveReportService.process(1045);
+            //massiveReportService.process(1045);
             // partialBalanceService.calculatePartialBalance(1045);
         } catch (Exception e) {
             System.out.println("DashboardControllerMessage: " + e.getMessage());
@@ -51,9 +51,9 @@ public class DashboardController {
     }
 
     @ModelAttribute("systemUserEntity")
-    public SystemUserEntity systemUserEntity(Authentication authentication) {
+    public CatalogUserEntity systemUserEntity(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        SystemUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
+        CatalogUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
         return systemUserEntity;
     }
 

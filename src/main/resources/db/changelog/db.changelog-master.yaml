@@ -15,3 +15,13 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp-001/dml-002-insert-system_catalog_person.yml
   - include:
       file: classpath:db/changelog/mvp-001/dml-003-insert-system_catalog_users.yml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-004-insert-system_configuration_user_profiles.yml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-005-insert-system_catalog_resources.yml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-006-update-system_catalog_profiles.yml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-007-alter-system_configuration_user_profiles.yml
+  - include:
+      file: classpath:db/changelog/mvp-001/dml-008-insert-system_configuration_profile_resources.yml

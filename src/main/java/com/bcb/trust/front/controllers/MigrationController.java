@@ -8,18 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bcb.trust.front.modules.legacy.service.WorkerService;
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
+import com.bcb.trust.front.modules.system.model.repository.UserEntityRepository;
 
 @Controller
 @RequestMapping("/migration")
 public class MigrationController {
 
     @Autowired
-    private SystemUserEntityRepository systemUserEntityRepository;
+    private UserEntityRepository systemUserEntityRepository;
 
     @Autowired
     private WorkerService workerService;
@@ -41,7 +38,7 @@ public class MigrationController {
 
         try {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            SystemUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
+            CatalogUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
 
             workerService.migrateRequest(systemUserEntity);
 
@@ -70,7 +67,7 @@ public class MigrationController {
 
         try {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            SystemUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
+            CatalogUserEntity systemUserEntity = systemUserEntityRepository.findByNickname(userDetails.getUsername());
 
             workerService.migrateTrusts(systemUserEntity);
 

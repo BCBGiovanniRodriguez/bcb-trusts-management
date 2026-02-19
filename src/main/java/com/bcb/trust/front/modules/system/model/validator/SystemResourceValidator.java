@@ -3,8 +3,8 @@ package com.bcb.trust.front.modules.system.model.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bcb.trust.front.modules.system.model.entity.SystemResourceEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemResourceRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogResourceEntity;
+import com.bcb.trust.front.modules.system.model.repository.ResourceRepository;
 
 public class SystemResourceValidator {
 
@@ -12,21 +12,21 @@ public class SystemResourceValidator {
 
     private List<String> errorList;
 
-    private SystemResourceRepository systemResourceRepository;
+    private ResourceRepository systemResourceRepository;
 
-    private SystemResourceEntity systemResourceEntity;
+    private CatalogResourceEntity catalogResourceEntity;
 
     public SystemResourceValidator() {
         this.valid = true;
         this.errorList = new ArrayList<>();
     }
 
-    public void setSystemResourceRepository(SystemResourceRepository systemResourceRepository) {
+    public void setSystemResourceRepository(ResourceRepository systemResourceRepository) {
         this.systemResourceRepository = systemResourceRepository;
     }
 
-    public void setSystemResourceEntity(SystemResourceEntity systemResourceEntity) {
-        this.systemResourceEntity = systemResourceEntity;
+    public void setCatalogResourceEntity(CatalogResourceEntity systemResourceEntity) {
+        this.catalogResourceEntity = systemResourceEntity;
     }
 
     /**
@@ -63,12 +63,12 @@ public class SystemResourceValidator {
             throw new Exception("Repository no proporcionado");
         }
 
-        if (systemResourceEntity == null) {
+        if (catalogResourceEntity == null) {
             throw new Exception("Entidad base no proporcionada");
         }
 
-        String name = this.systemResourceEntity.getAction();
-        String code = this.systemResourceEntity.getCode();
+        String name = this.catalogResourceEntity.getName();
+        String code = this.catalogResourceEntity.getCode();
 
         if (unique) {
             validateElement(name, unique);
@@ -106,22 +106,22 @@ public class SystemResourceValidator {
     /**
      * Perform validation on attribute name of entity provided.
      * 
-     * @param element
+     * @param code
      * @param unique  If true and repository provided perform uniqueness validation
      *                otherwise perform normal validation
      * @return True if fit the conditions
      */
-    public boolean validateElement(String element, boolean unique) {
+    public boolean validateElement(String code, boolean unique) {
 
         if (unique && this.systemResourceRepository != null) {
-            SystemResourceEntity found = this.systemResourceRepository.findOneByElement(element);
+            CatalogResourceEntity found = this.systemResourceRepository.findOneByCode(code);
             if (found != null) {
                 errorList.add("Elemento ya registrado");
             }
 
-            valid &= validateElement(element) & (found == null);
+            valid &= validateElement(code) & (found == null);
         } else {
-            valid &= validateElement(element);
+            valid &= validateElement(code);
         }
 
         return valid;
@@ -152,7 +152,7 @@ public class SystemResourceValidator {
     public boolean validateCode(String code, boolean unique) {
 
         if (unique && this.systemResourceRepository != null) {
-            SystemResourceEntity found = this.systemResourceRepository.findOneByCode(code);
+            CatalogResourceEntity found = this.systemResourceRepository.findOneByCode(code);
             if (found != null) {
                 errorList.add("Código ya registrado");
             }

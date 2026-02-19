@@ -28,7 +28,7 @@ public class SystemUserSessionEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private SystemUserEntity userEntity;
+    private CatalogUserEntity userEntity;
 
     public SystemUserSessionEntity() {
     }
@@ -75,15 +75,15 @@ public class SystemUserSessionEntity {
 
     @Override
     public String toString() {
-        return "SystemUserSession [userSessionId=" + userSessionId + ", name=" + name + ", address=" + address
+        return "CatalogUserSessionEntity [userSessionId=" + userSessionId + ", name=" + name + ", address=" + address
                 + ", userAgent=" + userAgent + ", created=" + createdAt + "]";
     }
 
-    public SystemUserEntity getUserEntity() {
+    public CatalogUserEntity getUserEntity() {
         return userEntity;
     }
 
-    public void setUserEntity(SystemUserEntity userEntity) {
+    public void setUserEntity(CatalogUserEntity userEntity) {
         this.userEntity = userEntity;
     }
 }

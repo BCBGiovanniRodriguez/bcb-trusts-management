@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcb.trust.front.modules.system.model.entity.SystemResourceEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemResourceRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogResourceEntity;
+import com.bcb.trust.front.modules.system.model.repository.ResourceRepository;
 import com.bcb.trust.front.modules.system.model.validator.SystemResourceValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +25,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class SystemResourceController {
 
     @Autowired
-    private SystemResourceRepository systemResourceRepository;
+    private ResourceRepository systemResourceRepository;
 
     @GetMapping("/resource")
     public String get() throws JsonProcessingException {
@@ -33,7 +33,7 @@ public class SystemResourceController {
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
         Map<String, Object> resultMap = new HashMap<>();
-        List<SystemResourceEntity> resourceList;
+        List<CatalogResourceEntity> resourceList;
 
         try {
             resourceList = systemResourceRepository.findAll();
@@ -55,7 +55,7 @@ public class SystemResourceController {
     }
 
     @PostMapping("/resource")
-    public String post(@RequestBody SystemResourceEntity systemResourceEntity) throws JsonProcessingException {
+    public String post(@RequestBody CatalogResourceEntity systemResourceEntity) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
@@ -64,7 +64,7 @@ public class SystemResourceController {
         
         try {
             SystemResourceValidator systemResourceValidator = new SystemResourceValidator();
-            systemResourceValidator.setSystemResourceEntity(systemResourceEntity);
+            systemResourceValidator.setCatalogResourceEntity(systemResourceEntity);
             systemResourceValidator.setSystemResourceRepository(systemResourceRepository);
             systemResourceValidator.validate(true);
 

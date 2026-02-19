@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup for pld module
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+
+
+
+
+
+
+

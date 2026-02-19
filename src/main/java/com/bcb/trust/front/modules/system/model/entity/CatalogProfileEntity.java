@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "system_catalog_profiles")
-public class SystemProfileEntity {
+public class CatalogProfileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,13 @@ public class SystemProfileEntity {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<ConfigurationProfileResourceEntity> profileResourceList;
+    private String code;
 
-    public List<ConfigurationProfileResourceEntity> getProfileResourceList() {
-        return profileResourceList;
+    @OneToMany(mappedBy = "profileEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<ConfigurationProfileResourceEntity> configurationProfileResourceList;
+
+    public List<ConfigurationProfileResourceEntity> getConfigurationProfileResourceList() {
+        return configurationProfileResourceList;
     }
 
     public Long getProfileId() {
@@ -73,18 +75,25 @@ public class SystemProfileEntity {
 
     @Override
     public String toString() {
-        return "SystemProfileEntity [profileId=" + profileId + ", name=" + name + ", description=" + members
+        return "ProfileEntity [profileId=" + profileId + ", name=" + name + ", description=" + members
                 + ", createdAt=" + createdAt + "]";
     }
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("profileId", this.profileId);
+        map.put("profile_id", this.profileId);
         map.put("name", this.name);
         map.put("members", this.members);
-        map.put("created", this.createdAt);
+        map.put("created_at", this.createdAt);
 
         return map;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

@@ -397,15 +397,27 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: element
+                  name: name
                   type: VARCHAR(250)
-                  remarks: "Elemento del recurso"
+                  remarks: "Nombre del recurso"
                   constraints:
                     nullable: false
               - column:
-                  name: action
+                  name: path
                   type: VARCHAR(250)
-                  remarks: "Acción del recurso"
+                  remarks: "Ruta del recurso"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: method
+                  type: VARCHAR(250)
+                  remarks: "Método del recurso"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+                  remarks: "Descripción del recurso"
                   constraints:
                     nullable: false
               - column:

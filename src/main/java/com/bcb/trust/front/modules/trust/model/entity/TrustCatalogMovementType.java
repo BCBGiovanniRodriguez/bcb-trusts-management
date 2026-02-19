@@ -2,7 +2,7 @@ package com.bcb.trust.front.modules.trust.model.entity;
 
 import java.time.LocalDateTime;
 
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +31,7 @@ public class TrustCatalogMovementType {
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
-    private SystemUserEntity createdBy;
+    private CatalogUserEntity createdBy;
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
@@ -71,11 +71,11 @@ public class TrustCatalogMovementType {
         this.inventoryEffect = inventoryEffect;
     }
 
-    public SystemUserEntity getCreatedBy() {
+    public CatalogUserEntity getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(SystemUserEntity createdBy) {
+    public void setCreatedBy(CatalogUserEntity createdBy) {
         this.createdBy = createdBy;
     }
 

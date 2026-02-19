@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import java.util.Optional;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,10 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonEntityRepository;
 import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemProfileEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemProfileRepository;
-import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
+import com.bcb.trust.front.modules.system.model.repository.ProfileRepository;
+import com.bcb.trust.front.modules.system.model.repository.UserEntityRepository;
 
 @Service
 public class SystemUserService {
@@ -27,10 +25,10 @@ public class SystemUserService {
     public static final Logger logger = Logger.getLogger(SystemUserService.class.getName());
 
     @Autowired
-    private SystemUserEntityRepository systemUserEntityRepository;
+    private UserEntityRepository systemUserEntityRepository;
 
     @Autowired
-    private SystemProfileRepository systemProfileEntityRepository;
+    private ProfileRepository systemProfileEntityRepository;
 
     @Autowired
     private CatalogPersonEntityRepository catalogPersonEntityRepository;
@@ -40,54 +38,52 @@ public class SystemUserService {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Transactional
-    public SystemUserEntity createUser(Map<String, Object> data) {
-        SystemUserEntity systemUserEntity = null;
+    public CatalogUserEntity createUser(Map<String, Object> data) {
+        CatalogUserEntity systemUserEntity = null;
         configureLogger();
+        Integer type;
+        String fullName;
 
         try {
             // Unwrap data
-            Long profileId = Long.parseLong(data.get("profileId").toString());
+            LocalDateTime now = LocalDateTime.now();
+            
+            @SuppressWarnings("unchecked")
+            Map<String, Object> personMap = (Map<String, Object>) data.get("person"); 
 
-            Optional<SystemProfileEntity> result = systemProfileEntityRepository.findById(profileId);
+            type = Integer.parseInt(personMap.get("type").toString());
+            CatalogPersonEntity catalogPersonEntity = new CatalogPersonEntity();
+            catalogPersonEntity.setFirstName(personMap.get("firstName").toString());
+            catalogPersonEntity.setSecondName(personMap.get("secondName").toString());
+            catalogPersonEntity.setLastName(personMap.get("lastName").toString());
+            catalogPersonEntity.setSecondLastName(personMap.get("secondLastName").toString());
+            catalogPersonEntity.setGender(Integer.parseInt(personMap.get("gender").toString()));
 
-            if (!result.isPresent()) {
-                throw new Exception("Identificador de Perfil de sistema no encontrado");
-            } else {
-                SystemProfileEntity profileEntity = result.get();
-                LocalDateTime now = LocalDateTime.now();
-                
-                @SuppressWarnings("unchecked")
-                Map<String, Object> personMap = (Map<String, Object>) data.get("person");
-
-                CatalogPersonEntity catalogPersonEntity = new CatalogPersonEntity();
-                catalogPersonEntity.setFirstName(personMap.get("firstName").toString());
-                catalogPersonEntity.setSecondName(personMap.get("secondName").toString());
-                catalogPersonEntity.setLastName(personMap.get("lastName").toString());
-                catalogPersonEntity.setSecondLastName(personMap.get("secondLastName").toString());
-                catalogPersonEntity.setGender(Integer.parseInt(personMap.get("gender").toString()));
-
-                String birthDateString = personMap.get("birthDate").toString();
-                catalogPersonEntity.setBirthdate(LocalDate.parse(birthDateString, isoFormatter));
-                
-                catalogPersonEntity.setRfc(personMap.get("rfc").toString());
-                catalogPersonEntity.setCurp(personMap.get("curp").toString());
-                catalogPersonEntity.setType(CatalogPersonEntity.TYPE_PERSON);
-                catalogPersonEntity.setCreatedAt(now);
-                
-                catalogPersonEntityRepository.save(catalogPersonEntity);
-
-                systemUserEntity = new SystemUserEntity();
-                systemUserEntity.setEmail(data.get("email").toString());
-                systemUserEntity.setNickname(data.get("nickname").toString());
-                systemUserEntity.setAccess(encoder.encode("test"));
-                //systemUserEntity.setProfile(profileEntity);
-                systemUserEntity.setPerson(catalogPersonEntity);
-                systemUserEntity.setStatus(SystemUserEntity.STATUS_ENABLED);
-                systemUserEntity.setCreatedAt(now);
-                systemUserEntityRepository.save(systemUserEntity);
-
-                logger.info("[SystemUserService][createUser][Usuario de Sistema registrado: " + systemUserEntity.getNickname() + "]");
+            if (type == CatalogPersonEntity.TYPE_PERSON) {
+                fullName = catalogPersonEntity.getLastName() + " " + catalogPersonEntity.getSecondLastName() + ", " + catalogPersonEntity.getFirstName() + " " + catalogPersonEntity.getSecondName();
+                catalogPersonEntity.setFullName(fullName);
             }
+
+            String birthDateString = personMap.get("birthDate").toString();
+            catalogPersonEntity.setBirthdate(LocalDate.parse(birthDateString, isoFormatter));
+            catalogPersonEntity.setRfc(personMap.get("rfc").toString());
+            catalogPersonEntity.setCurp(personMap.get("curp").toString());
+            catalogPersonEntity.setMaritalStatus(CatalogPersonEntity.MARITAL_STATUS_UNKNOWN);
+            catalogPersonEntity.setType(type);
+            catalogPersonEntity.setCreatedAt(now);
+            
+            catalogPersonEntityRepository.save(catalogPersonEntity);
+
+            systemUserEntity = new CatalogUserEntity();
+            systemUserEntity.setEmail(data.get("email").toString());
+            systemUserEntity.setNickname(data.get("nickname").toString());
+            systemUserEntity.setAccess(encoder.encode("test"));
+            systemUserEntity.setPerson(catalogPersonEntity);
+            systemUserEntity.setStatus(CatalogUserEntity.STATUS_ENABLED);
+            systemUserEntity.setCreatedAt(now);
+            systemUserEntityRepository.save(systemUserEntity);
+
+            logger.info("[SystemUserService][createUser][Usuario de Sistema registrado: " + systemUserEntity.getNickname() + "]");
         } catch (Exception e) {
             logger.warning("[SystemUserService][createUser][Error: " + e.getLocalizedMessage() + "]");
         }
@@ -96,8 +92,8 @@ public class SystemUserService {
     }
 
 
-    public SystemUserEntity getSystemUserEntityByNickname(String nickname) {
-        SystemUserEntity systemUserEntity = null;
+    public CatalogUserEntity getSystemUserEntityByNickname(String nickname) {
+        CatalogUserEntity systemUserEntity = null;
         configureLogger();
 
         try {

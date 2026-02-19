@@ -1,6 +1,5 @@
 package com.bcb.trust.front.modules.legacy.service;
 
-import java.lang.Thread.State;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,11 +19,10 @@ import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
 import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
 import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustQuarterEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustEntity;
-import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustWorkerEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
@@ -79,19 +77,25 @@ public class WorkerService {
         this.requestEntityRepository = requestEntityRepository;
     }
 
-    public void migrateRequest(SystemUserEntity userEntity) {
+    public void migrateRequest(CatalogUserEntity userEntity) {
         String sql;
         List<Map<String, Object>> resultList;
         RequestRequestEntity requestEntity;
         String migrationStandardText = "MIGRACION";
+        Optional<TrustCatalogTrustTypeEntity> trustTypeEntityOptional;
+        TrustCatalogTrustTypeEntity trustTypeEntity = null;
 
         try {
-            TrustCatalogTrustTypeEntity trustTypeEntity = trustTypeRepository.findById(1L).get();
+            trustTypeEntityOptional = trustTypeRepository.findById(1L);
+            if (trustTypeEntityOptional.isPresent()) {
+                trustTypeEntity = trustTypeEntityOptional.get();
+                System.out.println("Tipo de trust: " + trustTypeEntity.getName());
+            } else {
+                throw new Exception("No se encontro el tipo de trust");
+            }
 
             sql = "SELECT * FROM PROSPECT p ORDER BY p.PRS_NUM_PROSPECTO ";
             resultList = jdbcTemplate.queryForList(sql);
-
-            // Get default type
 
             Integer requestNumber;
             Integer trustChange = 1;
@@ -100,10 +104,8 @@ public class WorkerService {
             String wasReferedByFullName;
             CatalogAddressEntity addressEntity;
             CatalogPersonEntity personEntity;
-            // Integer state;
             Integer status;
             LocalDateTime created;
-            // --
             String fullName;
             Integer gender = CatalogPersonEntity.GENDER_UNKNOWN;
             LocalDate birthDate;
@@ -111,20 +113,22 @@ public class WorkerService {
             String rfc;
             Integer foreignStatus;
             Integer type;
-            // -- Address
             String street;
             String colony;
             String township;
             String state;
             String country;
             String zipcode;
-            // Long colonyId;
             String fullAddress;
             String trustChangeTrust;
             Optional<CatalogPersonEntity> result;
 
             for (Map<String, Object> map : resultList) {
                 requestNumber = Integer.parseInt(map.get("PRS_NUM_PROSPECTO").toString());
+
+                if (requestEntityRepository.findByNumber(requestNumber).size() > 0) {
+                    continue;
+                }
 
                 rfc = map.get("PRS_RFC").toString();
 
@@ -167,7 +171,7 @@ public class WorkerService {
                         : migrationStandardText;
                 zipcode = map.get("PRS_CODIGO_POSTAL") != null ? map.get("PRS_CODIGO_POSTAL").toString()
                         : migrationStandardText;
-                if (zipcode.length() > 4) {
+                if (zipcode.length() < 4) {
                     zipcode = "0" + zipcode;
                 }
 
@@ -294,7 +298,7 @@ public class WorkerService {
         }
     }
 
-    public void migrateTrusts(SystemUserEntity userEntity) {
+    public void migrateTrusts(CatalogUserEntity userEntity) {
         String sql;
         List<Map<String, Object>> resultList;
 

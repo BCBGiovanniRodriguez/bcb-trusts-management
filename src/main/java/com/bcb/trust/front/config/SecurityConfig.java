@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.bcb.trust.front.service.DatabaseUserDetailsService;
 
@@ -23,6 +24,9 @@ public class SecurityConfig {
     @Autowired
     private DatabaseUserDetailsService databaseUserDetailService;
 
+    @Autowired
+    private DynamicAuthorizationFilter dynamicAuthorizationFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(BCRYPT_DEFAULT_STRENGHT);
@@ -32,14 +36,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(csrf -> csrf.disable())
+            .addFilterAfter(dynamicAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/public/**", "/landing/**", "/login").permitAll()
                 .anyRequest().authenticated()
             ).formLogin(f -> f
                 .loginPage("/landing")
                 .loginProcessingUrl("/login")
                 //.failureUrl("/landing?error=true")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/dashboard", true)
                 //.successForwardUrl("/balance")
                 //.usernameParameter("email")
                 //.passwordParameter("access")

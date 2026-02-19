@@ -1,0 +1,111 @@
+databaseChangeLog:
+  - changeSet:
+      id: 12
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup inserts for system_catalog_profiles
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - addColumn:
+            tableName: system_catalog_profiles
+            columns:
+              - column: { name: code, type: VARCHAR(255), constraints: { nullable: false } }
+
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 1
+            columns:
+              - column: {name: code, value: "SYSTEM_ADMINISTRATOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 2
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_SYSTEMS_SUBDIRECTOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 3
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_SECURITY_INFORMATION_OFFICER"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 4
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_SECURITY_INFORMATION_ANALYST"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 5
+            columns:
+              - column: {name: code, value: "TRUST_N_LEGAL_DIRECTOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 6
+            columns:
+              - column: {name: code, value: "TRUST_N_LEGAL_SUBDIRECTOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 7
+            columns:
+              - column: {name: code, value: "TRUST_ADMINISTRATION_COORDINATOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 8
+            columns:
+              - column: {name: code, value: "TRUST_ADMINISTRATION_ANALIST"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 9
+            columns:
+              - column: {name: code, value: "TRUST_ACCOUNTING_COORDINATOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 10
+            columns:
+              - column: {name: code, value: "TRUST_ACCOUNTING_ANALIST"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 11
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_LEGAL_SUBDIRECTOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 12
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_LEGAL_ANALYST"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 13
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_PLD_MANAGER"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 14
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_PLD_ANALYST"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 15
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_METHODS_N_PROCEDURES_SUBDIRECTOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 16
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_METHODS_N_PROCEDURES_ANALYST"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 17
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_PROYECTS_N_PRODUCTION_SUPPORT_SUBDIRECTOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 18
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_OPERATIONS_DIRECTOR"}
+        - update:
+            tableName: system_catalog_profiles
+            where: profile_id = 19
+            columns:
+              - column: {name: code, value: "STOCK_EXCHANGE_DEPUTY_DIRECTOR_GENERAL"}

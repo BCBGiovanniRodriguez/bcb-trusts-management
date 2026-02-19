@@ -3,8 +3,8 @@ package com.bcb.trust.front.modules.system.model.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
+import com.bcb.trust.front.modules.system.model.repository.UserEntityRepository;
 
 public class SystemUserValidator {
 
@@ -12,9 +12,9 @@ public class SystemUserValidator {
 
     private List<String> errorList;
 
-    private SystemUserEntityRepository systemUserEntityRepository;
+    private UserEntityRepository systemUserEntityRepository;
 
-    private SystemUserEntity systemUserEntity;
+    private CatalogUserEntity systemUserEntity;
 
     public SystemUserValidator() {
         this.valid = true;
@@ -45,19 +45,19 @@ public class SystemUserValidator {
         return errorList;
     }
 
-    public SystemUserEntityRepository getSystemUserEntityRepository() {
+    public UserEntityRepository getSystemUserEntityRepository() {
         return systemUserEntityRepository;
     }
 
-    public void setSystemUserEntityRepository(SystemUserEntityRepository systemUserEntityRepository) {
+    public void setSystemUserEntityRepository(UserEntityRepository systemUserEntityRepository) {
         this.systemUserEntityRepository = systemUserEntityRepository;
     }
 
-    public SystemUserEntity getSystemUserEntity() {
+    public CatalogUserEntity getSystemUserEntity() {
         return systemUserEntity;
     }
 
-    public void setSystemUserEntity(SystemUserEntity systemUserEntity) {
+    public void setSystemUserEntity(CatalogUserEntity systemUserEntity) {
         this.valid = true;
         this.errorList.clear();
 
@@ -68,7 +68,7 @@ public class SystemUserValidator {
     public boolean validateNickname(String nickname) {
         
         if (this.systemUserEntityRepository != null) {
-            SystemUserEntity found = this.systemUserEntityRepository.findByNickname(nickname);
+            CatalogUserEntity found = this.systemUserEntityRepository.findByNickname(nickname);
             if (found != null) {
                 this.valid &= false;
                 errorList.add("Nickname ya registrado");

@@ -60,7 +60,7 @@
                                                         <td th:text="${request.personEntity.fullName}"></td>
                                                         <td th:text="${request.state}"></td>
                                                         <td th:text="${request.statusAsString}"></td>
-                                                        <td th:text="${#temporals.format(request.created, 'yyyy-MM-dd HH:mm-ss')}"></td>
+                                                        <td th:text="${#temporals.format(request.createdAt, 'yyyy-MM-dd HH:mm-ss')}"></td>
                                                         <td th:text="${request.registeredBy.person.fullName}"></td>
                                                         <td>
                                                             <a th:href="@{/request/request/detail/{id}(id=${request.requestId})}" class="btn btn-info" title="Ver Detalles">

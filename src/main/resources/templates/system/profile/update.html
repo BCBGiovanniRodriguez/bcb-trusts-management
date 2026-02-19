@@ -36,76 +36,553 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form">
-                                            <div class="row g-3">
+                                            <div class="form-group row g-3">
                                                 <div class="col-3" hidden>
                                                     <label for="name" class="form-label"><strong>Nombre</strong></label>
-                                                    <input type="text" id="profileId" name="profileId" class="form-control" th:value="${systemProfileEntity.profileId}" />
+                                                    <input type="text" id="profileId" name="profileId" class="form-control" th:value="${profileEntity.profileId}" />
                                                 </div>
 
                                                 <div class="col-3">
                                                     <label for="name" class="form-label"><strong>Nombre</strong></label>
-                                                    <input type="text" id="name" name="name" class="form-control" th:value="${systemProfileEntity.name}" />
+                                                    <input type="text" id="name" name="name" class="form-control" th:value="${profileEntity.name}" />
                                                 </div>
 
                                                 <div class="col-3">
                                                     <label for="members" class="form-label"><strong>Miembros</strong></label>
-                                                    <input name="members" id="members" type="number" min="0"  class="form-control" placeholder="Opcional" th:value="${systemProfileEntity.members}" />
+                                                    <input name="members" id="members" type="number" min="0"  class="form-control" placeholder="Opcional" th:value="${profileEntity.members}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row g-3">
+                                                <div class="col-3">
+                                                    <button id="btnSaveProfile" class="btn btn-warning" role="button">
+                                                        <i class="fa fa-sync"></i> Actualizar Perfil de Sistema
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h5>Recursos Asignados</h5>
+                                        
+                                        <div>
+                                            <button id="btnAvailableResources" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resourcesModal" role="button">
+                                                <i class="fa fa-search"></i> Recursos Disponibles
+                                            </button>
+                                            <hr>
+                                            <ul class="nav nav-tabs mb-3" id="assignedModulesTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active"  id="nav-assigned-system-tab" data-bs-toggle="tab" data-bs-target="#assigned-system-tab-pane" type="button" role="tab" aria-controls="assigned-system-tab-pane" aria-selected="true" tabindex="0">
+                                                        Sistema</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-assigned-request-tab" data-bs-toggle="tab" data-bs-target="#assigned-request-tab-pane" type="button" role="tab" aria-controls="assigned-request-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Prospectos</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-assigned-admin-tab" data-bs-toggle="tab" data-bs-target="#assigned-admin-tab-pane" role="tab" aria-controls="assigned-admin-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Administración</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-assigned-operation-tab" data-bs-toggle="tab" data-bs-target="#assigned-operation-tab-pane" role="tab" aria-controls="assigned-operation-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Operación</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-assigned-accounting-tab" data-bs-toggle="tab" data-bs-target="#assigned-accounting-tab-pane" role="tab" aria-controls="assigned-accounting-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Contabilidad</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-assigned-report-tab" data-bs-toggle="tab" data-bs-target="#assigned-report-tab-pane" role="tab" aria-controls="assigned-report-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Reportes</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-assigned-pld-tab" data-bs-toggle="tab" data-bs-target="#assigned-pld-tab-pane" type="button" role="tab" aria-controls="assigned-pld-tab-pane" aria-selected="false" tabindex="-1">
+                                                        PLD / FT</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-assigned-undefined-tab" data-bs-toggle="tab" data-bs-target="#assigned-undefined-tab-pane" role="tab" aria-controls="assigned-undefined-tab-pane" aria-selected="false" tabindex="-1">
+                                                        No definido</button></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="assigned-system-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-system-tab" tabindex="0">
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>DesAsignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Asignado Por</th>
+                                                                    <th>Fecha Asignación</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 1}">
+                                                                        <td>
+                                                                            <button type="button" class="btn btn-sm btn-danger removeResourceButton" data-resource-id="${configurationProfileResource.resourceEntity.resourceId}" data-resource-name="${configurationProfileResource.resourceEntity.name}">
+                                                                                <i class="fa fa-minus"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.assignedBy.person.fullName}"></td>
+                                                                        <td th:text="${#temporals.format(configurationProfileResource.assignedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="assigned-request-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-request-tab" tabindex="1">
+                                                    <h5>Recursos Modulo Prospectos</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 2}">
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="assigned-admin-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-admin-tab" tabindex="2">
+                                                    <h5>Recursos Modulo Administración</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 3}">
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="assigned-operation-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-operation-tab" tabindex="3">
+                                                    <h5>Recursos Modulo Operación</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 4}">
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="assigned-accounting-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-accounting-tab" tabindex="4">
+                                                    <h5>Recursos Modulo Contabilidad</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 5}">
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="assigned-report-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-report-tab" tabindex="5">
+                                                    <h5>Recursos Modulo Reportes</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 6}">
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="assigned-pld-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-pld-tab" tabindex="6">
+                                                    <h5>Recursos Modulo PLD/FT</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 7}">
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="assigned-undefined-tab-pane" role="tabpanel" aria-labelledby="nav-assigned-undefined-tab" tabindex="-1">
+                                                    <h5>Recursos Modulo No Definido</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="configurationProfileResource: ${assignedConfigurationProfileResourceList}">
+                                                                    <div th:if="${configurationProfileResource.resourceEntity.module == 0}">
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.code}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.method}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.name}"></td>
+                                                                        <td th:text="${configurationProfileResource.resourceEntity.description}"></td>
+                                                                    </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <div class="row g-3 text-start">
-                                            <div class="col-3">
-                                                <button id="btnSaveProfile" class="btn btn-warning" role="button">
-                                                    <i class="fa fa-sync"></i> Actualizar Perfil de Sistema
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                                
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card card-outline card-warning mb-4">
-                                    <div class="card-header">
-                                        <h3 class="card-title"><strong>Recursos Asignados</strong></h3>
+                        
+                    </div>
+                </div>
+            </main>
 
-                                        <div class="card-tools">
-                                            <a th:href="@{/system/profile/assign-resource/{profileId}(profileId=${systemProfileEntity.profileId})}" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#assignResourceModal" role="button">
-                                                <i class="fa fa-plus"></i> Asignar Recursos
-                                            </a>
+            <div class="modal fade" id="resourcesModal" tabindex="-1" role="dialog" aria-labelledby="resourcesModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="resourcesModalLabel">Recursos Disponibles</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card card-outline card-primary mb-4">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Resultados: <span id="results"></span></strong></h3>
+                                            <div class="card-tools">
+                                                <button id="btn-add-resources" type="button" class="btn btn-sm btn-primary" hidden>
+                                                    <i class="fa fa-plus"></i> Agregar Recursos
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table id="resourceTable" class="table table-sm table-hover table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Módulo</th>
-                                                        <th>Código</th>
-                                                        <th>Elemento</th>
-                                                        <th>Acción</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr th:each="profileResource: ${profileResourceList}">
-                                                        <td><span th:text="${profileResource.resource.moduleAsString}"></span></td>
-                                                        <td><span th:text="${profileResource.resource.code}"></span></td>
-                                                        <td><span th:text="${profileResource.resource.element}"></span></td>
-                                                        <td><span th:text="${profileResource.resource.action}"></span></td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-danger" role="button" title="Desasignar Recurso">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        <div class="card-body">
+                                            <ul class="nav nav-tabs mb-3" id="modulesTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active"  id="nav-system-tab" data-bs-toggle="tab" data-bs-target="#system-tab-pane" type="button" role="tab" aria-controls="nav-system-tab-pane" aria-selected="true" tabindex="0">
+                                                        Sistema</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-request-tab" data-bs-toggle="tab" data-bs-target="#request-tab-pane" type="button" role="tab" aria-controls="nav-request-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Prospectos</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-admin-tab" data-bs-toggle="tab" data-bs-target="#admin-tab-pane" role="tab" aria-controls="nav-admin-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Administración</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-operation-tab" data-bs-toggle="tab" data-bs-target="#operation-tab-pane" role="tab" aria-controls="nav-operation-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Operación</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-accounting-tab" data-bs-toggle="tab" data-bs-target="#accounting-tab-pane" role="tab" aria-controls="nav-accounting-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Contabilidad</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-report-tab" data-bs-toggle="tab" data-bs-target="#report-tab-pane" role="tab" aria-controls="nav-report-tab-pane" aria-selected="false" tabindex="-1">
+                                                        Reportes</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-pld-tab" data-bs-toggle="tab" data-bs-target="#pld-tab-pane" type="button" role="tab" aria-controls="nav-pld-tab-pane" aria-selected="false" tabindex="-1">
+                                                        PLD / FT</button></li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="nav-undefined-tab" data-bs-toggle="tab" data-bs-target="#undefined-tab-pane" role="tab" aria-controls="nav-undefined-tab-pane" aria-selected="false" tabindex="-1">
+                                                        No definido</button></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="system-tab-pane" role="tabpanel" aria-labelledby="nav-system-tab" tabindex="0">
+                                                    <h5>Recursos Módulo Sistemas</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${systemAvailableResourceList}">
+                                                                    <td>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" th:value="${resource.resourceId}" th:attr="resource-id=${resource.resourceId}">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getMethod()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td th:text="${resource.getDescription()}"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="request-tab-pane" role="tabpanel" aria-labelledby="nav-request-tab" tabindex="1">
+                                                    <h5>Recursos Módulo Prospectos</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${requestAvailableResourceList}">
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-primary addResourceButton" data-resource-id="${resource.getId()}" data-resource-name="${resource.getName()}">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="admin-tab-pane" role="tabpanel" aria-labelledby="nav-admin-tab" tabindex="2">
+                                                    <h5>Recursos Modulo Administración</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${adminAvailableResourceList}">
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-primary addResourceButton" data-resource-id="${resource.getId()}" data-resource-name="${resource.getName()}">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="operation-tab-pane" role="tabpanel" aria-labelledby="nav-operation-tab" tabindex="3">
+                                                    <h5>Recursos Modulo Operación</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${operationAvailableResourceList}">
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-primary addResourceButton" data-resource-id="${resource.getId()}" data-resource-name="${resource.getName()}">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="accounting-tab-pane" role="tabpanel" aria-labelledby="nav-accounting-tab" tabindex="4">
+                                                    <h5>Recursos Modulo Contabilidad</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${accountingAvailableResourceList}">
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-primary addResourceButton" data-resource-id="${resource.getId()}" data-resource-name="${resource.getName()}">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="report-tab-pane" role="tabpanel" aria-labelledby="nav-report-tab" tabindex="5">
+                                                    <h5>Recursos Modulo Reportes</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${reportAvailableResourceList}">
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-primary addResourceButton" data-resource-id="${resource.getId()}" data-resource-name="${resource.getName()}">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pld-tab-pane" role="tabpanel" aria-labelledby="nav-pld-tab" tabindex="6">
+                                                    <h5>Recursos Modulo PLD/FT</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${pldAvailableResourceList}">
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-primary addResourceButton" data-resource-id="${resource.getId()}" data-resource-name="${resource.getName()}">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="undefined-tab-pane" role="tabpanel" aria-labelledby="nav-undefined-tab" tabindex="-1">
+                                                    <h5>Recursos Modulo No Definido</h5>
+                                                    <div class="table-responsive mt-3">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asignar</th>
+                                                                    <th>Código</th>
+                                                                    <th>Método</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Descripción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="resource: ${undefinedAvailableResourceList}">
+                                                                    <td th:text="${resource.getCode()}"></td>
+                                                                    <td th:text="${resource.getName()}"></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-primary addResourceButton" data-resource-id="${resource.getId()}" data-resource-name="${resource.getName()}">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -113,13 +590,74 @@
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
 
             <footer th:replace="~{fragments/common :: footer}"></footer>
 
             <div th:replace="~{fragments/common :: commonModals}"></div>
 
             <div th:replace="~{fragments/common :: jsDependencies}"></div>
+
+            <script th:inline="javascript">
+                $().ready(function() {
+                    let btnAddResources = document.getElementById("btn-add-resources"),
+                        resourceIds = [];
+
+                    $(".form-check-input").on("change", function() {
+                        let resourceId = $(this).attr("resource-id");
+                        
+                        if ($(this).is(":checked")) {
+                            if (!resourceIds.includes(resourceId)) {
+                                resourceIds.push(resourceId);
+                            }
+                        } else {
+                            resourceIds = resourceIds.filter(id => id !== resourceId);
+                        }
+
+                        if (resourceIds.length > 0) {
+                            btnAddResources.removeAttribute("hidden");
+                        } else {
+                            btnAddResources.setAttribute("hidden", "hidden");
+                        }
+                    });
+
+                    $("#btn-add-resources").on("click", function() {
+                        $("#results").text("Agregando recursos...");
+                        $.ajax({
+                            url: /*[[@{/api/system/profile/assign-resources}]]*/ "/api/system/profile/assign-resources",
+                            method: "POST",
+                            contentType: "application/json",
+                            cache: false,
+                            data: JSON.stringify({
+                                profileId: /*[[${profileEntity.profileId}]]*/ 1,
+                                resourceIds: resourceIds
+                            }),
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $("#results").text("Recursos agregados exitosamente!");
+                                }, 1000);
+                                
+                                setTimeout(function() {
+                                    $("#results").text("Actualizando información...");
+                                }, 1000);
+                                
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 3000);
+                            },
+                            error: function(xhr, status, error) {
+                                $("#results").text("Error al agregar recursos. Por favor, inténtalo de nuevo.");
+                                // Aquí puedes agregar lógica para manejar errores
+                            }
+                        }).fail((jqXHR, textStatus, error) => {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(error);
+                        });
+                    });
+
+                });
+            </script>
 
             <script th:src="@{/public/js/module/system/profile/update.js}"></script>
         </div>

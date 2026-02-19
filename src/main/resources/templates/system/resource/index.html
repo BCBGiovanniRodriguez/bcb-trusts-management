@@ -52,11 +52,19 @@
                             </div>
                         </div>
 
+                        <div th:if="${resourceList.isEmpty()}" class="row">
+                            <div class="col-12">
+                                <div class="alert alert-warning" role="alert">
+                                    No se encontraron recursos registrados para el módulo seleccionado.
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card card-outline card-primary mb-4">
                                     <div class="card-header">
-                                        <h3 class="card-title"><strong>Recursos Registrados en el Sistema</strong></h3>
+                                        <h3 class="card-title"><strong>Recursos Registrados en el Módulo: <span th:text="${moduleAsString}"></span></strong></h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
@@ -64,10 +72,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Módulo</th>
                                                         <th>Código</th>
-                                                        <th>Elemento</th>
-                                                        <th>Actividad</th>
+                                                        <th>Ruta</th>
+                                                        <th>Nombre</th>
+                                                        <th>Descripción</th>
                                                         <th>Fecha de Creación</th>
                                                         <th hidden>Acciones</th>
                                                     </tr>
@@ -75,10 +83,10 @@
                                                 <tbody th:each="resource : ${resourceList}">
                                                     <tr>
                                                         <td th:text="${resource.resourceId}"></td>
-                                                        <td th:text="${resource.moduleAsString}"></td>
                                                         <td th:text="${resource.code}"></td>
-                                                        <td th:text="${resource.element}"></td>
-                                                        <td th:text="${resource.action}"></td>
+                                                        <td th:text="${resource.path}"></td>
+                                                        <td th:text="${resource.name}"></td>
+                                                        <td th:text="${resource.description}"></td>
                                                         <td th:text="${#temporals.format(resource.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                         <td hidden>
                                                             <a th:href="@{/system/resource/{id}(id=${resource.resourceId})}" class="btn btn-sm btn-info" hidden>
@@ -88,11 +96,9 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

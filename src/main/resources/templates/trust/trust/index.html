@@ -86,7 +86,7 @@
                                                         <td th:text="${trust.trustTypeEntity.name}"></td>
                                                         <td th:text="${trust.stateAsString}"></td>
                                                         <td th:text="${trust.statusAsString}"></td>
-                                                        <td th:text="${#temporals.format(trust.created, 'yyyy-MM-dd')}"></td>
+                                                        <td th:text="${#temporals.format(trust.createdAt, 'yyyy-MM-dd')}"></td>
                                                         <td th:text="${trust.registeredBy.person.fullName}"></td>
                                                         <td>
                                                             <a th:href="@{/trust/trust/detail/{id}(id=${trust.trustId})}" class="btn btn-info">

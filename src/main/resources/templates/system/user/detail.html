@@ -55,7 +55,7 @@
                                                         <td th:text="${userEntity.nickname}"></td>
                                                         <td th:text="${userEntity.email}"></td>
                                                         <td th:text="${userEntity.person.getFullName()}"></td>
-                                                        <td th:text="${userEntity.statusAsString}"></td>
+                                                        <td th:text="${userEntity.getStatusAsString()}"></td>
                                                         <td th:text="${#temporals.format(userEntity.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                         <td>
                                                             <a class="btn btn-sm btn-warning" th:href="@{/system/user/edit/{id}(id=${userEntity.userId})}">
@@ -79,30 +79,32 @@
                                         <h3 class="card-title"><strong>Perfiles Asignados</strong></h3>
 
                                         <div class="card-tools">
-                                            <a class="btn btn-sm btn-success" th:href="@{/system/user/profiles/{id}(id=${userEntity.userId})}">
+                                            <button id="btnAddProfile" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#profilesModal" role="button">
                                                 <i class="fa fa-plus"></i> Agregar Perfil
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-sm table-striped table-bordered" id="userAssignedProfilesTable">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>Desasignar</th>
                                                     <th>Perfil</th>
                                                     <th>Asignado Por</th>
                                                     <th>Fecha de Asignación</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                <tr th:each="assignedProfile : ${assignedConfigurationUserProfileList}">
+                                                    <td th:text="${assignedProfile.profileEntity.profileId}"></td>
+                                                    <td th:text="${assignedProfile.profileEntity.name}"></td>
+                                                    <td th:text="${assignedProfile.assignedBy.person.fullName}"></td>
+                                                    <td th:text="${#temporals.format(assignedProfile.assignedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
+
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +131,7 @@
                                                     <th>RFC</th>
                                                     <th>Tipo Persona</th>
                                                     <th>Estado Migratorio</th>
-                                                    <th>Estado</th>
+                                                    <th>Estado Civil</th>
                                                     <th>Fecha de Creación</th>
                                                     <th hidden>Acciones</th>
                                                 </tr>
@@ -145,9 +147,9 @@
                                                     <td th:text="${userEntity.person.genderAsString}"></td>
                                                     <td th:text="${userEntity.person.curp}"></td>
                                                     <td th:text="${userEntity.person.rfc}"></td>
-                                                    <td th:text="${userEntity.person.typeAsString}"></td>
-                                                    <td th:text="${userEntity.person.foreignStatusAsString}"></td>
-                                                    <td th:text="${userEntity.person.statusAsString}"></td>
+                                                    <td th:text="${userEntity.person.getTypeAsString()}"></td>
+                                                    <td th:text="${userEntity.person.getForeignStatusAsString()}"></td>
+                                                    <td th:text="${userEntity.person.getMaritalStatusAsString()}"></td>
                                                     <td th:text="${#temporals.format(userEntity.person.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                     <td hidden></td>
                                                 </tr>
@@ -247,9 +249,170 @@
                 </div>
             </main>
 
+            <div class="modal fade" id="profilesModal" tabindex="-1" role="dialog" aria-labelledby="profilesModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="profilesModalLabel">Perfiles Disponibles</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card card-outline card-primary mb-4">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Resultados: <span id="results"></span></strong></h3>
+                                            <div class="card-tools">
+                                                <button id="btn-assign-profiles" type="button" class="btn btn-sm btn-primary" hidden>
+                                                    <i class="fa fa-plus"></i> Agregar Perfiles
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-sm table-striped table-bordered" id="userAssignedProfilesTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Asignar</th>
+                                                        <th>Código</th>
+                                                        <th>Perfil</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="availableProfile : ${availableProfileEntityList}">
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" th:id="'assignProfile_' + ${availableProfile.profileId}" th:value="${availableProfile.profileId}" th:attr="profile-id=${availableProfile.profileId}">
+                                                            </div>
+                                                        </td>
+                                                        <td th:text="${availableProfile.code}"></td>
+                                                        <td th:text="${availableProfile.name}"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="addressModalLabel">Alta de Nueva Dirección</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="addPhoneModal" tabindex="-1" role="dialog" aria-labelledby="addPhoneModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="addPhoneModalLabel">Alta de Nuevo Teléfono</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="addEmailModal" tabindex="-1" role="dialog" aria-labelledby="addEmailModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="addEmailModalLabel">Alta de Nuevo Correo Electrónico</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <footer th:replace="~{fragments/common :: footer}"></footer>
 
             <div th:replace="~{fragments/common :: jsDependencies}"></div>
+
+            <script th:inline="javascript">
+                $().ready(function() {
+                    let btnAssignProfiles = document.getElementById("btn-assign-profiles"), profilesId = [];
+
+                    $('#btnAddProfile').click(function() {
+                        $('#profilesModal').modal('show');
+                    });
+
+                    $(".form-check-input").on("change", function() {
+                        let profileId = $(this).val();
+
+                        if ($(this).is(":checked")) {
+                            if (!profilesId.includes(profileId)) {
+                                profilesId.push(profileId);
+                            }
+                        } else {
+                            profilesId = profilesId.filter(id => id !== profileId);
+                        }
+
+                        console.log(profilesId);
+
+                        if (profilesId.length > 0) {
+                            btnAssignProfiles.removeAttribute("hidden");
+                        } else {
+                            btnAssignProfiles.setAttribute("hidden", "hidden");
+                        }
+                    });
+
+                    $("#btn-assign-profiles").click(function() {
+                        // Aquí puedes realizar una llamada AJAX para enviar los IDs de los perfiles seleccionados al backend
+                        console.log("Perfiles a asignar: ", profilesId);
+                        $.ajax({
+                            url: /*[[@{/api/system/user/assign-profiles}]]*/ '/system/user/assign-profiles',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                userId: /*[[${userEntity.userId}]]*/ 0,
+                                profileIds: profilesId
+                            }),
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $("#results").text("Perfiles asignados exitosamente", response)
+                                }, 1000);
+                                
+                                setTimeout(function() {
+                                    $("#results").text("Actualizando información...");
+                                }, 1000);
+                                
+                                setTimeout(function() {
+                                    $('#profilesModal').modal('hide');
+                                    location.reload();
+                                }, 3000);
+                            },
+                            error: function(error) {
+                                // Manejar errores aquí
+                                $("#results").text("Error al agregar recursos. Por favor, inténtalo de nuevo. Error: " + error);
+                            }
+                        });
+                    });
+
+
+
+                });
+            </script>
         </div>
     </body>
 </html>

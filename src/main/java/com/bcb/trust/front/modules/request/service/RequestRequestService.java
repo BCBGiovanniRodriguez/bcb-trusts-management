@@ -22,8 +22,8 @@ import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
 import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
 import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
-import com.bcb.trust.front.modules.system.model.repository.SystemUserEntityRepository;
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
+import com.bcb.trust.front.modules.system.model.repository.UserEntityRepository;
 import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.repository.TrustTrustTypeRepository;
 
@@ -41,7 +41,7 @@ public class RequestRequestService {
     private CatalogAddressEntityRepository addressEntityRepository;
 
     @Autowired
-    private SystemUserEntityRepository userEntityRepository;
+    private UserEntityRepository userEntityRepository;
 
     @Autowired
     private RequestEntityRepository requestEntityRepository;
@@ -60,7 +60,7 @@ public class RequestRequestService {
 
         try {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            SystemUserEntity systemUserEntity = userEntityRepository.findByNickname(userDetails.getUsername());
+            CatalogUserEntity systemUserEntity = userEntityRepository.findByNickname(userDetails.getUsername());
             LocalDateTime now = LocalDateTime.now();
 
             RequestRequestEntity lastRequest = requestEntityRepository.findFirstByOrderByNumberDesc();

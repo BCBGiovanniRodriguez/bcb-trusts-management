@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "system_catalog_resources")
-public class SystemResourceEntity {
+public class CatalogResourceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,18 +26,24 @@ public class SystemResourceEntity {
 
     private String code;
 
-    private String element;
+    private String name;
 
-    private String action;
+    private String path;
+
+    private String method;
+
+    private String description;
 
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "resourceEntity")
     private List<SystemUserActivityEntity> userActivityList;
 
-    public static final Integer MODULE_UNDEFINED = 1;
+    public static final Integer MODULE_UNDEFINED = 0;
 
-    public static final Integer MODULE_SYSTEM = 2;
+    public static final Integer MODULE_SYSTEM = 1;
+
+    public static final Integer MODULE_REQUEST = 2;
 
     public static final Integer MODULE_ADMINISTRATION = 3;
 
@@ -49,10 +55,10 @@ public class SystemResourceEntity {
 
     public static final Integer MODULE_PLD = 7;
 
-    public static String[] moduleNames = { "Seleccione Opción", "No definido", "Sistema", "Administración",
+    public static String[] moduleNames = { "No definido", "Sistema", "Administración",
             "Operaciones", "Contabilidad", "Reportes", "PLD" };
 
-    public SystemResourceEntity() {
+    public CatalogResourceEntity() {
     }
 
     public Long getResourceId() {
@@ -79,20 +85,36 @@ public class SystemResourceEntity {
         this.code = code;
     }
 
-    public String getAction() {
-        return action;
+    public String getName() {
+        return name;
     }
 
-    public String getElement() {
-        return element;
+    public void setName(String element) {
+        this.name = element;
     }
 
-    public void setElement(String element) {
-        this.element = element;
+    public String getPath() {
+        return path;
     }
 
-    public void setAction(String name) {
-        this.action = name;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -105,8 +127,8 @@ public class SystemResourceEntity {
 
     @Override
     public String toString() {
-        return "SystemResourceEntity [resourceId=" + resourceId + ", code=" + code + ", name=" + action
-                + ", createdAt=" + createdAt + "]";
+        return "ResourceEntity [resourceId=" + resourceId + ", code=" + code + ", name=" + name
+                + ", path=" + path + ", method=" + method + ", description=" + description + ", createdAt=" + createdAt + "]";
     }
 
     @Override
@@ -125,7 +147,7 @@ public class SystemResourceEntity {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SystemResourceEntity other = (SystemResourceEntity) obj;
+        CatalogResourceEntity other = (CatalogResourceEntity) obj;
         if (code == null) {
             if (other.code != null)
                 return false;
@@ -136,20 +158,23 @@ public class SystemResourceEntity {
 
     public Map<String, Object> toMap() throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("resourceId", this.resourceId);
-        map.put("name", this.action);
+        map.put("resource_id", this.resourceId);
+        map.put("name", this.name);
         map.put("code", this.code);
-        map.put("created", this.createdAt);
+        map.put("path", this.path);
+        map.put("method", this.method);
+        map.put("description", this.description);
+        map.put("created_at", this.createdAt);
 
         return map;
     }
 
     public String getModuleAsString() throws Exception {
-        if (this.module < 0 || (this.module > SystemResourceEntity.moduleNames.length)) {
+        if (this.module < 0 || (this.module > CatalogResourceEntity.moduleNames.length)) {
             throw new Exception("CatalogPersonEntity::getStatusAsString::Valor de tipo fuera del rango");
         }
 
-        return SystemResourceEntity.moduleNames[this.module];
+        return CatalogResourceEntity.moduleNames[this.module];
     }
 
 }

@@ -25,47 +25,19 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <form th:action="@{/system/profile}" method="get">
-                                    <div class="card card-outline card-info mb-4">
-                                        <div class="card-header">
-                                            <h3 class="card-title"><strong>Consulta de Perfiles Registrados en el Sistema</strong></h3>
-
-                                            <div class="card-tools">
-                                                <a th:href="@{/dashboard}" class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-arrow-circle-left"></i> Regresar a Dashboard
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group row">
-                                                <div class="col-3">
-                                                    <label for="status" class="form-label">Estado</label>
-                                                    <select name="status" id="status" class="form-select">
-                                                        <option th:each="status, iteration : ${statuses}" th:value="${iteration.index}" th:text="${status}"
-                                                            th:selected="${statusQueryParam == iteration.index}"></option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer text-center">
-                                            <button class="btn btn-info" type="submit">
-                                                <i class="fa fa-search"></i> Búsqueda
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12">
                                 <div class="card card-outline card-primary mb-4">
                                     <div class="card-header">
                                         <h3 class="card-title"><strong>Perfiles Registrados en el Sistema</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a th:href="@{/dashboard}" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-arrow-circle-left"></i> Regresar a Dashboard
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-sm table-striped table-bordered" id="profileTable">
+                                            <table class="table table-sm table-hover" id="profileTable">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>

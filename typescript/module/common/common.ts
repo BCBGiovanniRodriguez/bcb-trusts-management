@@ -43,7 +43,6 @@ $(() => {
         loadFrontendData();
     } else {
         const systemUser= JSON.parse(systemUserData);
-        console.dir(systemUser);
         
         let username: string = systemUser?.nickname != undefined ? systemUser.nickname : '',
             profile: string = systemUser?.profile?.name != undefined ? systemUser.profile.name : '',
@@ -70,12 +69,10 @@ $(() => {
                 $("#errorMessage").text("Error desconocido");
                 // @ts-ignore
                 serverErrorModal.modal('show');
-
                 setTimeout(function() {
                     // @ts-ignore
                     serverErrorModal.modal('hide');
                 }, 5000);
-
         }).then((result, textStatus, jqXHR) => {
             if(result != undefined) {
                 const resultJson = JSON.parse(result);
@@ -84,18 +81,13 @@ $(() => {
                 if(resultJson.status == 1) {
                     const systemUser = resultJson.data;
                     console.dir(systemUser);
-
-
                     const nickname = systemUser.nickname,
                         email = systemUser.email,
                         person = systemUser.person,
                         profile = systemUser.profile;
-
                     spanNavUsernameJQuery.text(nickname);
                     spanCardUsernameJQuery.text(systemUser.nickname);
-                    spanCardProfileJQuery.text(profile.name);
                     spanCardUserCreatedJQuery.text(systemUser.created);
-
                 } else {
                     // @ts-ignore
                     resultNotFoundModal.modal('show');

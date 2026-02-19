@@ -69,14 +69,16 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table id="userTable" class="table table-sm table-striped table-bordered">
+                                            <table id="userTable" class="table table-sm table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Nickname</th>
                                                         <th>Correo Electronico</th>
                                                         <th>Nombre Completo</th>
-                                                        <th>Estado</th>
+                                                        <th>Tipo</th>
+                                                        <th>Estado Migratorio</th>
+                                                        <th>Estado Civil</th>
                                                         <th>Fecha de Registro</th>
                                                         <th>Acciones</th>
                                                     </tr>
@@ -87,8 +89,10 @@
                                                         <td th:text="${user.nickname}"></td>
                                                         <td th:text="${user.email}"></td>
                                                         <td th:text="${user.person.fullName}"></td>
-                                                        <td th:text="${user.statusAsString}"></td>
-                                                        <td th:text="${user.createdAt}"></td>
+                                                        <td th:text="${user.person.getTypeAsString()}"></td>
+                                                        <td th:text="${user.person.getForeignStatusAsString()}"></td>
+                                                        <td th:text="${user.person.getMaritalStatusAsString()}"></td>
+                                                        <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                         <td>
                                                             <a th:href="@{/system/user/detail/{id}(id=${user.userId})}" class="btn btn-sm btn-info">
                                                                 <i class="fa fa-search"></i> Ver Detalles

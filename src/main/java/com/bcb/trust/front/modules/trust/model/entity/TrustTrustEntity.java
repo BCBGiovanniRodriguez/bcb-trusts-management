@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
-import com.bcb.trust.front.modules.system.model.entity.SystemUserEntity;
+import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -50,7 +50,7 @@ public class TrustTrustEntity extends CommonEntity {
 
     @ManyToOne
     @JoinColumn(name = "registered_by", nullable = false)
-    private SystemUserEntity registeredBy;
+    private CatalogUserEntity registeredBy;
 
     @OneToMany(mappedBy = "trust", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrustTrustorEntity> trustorList = new ArrayList<>();
@@ -179,11 +179,11 @@ public class TrustTrustEntity extends CommonEntity {
         this.trusteeList = trusteeList;
     }
 
-    public SystemUserEntity getRegisteredBy() {
+    public CatalogUserEntity getRegisteredBy() {
         return registeredBy;
     }
 
-    public void setRegisteredBy(SystemUserEntity registeredBy) {
+    public void setRegisteredBy(CatalogUserEntity registeredBy) {
         this.registeredBy = registeredBy;
     }
 

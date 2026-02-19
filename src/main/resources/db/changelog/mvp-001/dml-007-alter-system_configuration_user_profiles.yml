@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 13
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup inserts for system_configuration_user_profiles
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - addColumn:
+            tableName: system_configuration_user_profiles
+            columns:
+              - column: { name: user_profile_id, type: BIGINT, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: active, type: TINYINT, defaultValue: 1, constraints: { nullable: false } }
+              - column: { name: unassigned_at, type: TIMESTAMP}
+              - column: { name: unassigned_by, type: BIGINT }

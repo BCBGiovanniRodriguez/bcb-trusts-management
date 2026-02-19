@@ -1,0 +1,143 @@
+databaseChangeLog:
+  - changeSet:
+      id: 11
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup inserts for system_catalog_resources
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 0 }
+              - column: { name: code, value: "MUPP" }
+              - column: { name: name, value: "Página principal" }
+              - column: { name: path, value: "/" }
+              - column: { name: method, value: "GET" }
+              - column: { name: description, value: "Página principal" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 0 }
+              - column: { name: code, value: "MUPPL" }
+              - column: { name: name, value: "Página principal, Landing page" }
+              - column: { name: path, value: "/landing" }
+              - column: { name: method, value: "GET" }
+              - column: { name: description, value: "Landing page" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCRR" }
+              - column: { name: name, value: "Consulta de Recursos" }
+              - column: { name: path, value: "/api/system/resource" }
+              - column: { name: method, value: "GET" }
+              - column: { name: description, value: "Obtener lista de recursos" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCPR" }
+              - column: { name: name, value: "Consulta de Perfiles" }
+              - column: { name: path, value: "/api/system/profile" }
+              - column: { name: method, value: "GET" }
+              - column: { name: description, value: "Obtener lista de perfiles" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCPRO" }
+              - column: { name: name, value: "Consulta de Perfil" }
+              - column: { name: path, value: "/api/system/profile/{id}" }
+              - column: { name: method, value: "GET" }
+              - column: { name: description, value: "Obtener información de un perfil específico" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCPU" }
+              - column: { name: name, value: "Actualizar Perfil" }
+              - column: { name: path, value: "/api/system/profile/{id}" }
+              - column: { name: method, value: "PUT" }
+              - column: { name: description, value: "Actualizar información de un perfil específico" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCPU" }
+              - column: { name: name, value: "Actualizar Perfil" }
+              - column: { name: path, value: "/api/system/profile/{id}" }
+              - column: { name: method, value: "PUT" }
+              - column: { name: description, value: "Actualizar información de un perfil específico" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCUR" }
+              - column: { name: name, value: "Consulta de Usuarios" }
+              - column: { name: path, value: "/api/system/user" }
+              - column: { name: method, value: "GET" }
+              - column: { name: description, value: "Obtener lista de usuarios" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCURO" }
+              - column: { name: name, value: "Consulta de Usuario" }
+              - column: { name: path, value: "/api/system/user/{id}" }
+              - column: { name: method, value: "GET" }
+              - column: { name: description, value: "Obtener información de un usuario específico" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCUU" }
+              - column: { name: name, value: "Actualizar Usuario" }
+              - column: { name: path, value: "/api/system/user/{id}" }
+              - column: { name: method, value: "PUT" }
+              - column: { name: description, value: "Actualizar información de un usuario específico" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCUC" }
+              - column: { name: name, value: "Registrar Usuario" }
+              - column: { name: path, value: "/api/system/user" }
+              - column: { name: method, value: "POST" }
+              - column: { name: description, value: "Registrar un nuevo usuario" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCPRU" }
+              - column: { name: name, value: "Asignar-Desasignar Recurso a Perfil" }
+              - column: { name: path, value: "/api/system/profile/assign-resources" }
+              - column: { name: method, value: "POST" }
+              - column: { name: description, value: "Asignar-Desasignar recursos a un perfil específico" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+        - insert:
+            tableName: system_catalog_resources
+            columns:
+              - column: { name: module, value: 1 }
+              - column: { name: code, value: "MSCPRU" }
+              - column: { name: name, value: "Asignar-Desasignar Perfil a Usuario" }
+              - column: { name: path, value: "/api/system/user/assign-profiles" }
+              - column: { name: method, value: "POST" }
+              - column: { name: description, value: "Asignar-Desasignar perfiles a un usuario específico" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+

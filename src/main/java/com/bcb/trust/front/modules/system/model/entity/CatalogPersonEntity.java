@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
@@ -25,7 +24,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "system_catalog_persons")
-public class CatalogPersonEntity extends CommonEntity {
+public class CatalogPersonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,6 +90,18 @@ public class CatalogPersonEntity extends CommonEntity {
     public static final Integer FOREIGN_STATUS_FOREIGNER = 2;
 
     public static final String[] foreignStatuses = { "Seleccione Opción", "Nacional", "Extranjero" };
+
+    public static final Integer MARITAL_STATUS_SINGLE = 1;
+
+    public static final Integer MARITAL_STATUS_MARRIED = 2;
+    
+    public static final Integer MARITAL_STATUS_WIDOWED = 3;
+    
+    public static final Integer MARITAL_STATUS_DIVORCED = 4;
+
+    public static final Integer MARITAL_STATUS_UNKNOWN = 5;
+
+    public static final String[] maritalStatuses = { "Seleccione Opción", "Soltero(a)", "Casado(a)", "Viudo(a)", "Divorciado(a)", "No especificado" };
 
     public CatalogPersonEntity() {
         this.requestSet = new HashSet<>();
@@ -229,20 +240,20 @@ public class CatalogPersonEntity extends CommonEntity {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("personId", this.personId);
-        map.put("firstName", this.firstName);
-        map.put("secondName", this.secondName);
-        map.put("lastName", this.lastName);
-        map.put("secondLastName", this.secondLastName);
-        map.put("fullName", this.fullName);
+        map.put("person_id", this.personId);
+        map.put("first_name", this.firstName);
+        map.put("second_name", this.secondName);
+        map.put("last_name", this.lastName);
+        map.put("second_last_name", this.secondLastName);
+        map.put("full_name", this.fullName);
         map.put("gender", this.gender);
-        map.put("birthDate", this.birthdate);
+        map.put("birth_date", this.birthdate);
         map.put("curp", this.curp);
         map.put("rfc", this.rfc);
-        map.put("foreignStatus", this.foreignStatus);
+        map.put("foreign_status", this.foreignStatus);
         map.put("type", this.type);
-        map.put("status", this.maritalStatus);
-        map.put("created", this.createdAt);
+        map.put("marital_status", this.maritalStatus);
+        map.put("created_at", this.createdAt);
 
         return map;
     }
@@ -255,18 +266,17 @@ public class CatalogPersonEntity extends CommonEntity {
         return CatalogPersonEntity.genders[this.gender];
     }
 
-    @Override
-    public String getStatusAsString() throws Exception {
-        if (this.maritalStatus < 0 || (this.maritalStatus > CommonEntity.statuses.length)) {
-            throw new Exception("CatalogPersonEntity::getStatusAsString::Valor de estatus fuera del rango");
+    public String getMaritalStatusAsString() throws Exception {
+        if (this.maritalStatus < 0 || (this.maritalStatus > CatalogPersonEntity.maritalStatuses.length)) {
+            throw new Exception("CatalogPersonEntity::getMaritalStatusAsString::Valor de estatus fuera del rango");
         }
 
-        return CommonEntity.statuses[this.maritalStatus];
+        return CatalogPersonEntity.maritalStatuses[this.maritalStatus];
     }
 
     public String getTypeAsString() throws Exception {
         if (this.type < 0 || (this.type > CatalogPersonEntity.types.length)) {
-            throw new Exception("CatalogPersonEntity::getStatusAsString::Valor de tipo fuera del rango");
+            throw new Exception("CatalogPersonEntity::getTypeAsString::Valor de tipo fuera del rango");
         }
 
         return CatalogPersonEntity.types[this.type];
@@ -274,7 +284,7 @@ public class CatalogPersonEntity extends CommonEntity {
 
     public String getForeignStatusAsString() throws Exception {
         if (this.foreignStatus < 0 || (this.foreignStatus > CatalogPersonEntity.foreignStatuses.length)) {
-            throw new Exception("CatalogPersonEntity::getStatusAsString::Valor de tipo fuera del rango");
+            throw new Exception("CatalogPersonEntity::getForeignStatusAsString::Valor de tipo fuera del rango");
         }
 
         return CatalogPersonEntity.foreignStatuses[this.foreignStatus];

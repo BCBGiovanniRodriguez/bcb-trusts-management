@@ -12,23 +12,20 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "system_configuration_profile_resources")
-public class ConfigurationProfileResourceEntity {
+@Table(name = "system_configuration_user_profiles")
+public class ConfigurationUserProfileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long profileResourceId;
+    private Long userProfileId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private CatalogUserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "profile_id", nullable = false)
     private CatalogProfileEntity profileEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "resource_id", nullable = false)
-    private CatalogResourceEntity resourceEntity;
-
-    @Column(columnDefinition = "TINYINT(1)")
-    private Integer permissionType;
 
     @Column(columnDefinition = "TINYINT(1)")
     private Integer active;
@@ -39,12 +36,24 @@ public class ConfigurationProfileResourceEntity {
     @JoinColumn(name = "assigned_by", nullable = false)
     private CatalogUserEntity assignedBy;
 
-    public Long getProfileResourceId() {
-        return profileResourceId;
+    @ManyToOne
+    @JoinColumn(name = "unassigned_by", nullable = false)
+    private CatalogUserEntity unassignedBy;
+
+    public Long getUserProfileId() {
+        return userProfileId;
     }
 
-    public void setProfileResourceId(Long profileResourceId) {
-        this.profileResourceId = profileResourceId;
+    public void setUserProfileId(Long userProfileId) {
+        this.userProfileId = userProfileId;
+    }
+
+    public CatalogUserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(CatalogUserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public CatalogProfileEntity getProfileEntity() {
@@ -53,22 +62,6 @@ public class ConfigurationProfileResourceEntity {
 
     public void setProfileEntity(CatalogProfileEntity profileEntity) {
         this.profileEntity = profileEntity;
-    }
-
-    public CatalogResourceEntity getResourceEntity() {
-        return resourceEntity;
-    }
-
-    public void setResourceEntity(CatalogResourceEntity resourceEntity) {
-        this.resourceEntity = resourceEntity;
-    }
-
-    public Integer getPermissionType() {
-        return permissionType;
-    }
-
-    public void setPermissionType(Integer permissionType) {
-        this.permissionType = permissionType;
     }
 
     public Integer getActive() {
@@ -94,5 +87,12 @@ public class ConfigurationProfileResourceEntity {
     public void setAssignedBy(CatalogUserEntity assignedBy) {
         this.assignedBy = assignedBy;
     }
+    
+    public CatalogUserEntity getUnassignedBy() {
+        return unassignedBy;
+    }
 
+    public void setUnassignedBy(CatalogUserEntity unassignedBy) {
+        this.unassignedBy = unassignedBy;
+    }
 }

@@ -21,7 +21,7 @@ public class SystemUserActivityEntity {
 
     @ManyToOne
     @JoinColumn(name = "resourceId", referencedColumnName = "resourceId")
-    private SystemResourceEntity resourceEntity;
+    private CatalogResourceEntity resourceEntity;
 
     @Column(columnDefinition = "TINYINT(1)")
     private Integer status;
@@ -39,11 +39,11 @@ public class SystemUserActivityEntity {
         this.userActivityId = userActivityId;
     }
 
-    public SystemResourceEntity getResourceEntity() {
+    public CatalogResourceEntity getResourceEntity() {
         return resourceEntity;
     }
 
-    public void setResourceEntity(SystemResourceEntity resourceEntity) {
+    public void setResourceEntity(CatalogResourceEntity resourceEntity) {
         this.resourceEntity = resourceEntity;
     }
 

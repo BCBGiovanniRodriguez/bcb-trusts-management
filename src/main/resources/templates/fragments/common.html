@@ -6,23 +6,23 @@
         <title>BCB SAF</title>
         <link rel="icon" th:href="@{/public/img/favicon.ico}">
         <!--<link rel="stylesheet" type="text/css" th:href="@{/public/bootstrap-5.3.6/css/bootstrap.min.css}" /> -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/css/adminlte.min.css}" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" type="text/css" th:href="@{/public/adminlte/plugins/fontawesome/css/all.min.css}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.11.0/styles/overlayscrollbars.min.css" integrity="sha512-PBzouFB1XtDMHX9kVQ3rh7MDwvHFyD5FflRNcuMk7Q9BR9v8DgwjZWu++yrIxOjsdW3j+sj9KnnY59Jjzx5hWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
-            main.app-main {
+            /*main.app-main {
                 background-image: url(/public/img/logo-bursametrica-fiduciario.svg);
                 background-color: rgba(255,255,255,0.6);
                 background-blend-mode: lighten;
                 background-size: cover;
-
-            }
+            }*/
         </style>
         <script>
             const baseUrl = '/';
         </script>
+        <script th:src="@{/public/adminlte/plugins/jquery/jquery-3.7.1.min.js}"></script>
     </head>
 
     <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -86,7 +86,7 @@
             <!-- Sidebar Brand-->
              <div class="sidebar-brand">
                 <a th:href="@{/}" class="brand-link">
-                    <img th:src="@{/public/img/BCB-logo.png}" alt="Logo Admin" class="brand-image opacity-75 shadow" style="width: 100%; height: 100%;" />
+                    <img th:src="@{/public/img/BCB-logo-whitev2.svg}" alt="Logo Admin" class="brand-image shadow" style="width: 100%; height: 100%;" />
                 </a>
              </div>
             <!-- Sidebar Brand -->
@@ -95,17 +95,66 @@
                 <div class="mt-2">
                     <!-- Sidebar Menu -->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item" hidden>
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-cogs"></i>
                                 <p>
-                                    Configuración
+                                    Promoción
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a th:href="@{/request/request}" class="nav-link">
+                                        <i class="nav-icon bi bi-person-fill-add"></i>
+                                        <p>
+                                            Prospectos
+                                        </p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-cogs"></i>
+                                <p>
+                                    PLD / FT
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a th:href="@{/operation/catalog/accounting-guide}" class="nav-link">
+                                        <i class="nav-icon bi bi-list-columns-reverse"></i>
+                                        <p>
+                                            Dictaminación
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item" hidden>
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-files"></i>
+                                        <p>
+                                            Catálogos
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a th:href="@{/operation/catalog/accounting-guide}" class="nav-link">
+                                                <i class="nav-icon bi bi-list-columns-reverse"></i>
+                                                <p>
+                                                    Guía Contable
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-kanban"></i>
@@ -159,15 +208,6 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a th:href="@{/request/request}" class="nav-link">
-                                        <i class="nav-icon bi bi-person-fill-add"></i>
-                                        <p>
-                                            Prospectos
-                                        </p>
-                                    </a>
                                 </li>
 
                                 <li class="nav-item">
@@ -254,7 +294,7 @@
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview">
-                                        <li class="nav-item">
+                                        <li class="nav-item" hidden>
                                             <a th:href="@{/operation/catalog/accounting-guide}" class="nav-link">
                                                 <i class="nav-icon bi bi-list-columns-reverse"></i>
                                                 <p>
@@ -276,7 +316,36 @@
                             </ul>
                         </li>
 
-                        
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-cogs"></i>
+                                <p>
+                                    Contabilidad
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-files"></i>
+                                        <p>
+                                            Catálogos
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a th:href="@{/operation/catalog/accounting-guide}" class="nav-link">
+                                                <i class="nav-icon bi bi-list-columns-reverse"></i>
+                                                <p>
+                                                    Guía Contable
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -324,7 +393,7 @@
                                         </li>
 
                                         <li class="nav-item">
-                                            <a th:href="@{/configuration/endpoint}" class="nav-link">
+                                            <a th:href="@{/system/configuration/endpoint}" class="nav-link">
                                                 <i class="nav-icon fa fa-hexagon-nodes"></i>
                                                 <p>
                                                     Endpoints
@@ -338,7 +407,7 @@
                     </ul>
                     <!-- Sidebar Menu -->
                 </div>
-             </div>
+            </div>
             <!-- Sidebar Wrapper-->
         </aside>
 
@@ -444,13 +513,10 @@
 
         <div th:fragment="jsDependencies">
             <script>var exports = {};</script>
-            <script th:src="@{/public/adminlte/plugins/jquery/jquery-3.7.1.min.js}"></script>
             <script th:src="@{/public/js/module/common/common.js}"></script>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <!--<script th:src="@{/public/bootstrap-5.3.6/js/bootstrap.min.js}"></script>-->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
             <script th:src="@{/public/adminlte/js/adminlte.min.js}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         </div>
-        
     </body>
 </html>

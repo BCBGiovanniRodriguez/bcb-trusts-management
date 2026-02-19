@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "system_catalog_users")
-public class SystemUserEntity extends CommonEntity {
+public class CatalogUserEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +56,7 @@ public class SystemUserEntity extends CommonEntity {
     @OneToMany(mappedBy = "assignedBy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ConfigurationProfileResourceEntity> profileResourceList;
 
-    public SystemUserEntity() {
+    public CatalogUserEntity() {
     }
 
     public Long getUserId() {
@@ -117,14 +117,14 @@ public class SystemUserEntity extends CommonEntity {
 
     @Override
     public String toString() {
-        return "SystemUser [userId=" + userId + ", nickname=" + nickname + ", access=" + access
+        return "CatalogUserEntity [userId=" + userId + ", nickname=" + nickname + ", access=" + access
                 + ", email=" + email + ", person=" + person + ", status=" + status + ", created=" + createdAt + "]";
     }
 
     @Override
     public String getStatusAsString() throws Exception {
         if (this.status < 0 || (this.status > CommonEntity.statuses.length)) {
-            throw new Exception("SystemUserEntity::getStatusAsString::Valor de estatus fuera del rango");
+            throw new Exception("CatalogUserEntity::getStatusAsString::Valor de estatus fuera del rango");
         }
 
         return CommonEntity.statuses[this.status];
@@ -132,12 +132,12 @@ public class SystemUserEntity extends CommonEntity {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("userId", this.userId);
+        map.put("user_id", this.userId);
         map.put("nickname", this.nickname);
         map.put("email", this.email);
         map.put("person", this.person.toMap());
         map.put("status", this.status);
-        map.put("created", this.createdAt);
+        map.put("created_at", this.createdAt);
 
         return map;
     }

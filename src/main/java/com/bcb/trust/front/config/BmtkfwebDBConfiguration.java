@@ -13,6 +13,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -23,8 +24,8 @@ import jakarta.persistence.EntityManagerFactory;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    entityManagerFactoryRef = "bmtkfwebEntityManagerFactory",
-    transactionManagerRef = "bmtkfwebTransactionManager",
+    entityManagerFactoryRef = "bmtkfwebEntityManagerFactory", 
+    transactionManagerRef = "bmtkfwebTransactionManager", 
     basePackages = {
         "com.bcb.trust.front.model.bmtkfweb.*"
     }
@@ -40,36 +41,38 @@ public class BmtkfwebDBConfiguration {
     @Bean(name = "bmtkfwebDatasource")
     @ConfigurationProperties("bmtkfweb.datasource")
     public DataSource bmtkfwebDataSource() {
-        //return bmtkfwebDataSourceProperties().initializeDataSourceBuilder().build(); // Implement this
+        // return bmtkfwebDataSourceProperties().initializeDataSourceBuilder().build();
+        // // Implement this
         return DataSourceBuilder.create().build();
     }
 
     @Bean(name = "bmtkfwebEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean bmtkfwebEntityManagerFactory(EntityManagerFactoryBuilder builder,
-        @Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
+            @Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
 
         return builder.dataSource(bmtkfwebDataSource)
-            .packages("com.bcb.trust.front.model.bmtkfweb.*", "com.bcb.trust.front.modules.legacy.*")
-            .persistenceUnit("bmtkfweb")
-            .build();
+                .packages("com.bcb.trust.front.model.bmtkfweb.*", "com.bcb.trust.front.modules.legacy.*")
+                .persistenceUnit("bmtkfweb")
+                .build();
     }
 
     @Bean(name = "bmtkfwebTransactionManager")
     public PlatformTransactionManager transactionManager(
-        @Qualifier("bmtkfwebEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
-            return new JpaTransactionManager(entityManagerFactory);
+            @NonNull @Qualifier("bmtkfwebEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Bean(name = "bmtkfwebJdbcTemplate")
     @DependsOn("bmtkfwebDatasource")
-    public JdbcTemplate bmtkfwebJdbcTemplate(@Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
+    public JdbcTemplate bmtkfwebJdbcTemplate(@NonNull @Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
         return new JdbcTemplate(bmtkfwebDataSource);
     }
 
     @Bean(name = "bmtkfwebNamedParameterJdbcTemplate")
     @DependsOn("bmtkfwebDatasource")
-    public NamedParameterJdbcTemplate bmtkfwebNamedParameterJdbcTemplate(@Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
+    public NamedParameterJdbcTemplate bmtkfwebNamedParameterJdbcTemplate(
+            @NonNull @Qualifier("bmtkfwebDatasource") DataSource bmtkfwebDataSource) {
         return new NamedParameterJdbcTemplate(bmtkfwebDataSource);
     }
-    
+
 }
