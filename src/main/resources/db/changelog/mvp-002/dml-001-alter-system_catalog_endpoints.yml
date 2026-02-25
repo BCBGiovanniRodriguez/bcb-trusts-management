@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 15
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Alter on table system_catalog_endpoints
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - addColumn:
+            tableName: system_catalog_endpoints
+            columns:
+              - column: { name: type, afterColumn: "endpoint_id", type: TINYINT, defaultValue: 1, constraints: { nullable: false }, remarks: "REST = 1, SOAP = 2" }
+              - column: { name: code, afterColumn: "type", type: TINYINT, constraints: { nullable: false }, remarks: "Esta clave se maneja como constante en el código" }
+              - column: { name: env, afterColumn: "code", type: TINYINT, constraints: { nullable: false }, remarks: "PRD = 1, QA = 2, DEV = 3" }
+              - column: { name: username, afterColumn: "env", type: VARCHAR(255), constraints: { nullable: false }, remarks: "Usuario en caso de requerir autenticación" }
+              - column: { name: password, afterColumn: "username", type: VARCHAR(255), constraints: { nullable: false }, remarks: "Password en caso de requerir autenticación" }
+              - column: { name: token, afterColumn: "password", type: VARCHAR(255), constraints: { nullable: false }, remarks: "Token de autenticación, en caso de requerirse" }
+              - column: { name: resource, afterColumn: "port", type: VARCHAR(255), constraints: { nullable: false }, remarks: "URI del recurso a consultar" }
+              - column: { name: parameters, afterColumn: "resource", type: VARCHAR(255), constraints: { nullable: false }, remarks: "En formato json, en caso de ser necesarios" }
+

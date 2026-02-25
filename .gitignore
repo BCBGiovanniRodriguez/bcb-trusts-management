@@ -1,4 +1,12 @@
+src/main/resources/*.properties
+*.pdf
+trusts/*
+schema/legacy/*
+schema/dump/*
 
+mvnw
+mvnw.cmd
+src/main/resources/static/public
 .env
 HELP.md
 target/
@@ -8,7 +16,6 @@ target/
 typescript/node_modules/
 typescript/package-lock.json
 # Client dependencies
-src/main/resources/static/public/adminlte/
 # Database files
 schema/*
 
@@ -65,23 +72,3 @@ build/
 hs_err_pid*
 replay_pid*
 
-src/main/resources/*.properties
-*.pdf
-trusts/*
-schema/legacy/*
-schema/dump/*
-
-mvnw
-mvnw.cmd
-src/main/resources/static/public/bootstrap-5.3.6/*
-src/main/resources/static/public/img/*
-src/main/resources/static/public/*.tar
-src/main/resources/static/public/*.zip
-src/main/resources/static/public/*.tar.gz
-src/main/resources/static/public/*.rar
-src/main/resources/static/public/*.gz
-src/main/resources/static/public/*.7z
-src/main/resources/static/public/*.7zip
-src/main/resources/static/public/*.7z.*
-src/main/resources/static/public/*.7zip.*
-src/main/resources/static/public/*.tar.*

@@ -40,21 +40,29 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
+                                                        <th>Ambiente</th>
+                                                        <th>Tipo</th>
+                                                        <th>Código</th>
                                                         <th>Ruta</th>
-                                                        <th>Descripción</th>
+                                                        <th>Puerto</th>
+                                                        <th>Recurso</th>
                                                         <th>Fecha de Registro</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody th:each="endpoint : ${endpointList}">
+                                                <tbody th:each="endpoint : ${configurationEndpointEntityList}">
                                                     <tr>
                                                         <td th:text="${endpoint.endpointId}"></td>
-                                                        <td th:text="${endpoint.name}"></td>
-                                                        <td th:text="${endpoint.status.getStringValue}"></td>
-                                                        <td th:text="${endpoint.created}"></td>
+                                                        <td th:text="${endpoint.getEnvAsString()}"></td>
+                                                        <td th:text="${endpoint.getTypeAsString()}"></td>
+                                                        <td th:text="${endpoint.getCodeAsString()}"></td>
+                                                        <td th:text="${endpoint.url}"></td>
+                                                        <td th:text="${endpoint.port}"></td>
+                                                        <td th:text="${endpoint.resource}"></td>
+                                                        <td th:text="${#temporals.format(endpoint.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
                                                         <td>
-                                                            <a th:href="@{/thirdparty/endpoint/{id}(id=${endpoint.endpointId})}" class="btn btn-sm btn-info">
-                                                                <i class="fa fa-search"></i> Ver Detalles
+                                                            <a th:href="@{/system/configuration/endpoint/update/{id}(id=${endpoint.endpointId})}" class="btn btn-sm btn-warning" title="Editar Endpoint">
+                                                                <i class="fa fa-pen-to-square"></i>
                                                             </a>
                                                         </td>
                                                     </tr>

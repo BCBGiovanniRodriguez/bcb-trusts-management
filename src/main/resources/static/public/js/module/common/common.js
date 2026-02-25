@@ -7,7 +7,6 @@ $(() => {
     }
     else {
         const systemUser = JSON.parse(systemUserData);
-        console.dir(systemUser);
         let username = (systemUser === null || systemUser === void 0 ? void 0 : systemUser.nickname) != undefined ? systemUser.nickname : '', profile = ((_a = systemUser === null || systemUser === void 0 ? void 0 : systemUser.profile) === null || _a === void 0 ? void 0 : _a.name) != undefined ? systemUser.profile.name : '', created = (systemUser === null || systemUser === void 0 ? void 0 : systemUser.created) != undefined ? systemUser.created : '';
         spanNavUsernameJQuery.text(username);
         spanCardUsernameJQuery.text(username);
@@ -39,7 +38,6 @@ $(() => {
                     const nickname = systemUser.nickname, email = systemUser.email, person = systemUser.person, profile = systemUser.profile;
                     spanNavUsernameJQuery.text(nickname);
                     spanCardUsernameJQuery.text(systemUser.nickname);
-                    spanCardProfileJQuery.text(profile.name);
                     spanCardUserCreatedJQuery.text(systemUser.created);
                 }
                 else {

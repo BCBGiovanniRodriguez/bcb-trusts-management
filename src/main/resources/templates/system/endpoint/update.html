@@ -24,9 +24,9 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <div class="card card-outline card-success mb-4">
+                                <div class="card card-outline card-warning mb-4">
                                     <div class="card-header">
-                                        <h3 class="card-title"><strong>Registrar Endpoint en Sistema</strong></h3>
+                                        <h3 class="card-title"><strong>Actualizar Endpoint</strong></h3>
 
                                         <div class="card-tools">
                                             <a th:href="@{/system/configuration/endpoint}" class="btn btn-info btn-sm">
@@ -42,7 +42,7 @@
                                                     <select name="env" id="env" class="form-select">
                                                         <option th:each="env, iteration : ${envs}"
                                                             th:value="${iteration.index}" th:text="${env}"
-                                                            th:selected="0"></option>
+                                                            th:selected="${endpoint.env == iteration.index}"></option>
                                                     </select>
                                                 </div>
                                                 
@@ -51,7 +51,7 @@
                                                     <select name="type" id="type" class="form-select">
                                                         <option th:each="type, iteration : ${types}"
                                                             th:value="${iteration.index}" th:text="${type}"
-                                                            th:selected="0"></option>
+                                                            th:selected="${endpoint.type == iteration.index}"></option>
                                                     </select>
                                                 </div>
 
@@ -60,50 +60,50 @@
                                                     <select name="code" id="code" class="form-select">
                                                         <option th:each="code, iteration : ${codes}"
                                                             th:value="${iteration.index}" th:text="${code}"
-                                                            th:selected="0"></option>
+                                                            th:selected="${endpoint.code == iteration.index}"></option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-3">
                                                     <label for="username" class="form-label"><strong>Username (Opcional)</strong></label>
-                                                    <input type="text" id="username" name="username" class="form-control" />
+                                                    <input type="text" id="username" name="username" class="form-control" th:value="${endpoint.username}" />
                                                 </div>
                                                 
                                                 <div class="col-3">
                                                     <label for="password" class="form-label"><strong>Password (opcional)</strong></label>
-                                                    <input type="text" id="password" name="password" class="form-control" />
+                                                    <input type="text" id="password" name="password" class="form-control" th:value="${endpoint.password}" />
                                                 </div>
                                             </div>
 
                                             <div class="row g-3">
                                                 <div class="col-3">
                                                     <label for="token" class="form-label"><strong>Token (Opcional)</strong></label>
-                                                    <input type="text" id="token" name="token" class="form-control" />
+                                                    <input type="text" id="token" name="token" class="form-control" th:value="${endpoint.token}" />
                                                 </div>
                                             </div>
 
                                             <div class="row g-3">
                                                 <div class="col-3">
                                                     <label for="url" class="form-label"><strong>URL</strong></label>
-                                                    <input type="text" id="url" name="url" class="form-control" placeholder="Ej: 10.20.50.132" />
+                                                    <input type="text" id="url" name="url" class="form-control" placeholder="Ej: 10.20.50.132" th:value="${endpoint.url}" />
                                                 </div>
                                                 
                                                 <div class="col-3">
                                                     <label for="port" class="form-label"><strong>Puerto</strong></label>
-                                                    <input type="text" id="port" name="port" class="form-control" placeholder="Ej: 9002" />
+                                                    <input type="text" id="port" name="port" class="form-control" placeholder="Ej: 9002" th:value="${endpoint.port}" />
                                                 </div>
                                                 
                                                 <div class="col-3">
                                                     <label for="resource" class="form-label"><strong>Recurso</strong></label>
-                                                    <input type="text" id="resource" name="resource" class="form-control" placeholder="Ej: /api/location/byzipcode" />
+                                                    <input type="text" id="resource" name="resource" class="form-control" placeholder="Ej: /api/location/byzipcode" th:value="${endpoint.resource}" />
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="row g-3">
                                                 <div class="col-4">
-                                                    <button id="btnSuccess" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal" role="button" hidden>
-                                                        <i class="fa fa-plus"></i> Registrar Endpoint
+                                                    <button id="btnUpdate" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#confirmModal" role="button" hidden>
+                                                        <i class="fa fa-arrows-rotate"></i> Actualizar Endpoint
                                                     </button>
                                                 </div>
                                             </div>
@@ -120,28 +120,28 @@
             <footer th:replace="~{fragments/common :: footer}"></footer>
 
             <div th:replace="~{fragments/common :: jsDependencies}"></div>
+        </div>
 
-            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title primary modal-primary fs-5" id="confirmModalLabel">Confirmación de Registro</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>
-                                ¿Confirma que desea registrar el endpoint con los datos ingresados?
-                            </p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button id="btnSaveData" type="button" class="btn btn-primary">Guardar Registro</button>
-                        </div>
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title primary modal-primary fs-5" id="confirmModalLabel">Confirmación de Registro</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            ¿Confirma que desea registrar el endpoint con los datos ingresados?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button id="btnSaveData" type="button" class="btn btn-primary">Guardar Registro</button>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
+        <script th:inline="javascript">
             $(document).ready(function() {
                 const envJQuery = $("#env"),
                     typeJQuery = $("#type"),
@@ -154,9 +154,9 @@
 
                 $(".form-control, .form-select").on("change", function() {
                     if(validateData()) {
-                        $("#btnSuccess").removeAttr("hidden");
+                        $("#btnUpdate").removeAttr("hidden");
                     } else {
-                        $("#btnSuccess").attr("hidden", "hidden");
+                        $("#btnUpdate").attr("hidden", "hidden");
                     }
                 });
 
@@ -198,8 +198,8 @@
                     console.log(data);
 
                     $.ajax({
-                        url: '/system/configuration/endpoint',
-                        method: 'POST',
+                        url: '/system/configuration/endpoint/' + [[${endpoint.endpointId}]],
+                        method: 'PUT',
                         contentType: 'application/json',
                         data: JSON.stringify(data),
                         success: function(response) {

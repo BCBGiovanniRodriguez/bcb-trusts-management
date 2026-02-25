@@ -9,6 +9,7 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp/04_trust.yaml
   - include:
       file: classpath:db/changelog/mvp/05_sisbur.yaml
+
   - include:
       file: classpath:db/changelog/mvp-001/dml-001-insert-catalog_profiles.yml
   - include:
@@ -25,3 +26,6 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp-001/dml-007-alter-system_configuration_user_profiles.yml
   - include:
       file: classpath:db/changelog/mvp-001/dml-008-insert-system_configuration_profile_resources.yml
+
+  - include:
+      file: classpath:db/changelog/mvp-002/dml-001-alter-system_catalog_endpoints.yml

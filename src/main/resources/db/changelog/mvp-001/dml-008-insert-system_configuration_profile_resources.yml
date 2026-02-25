@@ -1,0 +1,371 @@
+databaseChangeLog:
+  - changeSet:
+      id: 14
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Initial database setup inserts for system_configuration_user_profiles
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 1 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 1 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 2 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 2 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 3 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 3 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 4 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 4 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 5 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 5 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 6 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 6 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 7 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 7 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 8 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 8 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 9 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 9 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 10 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 10 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 11 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 11 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 12 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 12 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 13 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 13 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 14 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 14 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 14 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 14 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 15 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 15 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 16 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 16 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 17 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 17 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 18 }
+              - column: { name: resource_id, value: 1 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }
+        - insert:
+            tableName: system_configuration_profile_resources
+            columns:
+              - column: { name: profile_id, value: 18 }
+              - column: { name: resource_id, value: 2 }
+              - column: { name: permission_type, value: 1 }
+              - column: { name: active, value: 1 }
+              - column: { name: assigned_at, valueComputed: CURRENT_TIMESTAMP }
+              - column: { name: assigned_by, value: 1 }

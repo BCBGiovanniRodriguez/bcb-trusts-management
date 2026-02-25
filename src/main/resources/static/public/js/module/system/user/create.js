@@ -1,60 +1,7 @@
 "use strict";
 $(() => {
-    const milisecondsOnOneYear = 31557600000, btnValidateJQuery = $("#btnValidate"), btnSaveUserJQuery = $("#btnSaveUser"), profileJQuery = $("#profile"), firstNameJQuery = $("#firstName"), secondNameJQuery = $("#secondName"), lastNameJQuery = $("#lastName"), secondLastNameJQuery = $("#secondLastName"), genderJQuery = $("#gender"), birthDateJQuery = $("#birthDate"), curpJQuery = $("#curp"), rfcJQuery = $("#rfc"), emailJQuery = $("#email"), nicknameJQuery = $("#nickname"), errorValidationModalJQuery = $("#errorValidationModal"), successValidationModalJQuery = $("#successValidationModal"), confirmOperationModalJQuery = $("#confirmOperationModal"), serverErrorModalJQuery = $("#serverErrorModal"), resultFoundModalJQuery = $("#resultFoundModal"), localApiSystem = "/api/system";
+    const milisecondsOnOneYear = 31557600000, btnSaveUserJQuery = $("#btnSaveUser"), firstNameJQuery = $("#firstName"), secondNameJQuery = $("#secondName"), lastNameJQuery = $("#lastName"), secondLastNameJQuery = $("#secondLastName"), genderJQuery = $("#gender"), birthDateJQuery = $("#birthDate"), curpJQuery = $("#curp"), rfcJQuery = $("#rfc"), emailJQuery = $("#email"), nicknameJQuery = $("#nickname"), confirmOperationModalJQuery = $("#confirmOperationModal"), serverErrorModalJQuery = $("#serverErrorModal"), divUserAlertJQuery = $("#divUserAlert"), userAlertJQuery = $("#userAlert"), userAlertStrongJQuery = $("#userAlertStrong"), userAlertSpanJQuery = $("#userAlertSpan"), localApiSystem = "/api/system";
     let errorList = [];
-    btnValidateJQuery.on('click', function () {
-        errorList = [];
-        if (validateProfileAndPermissions() && validatePerson()) {
-            successValidationModalJQuery.modal('show');
-            btnSaveUserJQuery.removeAttr('hidden');
-            btnValidateJQuery.attr('hidden', 'hidden');
-        }
-        else {
-            errorValidationModalJQuery
-                .find($("#errorDetail"))
-                .html(errorList.join('<br />'));
-            errorValidationModalJQuery.modal('show');
-            btnSaveUserJQuery.attr('hidden', 'hidden');
-            btnValidateJQuery.removeAttr('hidden');
-        }
-    });
-    profileJQuery.on('change', function () {
-        let self = $(this), profileId = Number(self.val()), tbody = $("#profilePermissionTable").find("tbody");
-        $.ajax({
-            method: 'GET',
-            contentType: 'application/json',
-            cache: false,
-            url: localApiSystem + '/profile/permission/' + profileId
-        }).fail((jqXHR, textStatus, error) => {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(error);
-        })
-            .then((result, textStatus, jqXHR) => {
-            if (result != undefined) {
-                let resultJson = JSON.parse(result);
-                if (resultJson.status == 1) {
-                    setTimeout(function () {
-                        resultFoundModalJQuery.modal('show');
-                    }, 1000);
-                    let data = resultJson.data;
-                    tbody.empty();
-                    $.each(data, function (i, item) {
-                        let tr = $('<tr>'), tdId = $('<td>', { 'text': item.permissionId }), tdModule = $('<td>', { 'text': item.moduleAsString }), tdCode = $('<td>', { 'text': item.code }), tdName = $('<td>', { 'text': item.name });
-                        tr.append(tdId).append(tdModule).append(tdCode).append(tdName);
-                        tbody.append(tr);
-                    });
-                }
-                else if (resultJson.status == 0) {
-                    console.log(resultJson.message);
-                }
-            }
-            else {
-                serverErrorModalJQuery.modal('show');
-            }
-        });
-        validatePerson();
-    });
     function validatePerson() {
         var _a;
         let valid = true;
@@ -70,10 +17,10 @@ $(() => {
             valid && (valid = false);
             errorList.push("<strong>Género</strong> es requerido");
         }
-        if (curpJQuery.val() == null || curpJQuery.val() == "" || curpJQuery.val() == "XAXX000000XXXXXX00") {
+        if (curpJQuery.val() == null || curpJQuery.val() == "") {
             errorList.push("<strong>CURP</strong> es requerido");
         }
-        if (rfcJQuery.val() == null || rfcJQuery.val() == "" || rfcJQuery.val() == "XAXX000000XX0") {
+        if (rfcJQuery.val() == null || rfcJQuery.val() == "") {
             valid && (valid = false);
             errorList.push("<strong>RFC</strong> es requerido");
         }
@@ -95,17 +42,14 @@ $(() => {
                 errorList.push("<strong>Fecha de Nacimiento</strong> ocurrio un error al transformar la fecha de nacimiento");
             }
         }
+        console.log("validatePerson: " + valid);
         return valid;
     }
-    function validateProfileAndPermissions() {
+    function validateEmail() {
         var _a;
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const validateEmail = (email) => emailRegex.test(email);
         let valid = true;
-        if (profileJQuery.val() == null || profileJQuery.val() == undefined) {
-            valid && (valid = false);
-            errorList.push("<strong>Perfil de Sistema</strong> es requerido, seleccione una opción");
-        }
         if (emailJQuery.val() == null || emailJQuery.val() == undefined) {
             valid && (valid = false);
             errorList.push("<strong>Correo Electrónico</strong> es requerido");
@@ -117,19 +61,53 @@ $(() => {
                 errorList.push("<strong>Correo Electrónico</strong> es requerido, el valor no parece ser válido");
             }
         }
+        console.log("validateEmail: " + valid);
         return valid;
     }
     emailJQuery.on('change', function () {
-        let self = $(this), email, nickname;
-        if (self.val() != null && self.val() != undefined && self.val() != "") {
-            email = self.val().toString();
-            nickname = email.split("@")[0];
-            nicknameJQuery.val(nickname);
+        let self = $(this), email = self.val() != null ? self.val().toString() : "", nickname, uniqueEmail;
+        uniqueEmail = false;
+        if (email != "") {
+            let url = localApiSystem + '/user/unique-email?email=' + self.val();
+            $.getJSON(url, function (result) {
+                if (result != undefined) {
+                    if (result.status == 1) {
+                        divUserAlertJQuery.removeAttr('hidden');
+                        if (result.data == 1) {
+                            uniqueEmail = true;
+                            if (self.val() != null && self.val() != undefined && self.val() != "") {
+                                email = self.val().toString();
+                                nickname = email.split("@")[0];
+                                nicknameJQuery.val(nickname);
+                                userAlertJQuery.addClass("alert-success").removeClass("alert-danger").removeClass("alert-warning");
+                                userAlertStrongJQuery.text("Correo Electrónico Disponible");
+                                userAlertSpanJQuery.text("El correo electrónico que ingresó está disponible para registrarse");
+                            }
+                        }
+                        else {
+                            userAlertJQuery.addClass("alert-danger").removeClass("alert-warning");
+                            userAlertStrongJQuery.text("Correo Electrónico No Disponible");
+                            userAlertSpanJQuery.text("El correo electrónico que ingresó ya se encuentra registrado, por favor ingrese un correo electrónico diferente");
+                            nicknameJQuery.val("");
+                        }
+                    }
+                }
+            });
+        }
+    });
+    $(".form-control, .form-select").on('change', function () {
+        let validado = validateEmail() && validatePerson();
+        console.log("validado: " + validado);
+        if (validado) {
+            btnSaveUserJQuery.removeAttr('hidden');
+        }
+        else {
+            btnSaveUserJQuery.attr('hidden', 'hidden');
         }
     });
     btnSaveUserJQuery.on('click', function () {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-        if (validatePerson() && validateProfileAndPermissions()) {
+        if (validatePerson() && validateEmail()) {
             let endpointUser = localApiSystem + "/user", personJson = {}, userJson = {};
             personJson.firstName = (_a = firstNameJQuery.val()) === null || _a === void 0 ? void 0 : _a.toString();
             personJson.secondName = (_b = secondNameJQuery.val()) === null || _b === void 0 ? void 0 : _b.toString();
@@ -139,40 +117,41 @@ $(() => {
             personJson.birthDate = (_f = birthDateJQuery.val()) === null || _f === void 0 ? void 0 : _f.toString();
             personJson.curp = (_g = curpJQuery.val()) === null || _g === void 0 ? void 0 : _g.toString();
             personJson.rfc = (_h = rfcJQuery.val()) === null || _h === void 0 ? void 0 : _h.toString();
+            personJson.type = 1;
             userJson.person = personJson;
             userJson.email = (_j = emailJQuery.val()) === null || _j === void 0 ? void 0 : _j.toString();
             userJson.nickname = (_k = nicknameJQuery.val()) === null || _k === void 0 ? void 0 : _k.toString();
-            userJson.profileId = Number(profileJQuery.val());
-            console.dir(userJson);
             $.ajax({
                 method: 'POST',
                 contentType: 'application/json',
                 cache: false,
                 url: endpointUser,
-                data: JSON.stringify(userJson)
+                data: JSON.stringify(userJson),
+                success: ((result, textStatus, jqXHR) => {
+                    if (result != undefined) {
+                        let resultJson = JSON.parse(result);
+                        if (resultJson.status == 1) {
+                            confirmOperationModalJQuery.modal('show');
+                            setTimeout(function () {
+                                window.location.href = "/system/user?status=1";
+                            }, 5000);
+                        }
+                        else if (resultJson.status == 0) {
+                            setTimeout(function () {
+                                console.log(resultJson.message);
+                                $("#errorMessage").text(resultJson.message);
+                                serverErrorModalJQuery.modal('show');
+                            }, 5000);
+                        }
+                    }
+                    else {
+                        serverErrorModalJQuery.modal('show');
+                    }
+                }),
             }).fail((jqXHR, textStatus, error) => {
                 console.log(jqXHR);
                 console.log(textStatus);
                 console.log(error);
-            })
-                .then((result, textStatus, jqXHR) => {
-                if (result != undefined) {
-                    let resultJson = JSON.parse(result);
-                    if (resultJson.status == 1) {
-                        confirmOperationModalJQuery.modal('show');
-                        setTimeout(function () {
-                            window.location.href = "/system/user?status=1";
-                        }, 5000);
-                    }
-                    else if (resultJson.status == 0) {
-                        console.log(resultJson.message);
-                        $("#errorMessage").text(resultJson.message);
-                        serverErrorModalJQuery.modal('show');
-                    }
-                }
-                else {
-                    serverErrorModalJQuery.modal('show');
-                }
             });
         }
     });

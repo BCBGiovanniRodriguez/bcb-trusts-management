@@ -65,8 +65,6 @@ $(() => {
                 serverErrorModal.modal('hide');
             }, 5000);
         }).then((result, textStatus, jqXHR) => {
-            console.log(textStatus);
-            console.log(jqXHR);
             if (result != undefined) {
                 if (result.state) {
                     let country = result.data.country, state = result.data.state, states = result.data.states, township = result.data.township, townships = result.data.townships, colonies = result.data.colonies;
@@ -291,7 +289,7 @@ $(() => {
             address.internalNumber = (_p = internalNumberJQuery.val()) === null || _p === void 0 ? void 0 : _p.toString();
             address.zipcode = (_q = zipcodeJQuery.val()) === null || _q === void 0 ? void 0 : _q.toString();
             address.colonyId = (_r = colonyJQuery.val()) === null || _r === void 0 ? void 0 : _r.toString();
-            fullAddress = streetJQuery.val() + ", " + internalNumberJQuery.val() + ", " + externalNumberJQuery.val() + ", Código Postal:" + zipcodeJQuery.val() + ", ";
+            fullAddress = streetJQuery.val() + ", " + internalNumberJQuery.val() + ", " + externalNumberJQuery.val() + ", Código Postal: " + zipcodeJQuery.val() + ", ";
             fullAddress += colonyName + ", " + partialAddress;
             address.fullAddress = fullAddress;
             request.type = (_s = trustTypeIdJQuery.val()) === null || _s === void 0 ? void 0 : _s.toString();

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.bcb.trust.front.modules.system.model.entity.CatalogEndpointEntity;
 
 @Repository
-public interface SystemCatalogEndpointRepository extends JpaRepository<CatalogEndpointEntity, Long> {
+public interface CatalogEndpointRepository extends JpaRepository<CatalogEndpointEntity, Long> {
 
 }
