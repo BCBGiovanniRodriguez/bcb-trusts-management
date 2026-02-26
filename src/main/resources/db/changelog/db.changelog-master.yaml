@@ -29,3 +29,8 @@ databaseChangeLog:
 
   - include:
       file: classpath:db/changelog/mvp-002/dml-001-alter-system_catalog_endpoints.yml
+
+  - include:
+      file: classpath:db/changelog/mvp-003/dml-001-create-request_catalog_business_types.yml
+  - include:
+      file: classpath:db/changelog/mvp-003/dml-002-insert-request_catalog_business_types.yml
