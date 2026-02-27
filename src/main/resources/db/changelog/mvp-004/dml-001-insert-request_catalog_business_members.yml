@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 19
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Create table request_catalog_business_members
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Fideicomitente"}
+              - column: {name: code, value: "BM001"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Fideicomisario"}
+              - column: {name: code, value: "BM002"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Tercero"}
+              - column: {name: code, value: "BM003"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Miembro del Comité Técnico"}
+              - column: {name: code, value: "BM004"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Propietario Real"}
+              - column: {name: code, value: "BM005"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Depositante"}
+              - column: {name: code, value: "BM006"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Depositario"}
+              - column: {name: code, value: "BM007"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Mandante"}
+              - column: {name: code, value: "BM008"}
+        - insert:
+            tableName: request_catalog_business_members
+            columns:
+              - column: {name: name, value: "Mandatario"}
+              - column: {name: code, value: "BM009"}

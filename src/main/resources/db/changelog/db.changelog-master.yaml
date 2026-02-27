@@ -34,3 +34,8 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp-003/dml-001-create-request_catalog_business_types.yml
   - include:
       file: classpath:db/changelog/mvp-003/dml-002-insert-request_catalog_business_types.yml
+# saf20260227 MVP-004: Request Catalog Business Members - Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-004/ddl-001-create-request_catalog_business_members.yml
+  - include:
+      file: classpath:db/changelog/mvp-004/dml-001-insert-request_catalog_business_members.yml
