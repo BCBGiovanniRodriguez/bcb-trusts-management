@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 22
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Insert information on table system_catalog_users
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "19" }
+              - column: { name: person_id, value: "19" }
+              - column: { name: nickname, value: "msegura" }
+              - column: { name: email, value: "msegura@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "20" }
+              - column: { name: person_id, value: "20" }
+              - column: { name: nickname, value: "folmedo" }
+              - column: { name: email, value: "folmedo@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }
+
+        - insert:
+            tableName: system_catalog_users
+            columns:
+              - column: { name: user_id, value: "21" }
+              - column: { name: person_id, value: "21" }
+              - column: { name: nickname, value: "jsandoval" }
+              - column: { name: email, value: "jsandoval@bcbcasadebolsa.com" }
+              - column:
+                  {
+                    name: access,
+                    value: "$2a$12$JFGlwtVNANExutXEDwZFv.Oy2oXL//xvpy2LvMoLNYPKoN53m5gOO",
+                  }
+              - column: { name: status, value: "1" }
+              - column: { name: created_at, valueComputed: "CURRENT_TIMESTAMP" }

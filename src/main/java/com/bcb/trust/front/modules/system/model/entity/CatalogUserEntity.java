@@ -1,6 +1,7 @@
 package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,13 +132,15 @@ public class CatalogUserEntity extends CommonEntity {
     }
 
     public Map<String, Object> toMap() {
+        DateTimeFormatter isoFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         Map<String, Object> map = new HashMap<>();
         map.put("user_id", this.userId);
         map.put("nickname", this.nickname);
         map.put("email", this.email);
         map.put("person", this.person.toMap());
         map.put("status", this.status);
-        map.put("created_at", this.createdAt);
+        map.put("created_at", this.createdAt != null ? this.createdAt.format(isoFormatter) : null);
 
         return map;
     }

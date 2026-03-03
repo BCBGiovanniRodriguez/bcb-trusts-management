@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Insert new profiles on table system_catalog_profiles
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column: {name: profile_id, value: 20}
+              - column: {name: name, value: "Promotor"}
+              - column: {name: members, value: "10"}
+              - column: {name: code, value: "STOCK_EXCHANGE_PROMOTION_SPONSOR"}
+        - insert:
+            tableName: system_catalog_profiles
+            columns:
+              - column: {name: profile_id, value: 21}
+              - column: {name: name, value: "Asesor"}
+              - column: {name: members, value: "10"}
+              - column: {name: code, value: "STOCK_EXCHANGE_PROMOTION_CONSULTANT"}

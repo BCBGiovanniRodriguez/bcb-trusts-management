@@ -16,4 +16,5 @@ public interface UserEntityRepository extends JpaRepository<CatalogUserEntity, L
     Optional<CatalogUserEntity> findOneByEmail(String email);
 
     List<CatalogUserEntity> findByStatus(Integer status);
+
 }
