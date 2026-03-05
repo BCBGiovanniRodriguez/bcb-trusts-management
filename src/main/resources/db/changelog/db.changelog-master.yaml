@@ -53,3 +53,10 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp-006/ddl-001-create-request_catalog_risk_activities.yml
   - include:
       file: classpath:db/changelog/mvp-006/dml-001-insert-request_catalog_risk_activities.yml
+# saf2026022704 MVP-007: Request Catalog Resource Origins - Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-007/ddl-001-create-request_catalog_resource_origins.yml
+  - include:
+      file: classpath:db/changelog/mvp-007/dml-001-insert-request_catalog_resource_origins.yml
+
+
