@@ -1,0 +1,144 @@
+databaseChangeLog:
+  - changeSet:
+      id: 25
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Insert data on table request_catalog_risk_activities
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 1}
+              - column: {name: name, value: "Prestación de Servicios de Comercio Exterior como Agente o Apoderado Aduanal"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 2}
+              - column: {name: name, value: "Servicios Profesionales"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 3}
+              - column: {name: name, value: "Juegos y Sorteos"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 4}
+              - column: {name: name, value: "Tarjetas de Servicios o de Crédito"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 5}
+              - column: {name: name, value: "Tarjetas Prepagadas, Vales o Cupones"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 6}
+              - column: {name: name, value: "Monederos y Certificados de Devoluciones o Recompensas"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 7}
+              - column: {name: name, value: "Cheques de Viajeros"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 8}
+              - column: {name: name, value: "Servicios de Mutuo Préstamo"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 9}
+              - column: {name: name, value: "Compra Venta de Inmuebles"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 10}
+              - column: {name: name, value: "Comercialización de Piedras Preciosas, Metales Preciosos, Joyas y Relojes"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 11}
+              - column: {name: name, value: "Comercialización de Obras de Arte"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 12}
+              - column: {name: name, value: "Comercialización de Vehículos"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 13}
+              - column: {name: name, value: "Servicios de Blindaje"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 14}
+              - column: {name: name, value: "Traslado o Custodia de Valores"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 15}
+              - column: {name: name, value: "Donativos"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 16}
+              - column: {name: name, value: "Arrendamiento de Inmuebles"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 17}
+              - column: {name: name, value: "Prestación de Servicios de Fe Publica"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 18}
+              - column: {name: name, value: "Outsourcing"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_risk_activities
+            columns:
+              - column: {name: risk_activity_id, value: 19}
+              - column: {name: name, value: "Otros"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}

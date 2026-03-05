@@ -39,3 +39,17 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp-004/ddl-001-create-request_catalog_business_members.yml
   - include:
       file: classpath:db/changelog/mvp-004/dml-001-insert-request_catalog_business_members.yml
+# saf2026022702 MVP-005: Request Catalog Consultants And Sponsors - Profiles, Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-001-insert-system_catalog_profiles.yml
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-002-insert-system_catalog_person.yml
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-003-insert-system_catalog_users.yml
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-004-insert-system_configuration_user_profiles.yml
+# saf2026022703 MVP-006: Request Catalog Risk Activities - Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-006/ddl-001-create-request_catalog_risk_activities.yml
+  - include:
+      file: classpath:db/changelog/mvp-006/dml-001-insert-request_catalog_risk_activities.yml

@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: 21
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Insert new personal information on table system_catalog_persons
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "19" }
+              - column: { name: first_name, value: "Moises" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Segura" }
+              - column: { name: second_last_name, value: "Aviles" }
+              - column: { name: gender, value: "2" }
+              - column: { name: birthdate, value: "1990-09-04" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "20" }
+              - column: { name: first_name, value: "Francisco" }
+              - column: { name: second_name, value: "Israel" }
+              - column: { name: last_name, value: "Olmedo" }
+              - column: { name: second_last_name, value: "Uribe" }
+              - column: { name: gender, value: "2" }
+              - column: { name: birthdate, value: "1990-06-30" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
+
+        - insert:
+            tableName: system_catalog_persons
+            columns:
+              - column: { name: person_id, value: "21" }
+              - column: { name: first_name, value: "Jonathan" }
+              - column: { name: second_name, value: "" }
+              - column: { name: last_name, value: "Sandoval" }
+              - column: { name: second_last_name, value: "Orozco" }
+              - column: { name: gender, value: "2" }
+              - column: { name: birthdate, value: "1990-09-28" }
+              - column: { name: foreign_status, value: "1" }
+              - column: { name: curp, value: "XAXX000000XXXXXX00" }
+              - column: { name: rfc, value: "XAXX000000XX0" }
+              - column: { name: marital_status, value: "1" }
+              - column: { name: type, value: "1" }
