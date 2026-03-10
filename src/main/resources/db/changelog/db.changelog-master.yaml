@@ -58,5 +58,13 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp-007/ddl-001-create-request_catalog_resource_origins.yml
   - include:
       file: classpath:db/changelog/mvp-007/dml-001-insert-request_catalog_resource_origins.yml
+# saf20260030401 MVP-008: Request Unique Person and Membership - Tables, Foreign Keys and Data
+  - include:
+      file: classpath:db/changelog/mvp-008/ddl-001-create-request_unique_persons.yml
+  - include:
+      file: classpath:db/changelog/mvp-008/ddl-002-create-request_unique_person_membership.yml
+
+
+
 
 

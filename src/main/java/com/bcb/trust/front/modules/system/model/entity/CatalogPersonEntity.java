@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.request.model.entity.UniquePerson;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
 
@@ -71,6 +72,9 @@ public class CatalogPersonEntity {
 
     @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrustTrusteeEntity> trusteeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UniquePerson> uniquePersonList = new ArrayList<>();
 
     public static final Integer GENDER_FEMALE = 1;
 
