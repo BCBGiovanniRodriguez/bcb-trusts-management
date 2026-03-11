@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/request/catalog")
+@RequestMapping("/api/request/catalog")
 public class BusinessTypeRestController {
 
     @Autowired

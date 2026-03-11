@@ -38,6 +38,14 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .addFilterAfter(dynamicAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/v3/api-docs",
+                    "/v3/api-docs/**",
+                    "/swagger-resources",
+                    "/swagger-resources/**"
+                ).permitAll()
                 .requestMatchers("/public/**", "/landing/**", "/login").permitAll()
                 .anyRequest().authenticated()
             ).formLogin(f -> f

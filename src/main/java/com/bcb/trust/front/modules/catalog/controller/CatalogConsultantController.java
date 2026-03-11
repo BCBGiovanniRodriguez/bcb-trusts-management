@@ -18,6 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/catalog")
 public class CatalogConsultantController {
@@ -25,6 +27,7 @@ public class CatalogConsultantController {
     @Autowired
     private CatalogConsultantRepository consultantRepository;
 
+    @Operation(summary = "Crear o actualizar un consultor", description = "Permite crear o actualizar un consultor en el sistema. Si se proporciona un ID existente, se actualizará el registro correspondiente; de lo contrario, se creará un nuevo registro.")
     @PostMapping("/consultant")
     public String create(@RequestBody CatalogConsultantEntity consultant) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();

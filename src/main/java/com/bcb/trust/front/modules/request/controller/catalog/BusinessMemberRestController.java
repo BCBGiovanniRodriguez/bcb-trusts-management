@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RestController
-@RequestMapping("/request/catalog")
+@RequestMapping("/api/request/catalog")
 public class BusinessMemberRestController {
 
     @Autowired
