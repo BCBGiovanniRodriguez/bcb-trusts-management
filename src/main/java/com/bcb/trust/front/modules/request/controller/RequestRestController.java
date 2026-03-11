@@ -19,7 +19,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @RestController
 @RequestMapping("/api/request")
-public class RequestRequestController {
+public class RequestRestController {
 
     @Autowired
     private RequestRequestService requestRequestService;

@@ -20,7 +20,39 @@
             }*/
         </style>
         <script>
-            const baseUrl = '/';
+            const ENV_PRD = 1,
+                ENV_QA = 2,
+                ENV_DEV = 3,
+                baseUrl = '/',
+                requestEndpoint = '/api/requests',
+                systemEndpoint = '/api/system';
+
+            let devUrl = 'http://localhost',
+                qaUrl = 'http://10.20.50.132',
+                prdUrl = 'http://10.10.50.1',
+                currentEnvironment = 3,
+                bcbApiLocationEndpoint = 'http://10.20.50.132:9001/api/location',
+                bcbApiSisburEndpoint = 'http://10.20.50.132:9002/api/sisbur',
+                bcbApiMindsEndpoint = 'http://10.10.50.24//WS_Minds/Consulta.asmx';
+
+                switch (currentEnvironment) {
+                    case ENV_PRD:
+                        bcbApiLocationEndpoint = prdUrl + ':9001/api/location';
+                        bcbApiSisburEndpoint = prdUrl + ':9002/api/sisbur';
+                        bcbApiMindsEndpoint = 'http://10.10.50.24//WS_Minds/Consulta.asmx';
+                        break;
+                    case ENV_QA:
+                        bcbApiLocationEndpoint = qaUrl + ':9001/api/location';
+                        bcbApiSisburEndpoint = qaUrl + ':9002/api/sisbur';
+                        bcbApiMindsEndpoint = 'http://10.20.50.204//WS_Minds/Consulta.asmx';
+                        break;
+                    case ENV_DEV:
+                    default:
+                        bcbApiLocationEndpoint = devUrl + ':9001/api/location';
+                        bcbApiSisburEndpoint = devUrl + ':9002/api/sisbur';
+                        break;
+                }
+
         </script>
         <script th:src="@{/public/adminlte/plugins/jquery/jquery-3.7.1.min.js}"></script>
     </head>
