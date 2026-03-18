@@ -35,4 +35,3 @@ volumes:
 
 networks:
   network_trust:
-    external: true
