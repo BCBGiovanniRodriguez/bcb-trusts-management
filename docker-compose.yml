@@ -15,6 +15,8 @@ services:
       retries: 5
     volumes:
       - db-data:/var/lib/mysql
+    networks:
+      - network_trust
   app:
     build: .
     ports:
@@ -25,6 +27,12 @@ services:
     volumes:
       - ./src/main/resources:/app/src/main/resources
       - ./trusts:/app/trusts
+    networks:
+      - network_trust
 
 volumes:
   db-data: 
+
+networks:
+  network_trust:
+    external: true
