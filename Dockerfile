@@ -1,5 +1,6 @@
 # ====== Etapa 1: Construcción ======
 FROM maven:3.9.9-eclipse-temurin-21 AS build
+WORKDIR /app
 
 # Copiar pom.xml y resolver dependencias primero
 COPY pom.xml .
@@ -35,6 +36,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 USER spring
 
-COPY --from=build /app/target/*.jar /app/front.jar
+COPY --chown=spring:spring --from=build /app/target/*.jar /app/front.jar
+
 EXPOSE 10101
+
 ENTRYPOINT [ "java", "-jar", "/app/front.jar" ]
