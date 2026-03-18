@@ -24,32 +24,36 @@
                 ENV_QA = 2,
                 ENV_DEV = 3,
                 baseUrl = '/',
-                requestEndpoint = '/api/requests',
+                requestEndpoint = '/api/request',
                 systemEndpoint = '/api/system';
 
             let devUrl = 'http://localhost',
                 qaUrl = 'http://10.20.50.132',
                 prdUrl = 'http://10.10.50.1',
                 currentEnvironment = 3,
-                bcbApiLocationEndpoint = 'http://10.20.50.132:9001/api/location',
-                bcbApiSisburEndpoint = 'http://10.20.50.132:9002/api/sisbur',
+                defaultNationalityId = 73,
+                bcbApiSisburEndpoint = 'http://10.20.50.132:9001/api/sisbur',
+                bcbApiLocationEndpoint = 'http://10.20.50.132:9002/api/location',
                 bcbApiMindsEndpoint = 'http://10.10.50.24//WS_Minds/Consulta.asmx';
 
                 switch (currentEnvironment) {
                     case ENV_PRD:
-                        bcbApiLocationEndpoint = prdUrl + ':9001/api/location';
-                        bcbApiSisburEndpoint = prdUrl + ':9002/api/sisbur';
+                        bcbApiSisburEndpoint = prdUrl + ':9001/api/sisbur';
+                        bcbApiLocationEndpoint = prdUrl + ':9002/api/location';
+                        bcbApiNationalityEndpoint = prdUrl + ':9002/api/nationality';
                         bcbApiMindsEndpoint = 'http://10.10.50.24//WS_Minds/Consulta.asmx';
                         break;
                     case ENV_QA:
-                        bcbApiLocationEndpoint = qaUrl + ':9001/api/location';
-                        bcbApiSisburEndpoint = qaUrl + ':9002/api/sisbur';
+                        bcbApiSisburEndpoint = qaUrl + ':9001/api/sisbur';
+                        bcbApiLocationEndpoint = qaUrl + ':9002/api/location';
+                        bcbApiNationalityEndpoint = qaUrl + ':9002/api/nationality';
                         bcbApiMindsEndpoint = 'http://10.20.50.204//WS_Minds/Consulta.asmx';
                         break;
                     case ENV_DEV:
                     default:
-                        bcbApiLocationEndpoint = devUrl + ':9001/api/location';
-                        bcbApiSisburEndpoint = devUrl + ':9002/api/sisbur';
+                        bcbApiSisburEndpoint = devUrl + ':9001/api/sisbur';
+                        bcbApiLocationEndpoint = devUrl + ':9002/api/location';
+                        bcbApiNationalityEndpoint = devUrl + ':9002/api/nationality';
                         break;
                 }
 
@@ -514,6 +518,21 @@
 
         <!-- Common Modals -->
         <div th:fragment="commonModals">
+
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-modal="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="confirmModalLabel">¿Desea confirmar la operación?</h5>
+                        </div>
+                        <div class="modal-body text-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button id="btnModalConfirm" type="button" class="btn btn-primary">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModalLabel" aria-modal="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

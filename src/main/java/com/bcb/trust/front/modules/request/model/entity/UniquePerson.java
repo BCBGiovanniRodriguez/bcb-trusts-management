@@ -1,7 +1,9 @@
 package com.bcb.trust.front.modules.request.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bcb.trust.front.modules.request.model.entity.catalog.UniquePersonMembership;
 import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
@@ -56,5 +58,14 @@ public class UniquePerson {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }    
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("uniquePersonId", this.uniquePersonId);
+        map.put("personEntity", this.personEntity.toMap());
+        map.put("created", this.createdAt);
+
+        return map;
+    }
 }

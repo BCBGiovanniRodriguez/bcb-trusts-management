@@ -42,9 +42,9 @@ public class RequestRestController {
             jsonResponse = mapper.writeValueAsString(resultMap);
             
         } catch (Exception e) {
-            System.out.println("Error en RequestRequestController::create[" + e.getLocalizedMessage() + "]");
+            System.out.println("Error en RequestRestController::create[" + e.getLocalizedMessage() + "]");
             resultMap.put("status", 0);
-            resultMap.put("message", "Error en RequestRequestController::create[" + e.getLocalizedMessage() + "]");
+            resultMap.put("message", "Error en RequestRestController::create[" + e.getLocalizedMessage() + "]");
             resultMap.put("data", null);
 
             jsonResponse = mapper.writeValueAsString(resultMap);
