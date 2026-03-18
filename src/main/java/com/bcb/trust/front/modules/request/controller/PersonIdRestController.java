@@ -7,18 +7,24 @@ import com.bcb.trust.front.modules.catalog.model.repository.CatalogPersonEntityR
 import com.bcb.trust.front.modules.request.model.entity.UniquePerson;
 import com.bcb.trust.front.modules.request.model.repository.UniquePersonRepository;
 import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @RestController
 @RequestMapping("/api/request")
@@ -28,15 +34,70 @@ public class PersonIdRestController {
     private UniquePersonRepository uniquePersonRepository;
 
     @Autowired
-    private CatalogPersonEntityRepository personEntityRepository;
+    private CatalogPersonEntityRepository catalogPersonEntityRepository;
 
     @GetMapping("/person-id")
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    public String get(@RequestParam(required = false) String name, @RequestParam(required = false) String rfc) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String jsonResponse = null;
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<CatalogPersonEntity> personList = new ArrayList<>();
+        List<CatalogPersonEntity> resultList = new ArrayList<>();
+        Set<Long> personIds = new HashSet<>();
+
+        try {
+
+            if (name != null && name != "") {
+                personList.addAll(catalogPersonEntityRepository.findByFirstNameStartsWith(name));
+                personList.addAll(catalogPersonEntityRepository.findBySecondNameStartsWith(name));
+                personList.addAll(catalogPersonEntityRepository.findByLastNameStartsWith(name));
+                personList.addAll(catalogPersonEntityRepository.findBySecondLastNameStartsWith(name));
+            }
+
+            if (rfc != null && rfc != "") {
+                personList.addAll(catalogPersonEntityRepository.findByRfcStartsWith(rfc));
+            }
+
+            // Unique Id's
+            for (CatalogPersonEntity entity : personList) {
+                personIds.add(entity.getPersonId());
+            }
+
+            
+
+            // Added, now filter by id
+            for (CatalogPersonEntity person : personList) {
+                if (!resultList.contains(person)) {
+
+                    resultList.add(person);
+                }
+            }
+
+            resultMap.put("status", 1);
+            resultMap.put("message", "Petición Correcta");
+            resultMap.put("data", resultList);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
+
+        } catch (Exception e) {
+            resultMap.put("status", 0);
+            resultMap.put("message", "Error en PersonIdRestController::create[" + e.getLocalizedMessage() + "]");
+            resultMap.put("data", null);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
+        }
+
+        return jsonResponse;
     }
 
     @PostMapping("/person-id")
-    public String post(@RequestBody Map<String, Object> data) {
+    public String post(@RequestBody Map<String, Object> data) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String jsonResponse = null;
+        Map<String, Object> resultMap = new HashMap<>();
         
         try {
             Integer typeInteger = Integer.parseInt(data.get("type").toString());
@@ -63,19 +124,29 @@ public class PersonIdRestController {
             person.setRfc(data.get("rfc").toString());
             person.setCreatedAt(LocalDateTime.now());
             
-            personEntityRepository.saveAndFlush(person);
+            catalogPersonEntityRepository.saveAndFlush(person);
 
             UniquePerson uniquePerson = new UniquePerson();
             uniquePerson.setPersonEntity(person);
             uniquePerson.setCreatedAt(LocalDateTime.now());
 
             uniquePersonRepository.saveAndFlush(uniquePerson);
+
+            resultMap.put("status", 1);
+            resultMap.put("message", "Petición Correcta");
+            resultMap.put("data", uniquePerson.toMap());
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
             
         } catch (Exception e) {
-            System.out.println();
+            resultMap.put("status", 0);
+            resultMap.put("message", "Error en PersonIdRestController::create[" + e.getLocalizedMessage() + "]");
+            resultMap.put("data", null);
+
+            jsonResponse = mapper.writeValueAsString(resultMap);
         }
         
-        return "";
+        return jsonResponse;
     }
     
     
