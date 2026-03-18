@@ -35,6 +35,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 USER spring
 
-COPY --from=build /app/target/front-0.0.1-SNAPSHOT.jar /app/front.jar
+COPY --from=build /app/target/*.jar /app/front.jar
 EXPOSE 10101
 ENTRYPOINT [ "java", "-jar", "/app/front.jar" ]
