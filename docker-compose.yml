@@ -1,5 +1,5 @@
 services:
-  db:
+  trustapp-db:
     image: mysql:latest
     ports:
       - 53306:3306
@@ -17,7 +17,7 @@ services:
       - db-data:/var/lib/mysql
     networks:
       - network_trust
-  app:
+  trustapp:
     build: .
     ports:
       - 10101:10101
