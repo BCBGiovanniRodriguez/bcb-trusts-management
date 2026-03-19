@@ -35,7 +35,7 @@ services:
       LEGACY_DB_DRIVER_CLASSNAME: ${LEGACY_DB_DRIVER_CLASSNAME}
       LEGACY_HIBERNATE_DIALECT: ${LEGACY_HIBERNATE_DIALECT}
     depends_on:
-      db:
+      trustapp-db:
         condition: service_healthy
     volumes:
       - ./src/main/resources:/app/src/main/resources
