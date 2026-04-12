@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,7 @@ public class CatalogConsultantController {
 
     @Operation(summary = "Crear o actualizar un consultor", description = "Permite crear o actualizar un consultor en el sistema. Si se proporciona un ID existente, se actualizará el registro correspondiente; de lo contrario, se creará un nuevo registro.")
     @PostMapping("/consultant")
-    public String create(@RequestBody CatalogConsultantEntity consultant) throws JsonProcessingException {
+    public String create(@NonNull @RequestBody CatalogConsultantEntity consultant) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String jsonResponse = null;
