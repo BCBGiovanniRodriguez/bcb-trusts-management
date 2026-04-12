@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -16,14 +20,20 @@ import org.springframework.stereotype.Service;
 import com.bcb.trust.front.model.bmtkfweb.dto.PercentageRightsAcquired;
 import com.bcb.trust.front.model.bmtkfweb.mapper.PercentageRightsAcquiredMapper;
 import com.bcb.trust.front.model.dto.WorkerDetail;
-import com.bcb.trust.front.model.mapper.IndividualReportAccountRowMapper;
 import com.bcb.trust.front.model.mapper.WorkerDetailRowMapper;
+import com.bcb.trust.front.modules.trust.model.entity.TrustSpecialWorkerEntity;
+import com.bcb.trust.front.modules.trust.model.entity.TrustTrustEntity;
+import com.bcb.trust.front.modules.trust.model.repository.TrustSpecialWorkerRepository;
 
 @Service
 public class LegacyService {
 
     @Autowired
+    @Qualifier("bmtkfwebNamedParameterJdbcTemplate")
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private TrustSpecialWorkerRepository trustSpecialWorkerRepository;
 
     DateTimeFormatter mexFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -38,7 +48,7 @@ public class LegacyService {
      */
     public int getTotalWorkers(int contractNumber) {
         int totalWorkers = 0;
-        String sqlQuery = "SELECT COUNT(*) AS TOTAL_WORKERS FROM " + tableName + " WHERE DAT_CONTRATO = :contrato AND DAT_NIVEL = :nivel AND DAT_ESTATUS <> :status AND LENGTH(DAT_CLAVE) >= 10";
+        String sqlQuery = "SELECT COUNT(*) AS TOTAL_WORKERS FROM FID_DATOS_EST_CTAS WHERE DAT_CONTRATO = :contrato AND DAT_NIVEL = :nivel AND DAT_ESTATUS <> :status AND LENGTH(DAT_CLAVE) >= 10";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("contrato", contractNumber, Types.INTEGER);
         parameters.addValue("nivel", 2, Types.INTEGER);
@@ -63,7 +73,7 @@ public class LegacyService {
         parameters.addValue("estatus", "INACTIVO", Types.VARCHAR);
         parameters.addValue("limit", limit, Types.INTEGER);
         
-        String sqlQuery = "SELECT * FROM " + tableName + " WHERE ";
+        String sqlQuery = "SELECT * FROM FID_DATOS_EST_CTAS WHERE ";
         sqlQuery += "DAT_CONTRATO = :contrato AND DAT_NIVEL = :nivel AND DAT_ESTATUS <> :estatus AND LENGTH(DAT_CLAVE) >= 10 ";
         
         if (account != null && !account.equals("")) {
@@ -71,17 +81,25 @@ public class LegacyService {
             sqlQuery += " AND DAT_CLAVE > :account";
         }
 
-        sqlQuery += " ORDER BY DAT_CLAVE LIMIT :limit";
+        sqlQuery += " ORDER BY DAT_CLAVE FETCH FIRST :limit ROWS ONLY";
 
-        //workerList = namedParameterJdbcTemplate.queryForList(sqlQuery, parameters, WorkerDetail.class);
         workerList = namedParameterJdbcTemplate.query(sqlQuery, parameters, new WorkerDetailRowMapper());
         return workerList;
     }
 
+    public Page<TrustSpecialWorkerEntity> getWorkerList2(TrustTrustEntity trustEntity, int pageNumber, int limit) {
+        Pageable pageable = PageRequest.of(pageNumber, limit);
+        
+        Page<TrustSpecialWorkerEntity> workerPage = trustSpecialWorkerRepository.findByTrustEntity(trustEntity, pageable);
+
+        return workerPage;
+    }
+    
+    //workerList = namedParameterJdbcTemplate.queryForList(sqlQuery, parameters, WorkerDetail.class);
     // 
 
     public WorkerDetail getWorkerData(int contractNumber, String account) {
-        String sqlQuery = "SELECT * FROM " + tableName + " WHERE DAT_CONTRATO = :contractNumber AND DAT_CLAVE = :account";
+        String sqlQuery = "SELECT * FROM FID_DATOS_EST_CTAS WHERE DAT_CONTRATO = :contractNumber AND DAT_CLAVE = :account";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("contractNumber", contractNumber, Types.INTEGER);
         parameters.addValue("account", account, Types.VARCHAR);
@@ -175,14 +193,18 @@ public class LegacyService {
      * @return
      */
     public List<LocalDate> getPeriodList(Integer trustNumber) {
-        String sql = "SELECT RCI_PERIODO FROM REPCTAIND LIMIT 1";
+        String sql = "SELECT RCI_PERIODO FROM REPCTAIND FETCH FIRST 1 ROWS ONLY";
         List<LocalDate> periodList = new ArrayList<>();
 
         try {
-            String rawValues = namedParameterJdbcTemplate.getJdbcTemplate().queryForObject(sql, String.class);
+            //String rawValues = namedParameterJdbcTemplate.getJdbcTemplate().queryForObject(sql, String.class);
 
-            LocalDate dateStartWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[0], mexFormatter);
-            LocalDate dateEndWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[1], mexFormatter);
+            //LocalDate dateStartWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[0], mexFormatter);
+            //LocalDate dateEndWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[1], mexFormatter);
+
+            // 
+            LocalDate dateStartWork = LocalDate.parse("2025-01-01");
+            LocalDate dateEndWork = LocalDate.parse("2025-06-30");
 
             periodList.add(dateStartWork);
             periodList.add(dateEndWork);

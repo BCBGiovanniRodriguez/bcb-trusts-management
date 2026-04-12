@@ -1,6 +1,6 @@
 package com.bcb.trust.front.model.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class WorkerDetail {
 
@@ -14,11 +14,11 @@ public class WorkerDetail {
 
     private String datEstatus;
 
-    private Date datFechaAlta;
+    private LocalDate datFechaAlta;
 
-    private Date datFechaBaja;
+    private LocalDate datFechaBaja;
 
-    private Date datFecUltMod;
+    private LocalDate datFecUltMod;
 
     private Integer datId;
 
@@ -69,27 +69,27 @@ public class WorkerDetail {
         this.datEstatus = datEstatus;
     }
 
-    public Date getDatFechaAlta() {
+    public LocalDate getDatFechaAlta() {
         return datFechaAlta;
     }
 
-    public void setDatFechaAlta(Date datFechaAlta) {
+    public void setDatFechaAlta(LocalDate datFechaAlta) {
         this.datFechaAlta = datFechaAlta;
     }
 
-    public Date getDatFechaBaja() {
+    public LocalDate getDatFechaBaja() {
         return datFechaBaja;
     }
 
-    public void setDatFechaBaja(Date datFechaBaja) {
+    public void setDatFechaBaja(LocalDate datFechaBaja) {
         this.datFechaBaja = datFechaBaja;
     }
 
-    public Date getDatFecUltMod() {
+    public LocalDate getDatFecUltMod() {
         return datFecUltMod;
     }
 
-    public void setDatFecUltMod(Date datFecUltMod) {
+    public void setDatFecUltMod(LocalDate datFecUltMod) {
         this.datFecUltMod = datFecUltMod;
     }
 

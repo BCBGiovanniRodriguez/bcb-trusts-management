@@ -3,15 +3,19 @@ package com.bcb.trust.front.modules.request.model.entity.catalog;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
+import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +32,9 @@ public class BusinessTypeEntity extends CommonEntity {
     private Integer status;
 
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "businessTypeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RequestRequestEntity> requests;
 
     public Long getBusinessTypeId() {
         return businessTypeId;

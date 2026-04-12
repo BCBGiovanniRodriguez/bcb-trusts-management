@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
+import com.bcb.trust.front.modules.request.model.entity.catalog.BusinessTypeEntity;
 import com.bcb.trust.front.modules.system.model.entity.CatalogAddressEntity;
 import com.bcb.trust.front.modules.system.model.entity.CatalogPersonEntity;
 import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
-import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
 
@@ -34,8 +34,8 @@ public class RequestRequestEntity extends CommonEntity {
     private Long requestId;
 
     @ManyToOne
-    @JoinColumn(name = "trust_type_id", nullable = false)
-    private TrustCatalogTrustTypeEntity trustTypeEntity;
+    @JoinColumn(name = "business_type_id", nullable = false)
+    private BusinessTypeEntity businessTypeEntity;
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
@@ -145,14 +145,6 @@ public class RequestRequestEntity extends CommonEntity {
         this.trustChangeName = trustChangeName;
     }
 
-    public TrustCatalogTrustTypeEntity getTrustTypeEntity() {
-        return trustTypeEntity;
-    }
-
-    public void setTrustTypeEntity(TrustCatalogTrustTypeEntity trustTypeEntity) {
-        this.trustTypeEntity = trustTypeEntity;
-    }
-
     public CatalogAddressEntity getAddressEntity() {
         return addressEntity;
     }
@@ -225,7 +217,6 @@ public class RequestRequestEntity extends CommonEntity {
         map.put("name", this.name);
         map.put("trustChange", this.isTrustChange);
         map.put("trustChangeName", this.trustChangeName);
-        map.put("trustType", this.trustTypeEntity.toMap());
         map.put("address", this.addressEntity.toMap());
         map.put("person", this.personEntity.toMap());
         map.put("state", this.state);
@@ -235,4 +226,11 @@ public class RequestRequestEntity extends CommonEntity {
         return map;
     }
 
+    public BusinessTypeEntity getBusinessTypeEntity() {
+        return businessTypeEntity;
+    }
+
+    public void setBusinessTypeEntity(BusinessTypeEntity businessTypeEntity) {
+        this.businessTypeEntity = businessTypeEntity;
+    }
 }

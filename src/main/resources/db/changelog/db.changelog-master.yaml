@@ -63,6 +63,25 @@ databaseChangeLog:
       file: classpath:db/changelog/mvp-008/ddl-001-create-request_unique_persons.yml
   - include:
       file: classpath:db/changelog/mvp-008/ddl-002-create-request_unique_person_membership.yml
+# legacy2026030299: Legacy Selected Workers - Table
+  - include:
+      file: classpath:db/changelog/legacy/ddl-001-create-trust_special_workers.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-002-create-trust_special_years.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-003-create-trust_special_periods.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-004-create-trust_special_selected_workers.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-005-create-trust_special_worker_balance.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-006-create-trust_special_year_balance.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-007-create-trust_special_rights_acquired.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-008-alter-request_catalog_requests.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-009-alter-trust_catalog_trust.yml
 
 
 

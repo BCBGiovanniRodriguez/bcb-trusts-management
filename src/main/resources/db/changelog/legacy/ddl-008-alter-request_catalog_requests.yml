@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 37
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Alter table request_catalog_requests
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - dropForeignKeyConstraint:
+            baseTableName: request_catalog_requests
+            constraintName: request_catalog_requests_fk_1
+
+        - dropColumn:
+            tableName: request_catalog_requests
+            columnName: trust_type_id
+
+        - addColumn:
+            tableName: request_catalog_requests
+            columns:
+              - column: { name: business_type_id, type: BIGINT, constraints: { nullable: false } }
+
+        - addForeignKeyConstraint:
+            baseTableName: request_catalog_requests
+            baseColumnNames: business_type_id
+            referencedTableName: request_catalog_business_types
+            referencedColumnNames: business_type_id
+            constraintName: request_catalog_requests_fk_1
+
+

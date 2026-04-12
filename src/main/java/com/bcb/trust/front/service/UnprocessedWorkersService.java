@@ -14,24 +14,23 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.bcb.trust.front.entity.enums.ProcessDetailStateEnum;
 import com.bcb.trust.front.model.bmtkfweb.dto.PercentageRightsAcquired;
 import com.bcb.trust.front.model.bmtkfweb.mapper.PercentageRightsAcquiredMapper;
 import com.bcb.trust.front.model.dto.WorkerDetail;
-import com.bcb.trust.front.model.dto.WorkerForProcess;
 import com.bcb.trust.front.model.mapper.WorkerDetailRowMapper;
-import com.bcb.trust.front.model.mapper.WorkersForProcessMapper;
 import com.bcb.trust.front.model.trusts.entity.ProcessDetailEntity;
 import com.bcb.trust.front.model.trusts.entity.ProcessEntity;
 import com.bcb.trust.front.model.trusts.enums.ProcessStateEnum;
 import com.bcb.trust.front.model.trusts.enums.ProcessTypeEnum;
 import com.bcb.trust.front.model.trusts.repository.ProcessDetailRepository;
 import com.bcb.trust.front.model.trusts.repository.ProcessRepository;
+import com.bcb.trust.front.modules.trust.model.entity.TrustSpecialSelectedWorkerEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -54,9 +53,14 @@ public class UnprocessedWorkersService {
     private IndividualReportService individualReportService;
 
     @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Qualifier("trustNamedParameterJdbcTemplate")
+    private NamedParameterJdbcTemplate trustNamedParameterJdbcTemplate;
+    
+    @Autowired
+    @Qualifier("bmtkfwebNamedParameterJdbcTemplate")
+    private NamedParameterJdbcTemplate bmtkfwebNamedParameterJdbcTemplate;
 
-    private int RECORDS_PER_CYCLE = 100;
+    private int RECORDS_PER_CYCLE = 4;
 
     private String primaryOutputPath = "./trusts/trust";
 
@@ -73,10 +77,13 @@ public class UnprocessedWorkersService {
         List<LocalDate> periodList = new ArrayList<>();
 
         try {
-            String rawValues = namedParameterJdbcTemplate.getJdbcTemplate().queryForObject(sql, String.class);
+            //String rawValues = namedParameterJdbcTemplate.getJdbcTemplate().queryForObject(sql, String.class);
 
-            LocalDate dateStartWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[0], mexFormatter);
-            LocalDate dateEndWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[1], mexFormatter);
+            //LocalDate dateStartWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[0], mexFormatter);
+            //LocalDate dateEndWork = LocalDate.parse(rawValues.split("[^\\{alpha}]al[^\\{alpha}]")[1], mexFormatter);
+
+            LocalDate dateStartWork = LocalDate.parse("2025-01-01");
+            LocalDate dateEndWork = LocalDate.parse("2025-06-30");
 
             periodList.add(dateStartWork);
             periodList.add(dateEndWork);
@@ -88,14 +95,16 @@ public class UnprocessedWorkersService {
     }
 
     @SuppressWarnings("null")
-    private int getTotalWorkers() {
+    private int getTotalWorkers(String contractNumber) {
         int totalWorkers = 0;
-        String sqlQuery = "SELECT COUNT(*) AS TOTAL_WORKERS FROM WorkersForProcess";
+        //String sqlQuery = "SELECT COUNT(*) AS TOTAL_WORKERS FROM WorkersForProcess";
+        String sqlQuery = "SELECT COUNT(*) AS TOTAL_WORKERS FROM LEGACY_SELECTED_WORKERS WHERE CONTRACT_NUMBER = :contractNumber";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("nivel", 2);
-        parameters.addValue("status", "INACTIVO");
+        parameters.addValue("contractNumber", contractNumber);
+        //parameters.addValue("nivel", 2);
+        //parameters.addValue("status", "INACTIVO");
 
-        totalWorkers = (int) namedParameterJdbcTemplate.getJdbcTemplate()
+        totalWorkers = (int) trustNamedParameterJdbcTemplate.getJdbcTemplate()
                 .queryForObject(sqlQuery, Integer.class);
 
         return totalWorkers;
@@ -106,8 +115,9 @@ public class UnprocessedWorkersService {
         List<PercentageRightsAcquired> percentageRightsAcquiredList = new ArrayList<>();
 
         try {
-            percentageRightsAcquiredList = namedParameterJdbcTemplate.getJdbcTemplate().query(sql,
-                    new PercentageRightsAcquiredMapper());
+            percentageRightsAcquiredList = bmtkfwebNamedParameterJdbcTemplate
+                .getJdbcTemplate().query(sql, new PercentageRightsAcquiredMapper());
+
         } catch (Exception e) {
             System.out.println("Error en LegacyService:: getRightsPercentageList" + e.getLocalizedMessage());
         }
@@ -118,33 +128,35 @@ public class UnprocessedWorkersService {
     /**
      * 
      * @param contractNumber
-     * @param subaccount
+     * @param account
      * @param limit
      */
-    public List<WorkerDetail> getWorkerList(int contractNumber, String subaccount, int limit) {
+    public List<WorkerDetail> getWorkerList(int contractNumber, String account, int limit) {
         List<WorkerDetail> workerList = new ArrayList<>();
-        List<WorkerForProcess> workerForProcessList = new ArrayList<>();
-        String sqlQuery = "SELECT * FROM WorkersForProcess ";
+        List<TrustSpecialSelectedWorkerEntity> selectedWorkerList = new ArrayList<>();
+        String sqlQuery = "SELECT * FROM TRUST_SELECTED_WORKERS WHERE CONTRACT_NUMBER = :contractNumber";
         MapSqlParameterSource parametersOne = new MapSqlParameterSource();
 
         try {
-            if (subaccount != null && !subaccount.equals("")) {
-                parametersOne.addValue("subaccount", subaccount);
-                sqlQuery += " WHERE subaccount > :subaccount ";
+            if (account != null && !account.equals("")) {
+                parametersOne.addValue("account", account);
+                sqlQuery += " AND account > :account ";
             }
 
+            // NO FUNCIONA EN ORACLE
             parametersOne.addValue("limit", limit);
             sqlQuery += " LIMIT :limit";
 
-            workerForProcessList = namedParameterJdbcTemplate.query(sqlQuery, parametersOne,
-                    new WorkersForProcessMapper());
-            System.out.println("Workers: " + workerForProcessList.size());
+            //selectedWorkerList = trustNamedParameterJdbcTemplate.query(sqlQuery, parametersOne, new SelectedWorkerRowMapper());
+            System.out.println("#Workers: " + selectedWorkerList.size());
 
             StringBuilder subaccountsStringBuilder = new StringBuilder();
-            for (WorkerForProcess workerForProcess : workerForProcessList) {
-                subaccountsStringBuilder.append(workerForProcess.getSubaccount()).append(", ");
+            /*
+            for (SelectedWorkerEntity selectedWorker : selectedWorkerList) {
+                subaccountsStringBuilder.append(selectedWorker.getAccount()).append(", ");
             }
-            subaccountsStringBuilder.append("0");
+            */
+            //subaccountsStringBuilder.append("0");
             System.out.println(subaccountsStringBuilder.toString());
 
             sqlQuery = "SELECT * FROM FID_DATOS_EST_CTAS WHERE ";
@@ -158,7 +170,9 @@ public class UnprocessedWorkersService {
             // parameters.addValue("limit", limit);
             // parameters.addValue("subaccounts", subaccountsStringBuilder.toString());
 
-            workerList = namedParameterJdbcTemplate.query(sqlQuery, parameters, new WorkerDetailRowMapper());
+            workerList = bmtkfwebNamedParameterJdbcTemplate
+                .query(sqlQuery, parameters, new WorkerDetailRowMapper());
+
         } catch (Exception e) {
             System.out.println("Error on UnprocessedWorkersService::getWorkerList: " + e.getLocalizedMessage());
         }
@@ -170,7 +184,7 @@ public class UnprocessedWorkersService {
         LocalDateTime now = LocalDateTime.now();
         // String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath +
         // now.format(filedateFormatter);
-        String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + "20250604233255/pending/pendientes";
+        String outputPath = primaryOutputPath + trustNumber + secondaryOutputPath + "20260330134101/pending/pendientes";
         String fileName;
         Integer workersProcessed = 0;
         Integer totalWorkers = 0;
@@ -183,10 +197,11 @@ public class UnprocessedWorkersService {
             ClassPathResource resource = new ClassPathResource("TemplateJson.jrxml");
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
 
-            totalWorkers = getTotalWorkers();
+            //totalWorkers = getTotalWorkers(trustNumber + "");
+            totalWorkers = 4;
             System.out.println("Workers for process: " + totalWorkers);
-            // String account = ""; // null or empty on first iteration
-            String account = "1000201650"; // null or empty on first iteration
+            String account = ""; // null or empty on first iteration
+            //String account = "1000201650"; // null or empty on first iteration
             List<WorkerDetail> workerList = getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
             individualReportService.setPercentageRightsAcquiredList(getRightsPercentageList());
 
@@ -216,7 +231,6 @@ public class UnprocessedWorkersService {
                         processDetail.setProcess(process);
 
                         try {
-                            //
                             individualReportService.setSubaccountWorker(workerDetail.getDatClave());
                             individualReportService.setStartDate(periodList.get(0));
                             individualReportService.setEndDate(periodList.get(1));

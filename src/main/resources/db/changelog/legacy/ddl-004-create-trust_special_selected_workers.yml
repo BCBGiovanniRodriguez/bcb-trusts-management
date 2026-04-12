@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 33
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Create table trust_special_selected_workers
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+        - createTable:
+            tableName: trust_special_selected_workers
+            columns:
+              - column: { name: selected_worker_id, type: BIGINT, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: contract_number, type: INTEGER, constraints: { nullable: false } }
+              - column: { name: account, type: VARCHAR(255), constraints: { nullable: false } }
+              - column: { name: name, type: VARCHAR(255), constraints: { nullable: false } }

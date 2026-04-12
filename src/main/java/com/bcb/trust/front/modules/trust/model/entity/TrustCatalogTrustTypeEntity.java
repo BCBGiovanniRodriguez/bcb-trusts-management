@@ -2,21 +2,15 @@ package com.bcb.trust.front.modules.trust.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
-import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,14 +29,7 @@ public class TrustCatalogTrustTypeEntity extends CommonEntity {
 
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "trustTypeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RequestRequestEntity> requestSet;
-
-    @OneToMany(mappedBy = "trustTypeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TrustTrustEntity> trustList;
-
     public TrustCatalogTrustTypeEntity() {
-        requestSet = new HashSet<>();
     }
 
     public Long getTrustTypeId() {
