@@ -1,0 +1,221 @@
+databaseChangeLog:
+  - changeSet:
+      id: 36
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Alter table trust_special_rights_acquired
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - createTable:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, type: BIGINT, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: year, type: INT, constraints: { nullable: false } }
+              - column: { name: percent, type: 'NUMERIC(4, 1)', constraints: { nullable: false } }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "1" }
+              - column: { name: year, value: "0" }
+              - column: { name: percent, value: "0" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "2" }
+              - column: { name: year, value: "1" }
+              - column: { name: percent, value: "0" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "3" }
+              - column: { name: year, value: "2" }
+              - column: { name: percent, value: "10" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "4" }
+              - column: { name: year, value: "3" }
+              - column: { name: percent, value: "12.5" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "5" }
+              - column: { name: year, value: "4" }
+              - column: { name: percent, value: "15" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "6" }
+              - column: { name: year, value: "5" }
+              - column: { name: percent, value: "17.25" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "7" }
+              - column: { name: year, value: "6" }
+              - column: { name: percent, value: "20" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "8" }
+              - column: { name: year, value: "7" }
+              - column: { name: percent, value: "22.5" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "9" }
+              - column: { name: year, value: "8" }
+              - column: { name: percent, value: "25" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "10" }
+              - column: { name: year, value: "9" }
+              - column: { name: percent, value: "27.5" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "11" }
+              - column: { name: year, value: "10" }
+              - column: { name: percent, value: "30" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "12" }
+              - column: { name: year, value: "11" }
+              - column: { name: percent, value: "33" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "13" }
+              - column: { name: year, value: "12" }
+              - column: { name: percent, value: "36" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "14" }
+              - column: { name: year, value: "13" }
+              - column: { name: percent, value: "39" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "15" }
+              - column: { name: year, value: "14" }
+              - column: { name: percent, value: "42" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "16" }
+              - column: { name: year, value: "15" }
+              - column: { name: percent, value: "45" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "17" }
+              - column: { name: year, value: "16" }
+              - column: { name: percent, value: "48" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "18" }
+              - column: { name: year, value: "17" }
+              - column: { name: percent, value: "51" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "19" }
+              - column: { name: year, value: "18" }
+              - column: { name: percent, value: "54" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "20" }
+              - column: { name: year, value: "19" }
+              - column: { name: percent, value: "57" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "21" }
+              - column: { name: year, value: "20" }
+              - column: { name: percent, value: "60" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "22" }
+              - column: { name: year, value: "21" }
+              - column: { name: percent, value: "65" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "23" }
+              - column: { name: year, value: "22" }
+              - column: { name: percent, value: "70" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "24" }
+              - column: { name: year, value: "23" }
+              - column: { name: percent, value: "75" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "25" }
+              - column: { name: year, value: "24" }
+              - column: { name: percent, value: "80" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "26" }
+              - column: { name: year, value: "25" }
+              - column: { name: percent, value: "85" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "27" }
+              - column: { name: year, value: "26" }
+              - column: { name: percent, value: "90" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "28" }
+              - column: { name: year, value: "27" }
+              - column: { name: percent, value: "95" }
+
+        - insert:
+            tableName: trust_special_rights_acquired
+            columns:
+              - column: { name: right_acquired_id, value: "29" }
+              - column: { name: year, value: "28" }
+              - column: { name: percent, value: "100" }
+

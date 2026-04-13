@@ -39,7 +39,13 @@
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="general-data-tab" data-bs-toggle="tab" data-bs-target="#general-data-tab-pane" 
                                                     type="button" role="tab" aria-controls="general-data-tab-pane" aria-selected="true" tabindex="0">
-                                                        <i class="bi bi-clipboard2-check-fill"></i> <strong>Datos Generales</strong>
+                                                    <i class="bi bi-clipboard2-check-fill"></i> <strong>Detalle Solicitud</strong>
+                                                </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="business-members-tab" data-bs-toggle="tab" data-bs-target="#business-members-tab-pane" 
+                                                    type="button" role="tab" aria-controls="business-members-tab-pane" aria-selected="true" tabindex="0">
+                                                        <i class="bi bi-clipboard2-check-fill"></i> <strong>Miembros del Negocio</strong>
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
@@ -62,7 +68,7 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
-                                                <div class="tab-pane fade active show" id="general-data-tab-pane" role="tabpanel" aria-labelledby="general-data-tab" tabindex="0">
+                                                <div class="tab-pane fade active show" id="general-data-tab-pane" role="tabpanel" aria-labelledby="general-data-tab" tabindex="1">
                                                     <div class="row g-3">
                                                         <div class="col-4">
                                                             <label for="trustTypeId" class="form-label"><strong>Tipo de Fideicomiso</strong></label>
@@ -111,92 +117,18 @@
                                                         </div>
                                                     </div>
                                                     <hr>
-                                                    <div class="row g-3">
-                                                        <div class="col-4">
-                                                            <label for="personType" class="form-label"><strong>Tipo de Persona</strong></label>
-                                                            <select id="personType" name="personType" class="form-select request-validate">
-                                                                <option value="0" selected disabled>Seleccione Opción</option>
-                                                                <option value="1">Persona Física</option>
-                                                                <option value="2">Persona Moral</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="col-4">
-                                                            <label for="foreignStatus" class="form-label"><strong>Estatus Migratorio</strong></label>
-                                                            <select id="foreignStatus" name="foreignStatus" class="form-select request-validate">
-                                                                <option value="0" selected disabled>Seleccione Opción</option>
-                                                                <option value="1">Nacional</option>
-                                                                <option value="2">Extranjero</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div id="personTypePerson" hidden>
-                                                        <div class="row g-3">
-                                                            <div class="col-3">
-                                                                <label for="firstName" class="form-label"><strong>Primer Nombre</strong></label>
-                                                                <input type="text" name="firstName" id="firstName" class="form-control" maxlength="200" />
-                                                            </div>
-                                                            
-                                                            <div class="col-3">
-                                                                <label for="secondName" class="form-label"><strong>Segundo Nombre</strong></label>
-                                                                <input id="secondName" name="secondName" type="text" class="form-control" placeholder="Opcional" />
-                                                            </div>
-                                                            
-                                                            <div class="col-3">
-                                                                <label for="lastName" class="form-label"><strong>Apellido Paterno</strong></label>
-                                                                <input id="lastName" name="lastName" type="text" class="form-control" />
-                                                            </div>
-
-                                                            <div class="col-3">
-                                                                <label for="secondLastName" class="form-label"><strong>Apellido Materno</strong></label>
-                                                                <input id="secondLastName" name="secondLastName" type="text" class="form-control" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row g-3">
-                                                            <div class="col-3">
-                                                                <label for="gender" class="form-label"><strong>Género</strong></label>
-                                                                <select id="gender" name="gender" class="form-select">
-                                                                    <option value="0" selected disabled>Seleccione Opción</option>
-                                                                    <option value="1">Femenino</option>
-                                                                    <option value="2">Masculino</option>
-                                                                </select>
-                                                            </div>
-                                                            
-                                                            <div class="col-3">
-                                                                <label for="birthDate" class="form-label"><strong>Fecha de Nacimiento</strong></label>
-                                                                <input id="birthDate" name="birthDate" type="date" class="form-control" />
-                                                            </div>
-                                                            
-                                                            <div class="col-3">
-                                                                <label for="curp" class="form-label"><strong>CURP</strong></label>
-                                                                <input id="curp" name="curp" type="text" class="form-control" maxlength="18" minlength="18" value="XAXX000000XXXXXX00" />
-                                                            </div>
-
-                                                            <div class="col-3">
-                                                                <label for="rfc" class="form-label"><strong>RFC</strong></label>
-                                                                <input id="rfc" name="rfc" type="text" class="form-control" maxlength="13" minlength="13" value="XAXX000000XX0" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div id="personTypeEnterprise" hidden>
-                                                        <div class="row g-3">
-                                                            <div class="col-3">
-                                                                <label for="rfcEnterprise" class="form-label"><strong>RFC</strong></label>
-                                                                <input id="rfcEnterprise" name="rfcEnterprise" type="text" class="form-control request-validate" maxlength="12" minlength="12" value="XAX000000XX0" />
-                                                            </div>
-
-                                                            <div class="col-8">
-                                                                <label for="fullName" class="form-label"><strong>Razón Social</strong></label>
-                                                                <input id="fullName" name="fullName" type="text" class="form-control request-validate"  maxlength="200">
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
 
-                                                <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="1">
+                                                <div class="tab-pane fade" id="business-members-tab-pane" role="tabpanel" aria-labelledby="business-members-tab" tabindex="0">
+                                                    <button id="selectPerson" class="btn btn-primary" type="button" role="button">
+                                                        <i class="fa fa-add"></i> Agregar Miembro
+                                                    </button>
+                                                    <hr>
+
+                                                    
+                                                </div> 
+
+                                                <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="2">
                                                     <div class="row g-3">
                                                         <div class="col-3">
                                                             <label for="zipcode" class="form-label"><strong>Código Postal</strong></label>
@@ -245,7 +177,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="2">
+                                                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="3">
 
                                                     <div class="row g-3">
                                                         <div class="col-3">
@@ -281,7 +213,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="tab-pane fade" id="summary-tab-pane" role="tabpanel" aria-labelledby="summary-tab" tabindex="2">
+                                                <div class="tab-pane fade" id="summary-tab-pane" role="tabpanel" aria-labelledby="summary-tab" tabindex="4" hidden>
 
                                                     <div class="row g-3">
                                                         <div class="col-6">
@@ -311,7 +243,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

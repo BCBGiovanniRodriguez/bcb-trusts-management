@@ -29,3 +29,61 @@ databaseChangeLog:
 
   - include:
       file: classpath:db/changelog/mvp-002/dml-001-alter-system_catalog_endpoints.yml
+
+  - include:
+      file: classpath:db/changelog/mvp-003/dml-001-create-request_catalog_business_types.yml
+  - include:
+      file: classpath:db/changelog/mvp-003/dml-002-insert-request_catalog_business_types.yml
+# saf20260227 MVP-004: Request Catalog Business Members - Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-004/ddl-001-create-request_catalog_business_members.yml
+  - include:
+      file: classpath:db/changelog/mvp-004/dml-001-insert-request_catalog_business_members.yml
+# saf2026022702 MVP-005: Request Catalog Consultants And Sponsors - Profiles, Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-001-insert-system_catalog_profiles.yml
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-002-insert-system_catalog_person.yml
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-003-insert-system_catalog_users.yml
+  - include:
+      file: classpath:db/changelog/mvp-005/dml-004-insert-system_configuration_user_profiles.yml
+# saf2026022703 MVP-006: Request Catalog Risk Activities - Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-006/ddl-001-create-request_catalog_risk_activities.yml
+  - include:
+      file: classpath:db/changelog/mvp-006/dml-001-insert-request_catalog_risk_activities.yml
+# saf2026022704 MVP-007: Request Catalog Resource Origins - Table and Data
+  - include:
+      file: classpath:db/changelog/mvp-007/ddl-001-create-request_catalog_resource_origins.yml
+  - include:
+      file: classpath:db/changelog/mvp-007/dml-001-insert-request_catalog_resource_origins.yml
+# saf20260030401 MVP-008: Request Unique Person and Membership - Tables, Foreign Keys and Data
+  - include:
+      file: classpath:db/changelog/mvp-008/ddl-001-create-request_unique_persons.yml
+  - include:
+      file: classpath:db/changelog/mvp-008/ddl-002-create-request_unique_person_membership.yml
+# legacy2026030299: Legacy Selected Workers - Table
+  - include:
+      file: classpath:db/changelog/legacy/ddl-001-create-trust_special_workers.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-002-create-trust_special_years.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-003-create-trust_special_periods.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-004-create-trust_special_selected_workers.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-005-create-trust_special_worker_balance.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-006-create-trust_special_year_balance.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-007-create-trust_special_rights_acquired.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-008-alter-request_catalog_requests.yml
+  - include:
+      file: classpath:db/changelog/legacy/ddl-009-alter-trust_catalog_trust.yml
+
+
+
+
+

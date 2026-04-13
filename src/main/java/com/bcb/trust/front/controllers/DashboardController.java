@@ -40,9 +40,9 @@ public class DashboardController {
         model.addAttribute("workersForProcess", "Usuario Fiduciario");
 
         try {
-            // reportService.generateReport();
-            //massiveReportService.process(1045);
-            // partialBalanceService.calculatePartialBalance(1045);
+            //reportService.generateReport(); // Version antigua
+            //massiveReportService.process(1045); // Version nueva
+            //partialBalanceService.calculatePartialBalance(1045);
         } catch (Exception e) {
             System.out.println("DashboardControllerMessage: " + e.getMessage());
         }

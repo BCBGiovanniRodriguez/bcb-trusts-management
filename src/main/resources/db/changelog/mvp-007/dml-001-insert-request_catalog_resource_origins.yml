@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: 27
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Insert data on table request_catalog_resource_origins
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 1}
+              - column: {name: name, value: "Ahorro / Patrimonio"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 2}
+              - column: {name: name, value: "Renta / Venta de Inmuebles"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 3}
+              - column: {name: name, value: "Derivado de la Actividad Económica"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 4}
+              - column: {name: name, value: "Fondo de Ahorro"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 5}
+              - column: {name: name, value: "Inversiones"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 6}
+              - column: {name: name, value: "Aportaciones Gubernamentales"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 7}
+              - column: {name: name, value: "Préstamos"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 8}
+              - column: {name: name, value: "Sueldo Honorarios"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 9}
+              - column: {name: name, value: "Herencia"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 10}
+              - column: {name: name, value: "Donaciones"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 11}
+              - column: {name: name, value: "Negocio"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 12}
+              - column: {name: name, value: "Comisiones / Honorarios Variables"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}
+        - insert:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: {name: resource_origin_id, value: 13}
+              - column: {name: name, value: "Otros"}
+              - column: {name: status, value: 1}
+              - column: {name: created_at, valueComputed: "CURRENT_TIMESTAMP"}

@@ -86,14 +86,6 @@ public class WorkerService {
         TrustCatalogTrustTypeEntity trustTypeEntity = null;
 
         try {
-            trustTypeEntityOptional = trustTypeRepository.findById(1L);
-            if (trustTypeEntityOptional.isPresent()) {
-                trustTypeEntity = trustTypeEntityOptional.get();
-                System.out.println("Tipo de trust: " + trustTypeEntity.getName());
-            } else {
-                throw new Exception("No se encontro el tipo de trust");
-            }
-
             sql = "SELECT * FROM PROSPECT p ORDER BY p.PRS_NUM_PROSPECTO ";
             resultList = jdbcTemplate.queryForList(sql);
 
@@ -197,7 +189,6 @@ public class WorkerService {
                 // requestEntity.setWasRefered(CommonEntity.SIMPLE_OPTION_NO);
                 // requestEntity.setWasReferedBy(RequestRequestEntity.WAS_REFERED_BY_UNKOWN);
                 // requestEntity.setWasReferedByFullName(migrationStandardText);
-                requestEntity.setTrustTypeEntity(trustTypeEntity);
                 requestEntity.setAddressEntity(addressEntity);
                 requestEntity.setPersonEntity(personEntity);
                 requestEntity.setState(RequestRequestEntity.STATE_REGISTERED);
@@ -327,7 +318,6 @@ public class WorkerService {
                     trustEntity.setName(trustName);
                     trustEntity.setNumber(trustNumber);
                     trustEntity.setRequestEntity(requestEntity);
-                    trustEntity.setTrustTypeEntity(trustTypeEntity);
                     trustEntity.setState(TrustTrustEntity.STATE_ACTIVE);
                     trustEntity.setStatus(CommonEntity.STATUS_ENABLED);
                     trustEntity.setCreatedAt(LocalDateTime.now());
@@ -377,7 +367,6 @@ public class WorkerService {
                     newRequest.setNumber(trustNumber); // get last
                     newRequest.setPersonEntity(newPerson);
                     newRequest.setAddressEntity(newAddress);
-                    newRequest.setTrustTypeEntity(trustTypeEntity);
                     newRequest.setRegisteredBy(userEntity);
                     newRequest.setCreatedAt(LocalDateTime.now());
                     newRequest.setState(1);
@@ -395,7 +384,6 @@ public class WorkerService {
                     trustEntity.setName(trustName);
                     trustEntity.setNumber(trustNumber);
                     trustEntity.setRequestEntity(newRequest);
-                    trustEntity.setTrustTypeEntity(trustTypeEntity);
                     trustEntity.setState(TrustTrustEntity.STATE_ACTIVE);
                     trustEntity.setStatus(CommonEntity.STATUS_ENABLED);
                     trustEntity.setCreatedAt(LocalDateTime.now());

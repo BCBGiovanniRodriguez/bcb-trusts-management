@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="~{fragments/common :: head}"></head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav th:replace="~{fragments/common :: nav}"></nav>
+
+            <aside th:replace="~{fragments/common :: aside}"></aside>
+
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>ID Persona :: Registrar</h4>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline card-success mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><strong>Registrar ID Persona</strong></h3>
+
+                                        <div class="card-tools">
+                                            <a th:href="@{/request/person-id-front}" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-arrow-circle-left"></i> Regresar a Id Persona
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h5>Datos Personales</h5>
+                                        <div class="container-fluid">
+                                            <div class="row g-3">
+                                                <label for="personType" class="col-sm-2 col-form-label"><strong>Tipo de Persona</strong></label>
+                                                <div class="col-sm-4">
+                                                    <select id="personType" name="personType" class="form-select">
+                                                        <option value="0" disabled>Seleccione Opción</option>
+                                                        <option value="1" selected>Persona Física</option>
+                                                        <option value="2">Persona Moral</option>
+                                                    </select>
+                                                </div>
+    
+                                                <div id="marital-status-container" class="col-md-6">
+                                                    <div class="container-fluid">
+                                                        <div class="row g-3">
+                                                            <label for="maritalStatus" class="col-sm-4 col-form-label"><strong>Estado Civil</strong></label>
+                                                            <div class="col-sm-8">
+                                                                <select id="maritalStatus" name="maritalStatus" class="form-select">
+                                                                    <option value="0" selected disabled>Seleccione Opción</option>
+                                                                    <option value="1">Soltero(a)</option>
+                                                                    <option value="2">Casado(a)</option>
+                                                                    <option value="3">Divorciado(a)</option>
+                                                                    <option value="4">Viudo(a)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+
+                                            <div class="row g-3">
+                                                <label for="foreignStatus" class="col-sm-2 col-form-label"><strong>Estatus Migratorio</strong></label>
+                                                <div class="col-sm-4">
+                                                    <select id="foreignStatus" name="foreignStatus" class="form-select">
+                                                        <option value="0" disabled>Seleccione Opción</option>
+                                                        <option value="1" selected>Nacional</option>
+                                                        <option value="2">Extranjero</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <label for="nationalityId" class="col-sm-2 col-form-label"><strong>Nacionalidad</strong></label>
+                                                <div class="col-sm-4">
+                                                    <select id="nationalityId" name="nationalityId" class="form-select" disabled>
+                                                        <option value="0" selected disabled>Seleccione Opción</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div id="personTypePerson">
+                                            <div class="row g-3">
+                                                <label for="firstName" class="col-sm-2 col-form-label"><strong>Primer Nombre</strong></label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="firstName" id="firstName" class="form-control" maxlength="200" />
+                                                </div>
+                                                
+                                                <label for="secondName" class="col-sm-2 col-form-label"><strong>Segundo Nombre</strong></label>
+                                                <div class="col-sm-4">
+                                                    <input id="secondName" name="secondName" type="text" class="form-control" placeholder="Opcional" />
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row g-3">
+                                                <label for="lastName" class="col-sm-2 col-form-label"><strong>Apellido Paterno</strong></label>
+                                                <div class="col-sm-4">
+                                                    <input id="lastName" name="lastName" type="text" class="form-control" />
+                                                </div>
+
+                                                <label for="secondLastName" class="col-sm-2 col-form-label"><strong>Apellido Materno</strong></label>
+                                                <div class="col-sm-4">
+                                                    <input id="secondLastName" name="secondLastName" type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <br>
+
+                                            <div class="row g-3">
+                                                <label for="gender" class="col-2 col-form-label"><strong>Género</strong></label>
+                                                <div class="col-4">
+                                                    <select id="gender" name="gender" class="form-select">
+                                                        <option value="0" selected disabled>Seleccione Opción</option>
+                                                        <option value="1">Femenino</option>
+                                                        <option value="2">Masculino</option>
+                                                    </select>
+                                                </div>
+                                                <br>
+
+                                                <label for="birthDate" class="col-2 col-form-label"><strong>Fecha de Nacimiento</strong></label>
+                                                <div class="col-4">
+                                                    <input id="birthDate" name="birthDate" type="date" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <br>
+
+                                            <div class="row g-3">
+                                                <label for="curp" class="col-2 col-form-label"><strong>CURP</strong></label>
+                                                <div class="col-4">
+                                                    <input id="curp" name="curp" type="text" class="form-control" maxlength="18" minlength="18" value="XAXX000000XXXXXX00" />
+                                                </div>
+
+                                                <label for="rfc" class="col-2 col-form-label"><strong>RFC</strong></label>
+                                                <div class="col-4">
+                                                    <input id="rfc" name="rfc" type="text" class="form-control" maxlength="13" minlength="13" value="XAXX000000XX0" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="personTypeEnterprise" hidden>
+                                            <div class="row g-3">
+                                                <div class="col-3">
+                                                    <label for="rfcEnterprise" class="form-label"><strong>RFC</strong></label>
+                                                    <input id="rfcEnterprise" name="rfcEnterprise" type="text" class="form-control" maxlength="12" minlength="12" value="XAX000000XX0" />
+                                                </div>
+
+                                                <div class="col-8">
+                                                    <label for="fullName" class="form-label"><strong>Razón Social</strong></label>
+                                                    <input id="fullName" name="fullName" type="text" class="form-control"  maxlength="200">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="row g-3">
+                                            <div class="col-12 text-center">
+                                                <button id="btnSavePerson" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                                                    <i class="fa fa-save"></i> Guardar Persona
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h5>Direcciones</h5>
+                                        <div>
+                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addressModal">
+                                                <i class="fa fa-plus"></i> Agregar dirección
+                                            </button>
+
+                                            <div class="table-responsive">
+                                                <table id="addressTable" class="table table-condensed table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Calle</th>
+                                                            <th>Número Interior</th>
+                                                            <th>Número Exterior</th>
+                                                            <th>Colonia</th>
+                                                            <th>Código Postal</th>
+                                                            <th>Municipio</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h5>Datos de Contacto</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h5>Teléfonos</h5>
+                                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#phoneModal">
+                                                    <i class="fa fa-plus"></i> Agregar Teléfono
+                                                </button>
+                                                <hr>
+                                                <div class="table-responsive">
+                                                    <table class="table table-condensed table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Ubicación</th>
+                                                                <th>País</th>
+                                                                <th>Tipo</th>
+                                                                <th>Pertenencia</th>
+                                                                <th>Número</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <h5>Correos Electrónicos</h5>
+                                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#emailModal">
+                                                    <i class="fa fa-plus"></i> Agregar Correo Electrónico
+                                                </button>
+                                                <hr>
+                                                <div class="table-responsive">
+                                                    <table class="table table-condensed table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Pertenencia</th>
+                                                                <th>Correo Electrónico</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer th:replace="~{fragments/common :: footer}"></footer>
+
+            <div th:replace="~{fragments/common :: commonModals}"></div>
+
+            <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" data-bs-theme="dark">
+                            <h5 class="modal-title" id="addressModalLabel"><strong>AGREGAR DIRECCIÓN</strong></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row g-3">
+
+                                </div>
+                                <hr>
+                                <div class="row g-3">
+                                    <label for="zipcode" class="col-2 col-form-label"><strong>Código Postal</strong></label>
+                                    <div class="col-4">
+                                        <input id="zipcode" name="zipcode" maxlength="5" type="text" class="form-control address" placeholder="Ej: 01234" />
+                                    </div>
+
+                                    <label for="colony" class="col-2 col-form-label"><strong>Colonia</strong></label>
+                                    <div class="col-4">
+                                        <select id="colony" name="colony" class="form-select address" readonly aria-readonly="true">
+                                            <option value="0" selected disabled>Selecione Opción</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row g-3">
+                                    <label for="township" class="col-2 col-form-label"><strong>Municipio</strong></label>
+                                    <div class="col-4">
+                                        <select id="township" name="township" class="form-select" readonly aria-readonly="true">
+                                            <option value="0" selected disabled>Selecione Opción</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="state" class="col-2 col-form-label"><strong>Estado</strong></label>
+                                    <div class="col-4">
+                                        <select id="state" name="state" class="form-select" readonly aria-readonly="true">
+                                            <option value="0" selected disabled>Selecione Opción</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row g-3">
+                                    <label for="street" class="col-2 col-form-label"><strong>Calle</strong></label>
+                                    <div class="col-10">
+                                        <input id="street" name="street" type="text" class="form-control address" placeholder="Ej: Insurgentes Sur" />
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row g-3">
+                                    <label for="externalNumber" class="col-2 col-form-label"><strong>Número Exterior</strong></label>
+                                    <div class="col-4">
+                                        <input id="externalNumber" name="externalNumber" type="text" class="form-control address" placeholder="Ej: 123" />
+                                    </div>
+                                    
+                                    <label for="internalNumber" class="col-2 col-form-label"><strong>Número Interior</strong></label>
+                                    <div class="col-4">
+                                        <input id="internalNumber" name="internalNumber" type="text" class="form-control address" placeholder="Ej: 456" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button id="btnIncludeAddress" type="button" class="btn btn-primary" hidden>Agregar Dirección</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="phoneModal" tabindex="-1" role="dialog" aria-labelledby="phoneModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" data-bs-theme="dark">
+                            <h5 class="modal-title" id="phoneModalLabel"><strong>AGREGAR TÉLEFONO</strong></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row g-3">
+                                    <label for="phoneLocation" class="col-1 col-form-label"><strong>Ubicación</strong></label>
+                                    <div class="col-3">
+                                        <select id="phoneLocation" name="phoneLocation" class="form-select phone">
+                                            <option value="0" selected disabled>Seleccione Opción</option>
+                                            <option value="1" selected>Nacional</option>
+                                            <option value="2">Extranjero</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-8" id="phoneLocationContainer" hidden>
+                                        <div class="container-fluid">
+                                            <div id="foreignStatuses" class="row g-3">
+                                                <label for="country_id" class="col-2 col-form-label"><strong>Paises</strong></label>
+                                                <div class="col-10">
+                                                    <select id="country_id" name="country_id" class="form-select phone">
+                                                        <option value="0" selected disabled>Seleccione Opción</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row g-3">
+                                    <label for="phoneType" class="col-1 col-form-label"><strong>Tipo</strong></label>
+                                    <div class="col-3">
+                                        <select id="phoneType" name="phoneType" class="form-select phone">
+                                            <option value="0" selected disabled>Seleccione Opción</option>
+                                            <option value="1">Fijo</option>
+                                            <option value="2">Móvil</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="phoneOwn" class="col-2 col-form-label"><strong>Pertenencia</strong></label>
+                                    <div class="col-6">
+                                        <select id="phoneOwn" name="phoneOwn" class="form-select phone">
+                                            <option value="0" selected disabled>Seleccione Opción</option>
+                                            <option value="1">Propio</option>
+                                            <option value="2">Trabajo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row g-3">
+                                    <label for="phoneNumber" class="col-1 col-form-label"><strong>Número</strong></label>
+                                    <div class="col-3">
+                                        <input id="phoneNumber" name="phoneNumber" type="text" class="form-control phone" placeholder="Ej: 5512345678" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button id="btnIncludePhone" type="button" class="btn btn-primary" hidden>Agregar Teléfono</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-modal="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" data-bs-theme="dark">
+                            <h5 class="modal-title" id="emailModalLabel"><strong>AGREGAR CORREO ELECTRÓNICO</strong></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row g-3">
+                                    <label for="emailOwn" class="col-1 col-form-label"><strong>Pertenencia</strong></label>
+                                    <div class="col-3">
+                                        <select id="emailOwn" name="emailOwn" class="form-select email">
+                                            <option value="0" selected disabled>Seleccione Opción</option>
+                                            <option value="1">Personal</option>
+                                            <option value="2">Trabajo</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="emailAddress" class="col-2 col-form-label"><strong>Correo Electrónico</strong></label>
+                                    <div class="col-6">
+                                        <input id="emailAddress" name="emailAddress" type="email" class="form-control" placeholder="Ej: ejemplo@dominio.com" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button id="btnIncludeEmail" type="button" class="btn btn-primary" hidden>Agregar Correo Electrónico</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="~{fragments/common :: jsDependencies}"></div>
+
+            <script th:src="@{/public/js/module/request/person-id/create.js}"></script>
+        </div>
+    </body>
+</html>

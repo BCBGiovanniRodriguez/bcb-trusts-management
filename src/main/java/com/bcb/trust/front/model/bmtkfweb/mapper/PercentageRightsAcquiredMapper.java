@@ -4,13 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.NonNull;
 
 import com.bcb.trust.front.model.bmtkfweb.dto.PercentageRightsAcquired;
 
 public class PercentageRightsAcquiredMapper implements RowMapper<PercentageRightsAcquired> {
 
     @Override
-    public PercentageRightsAcquired mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public PercentageRightsAcquired mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
         PercentageRightsAcquired record = new PercentageRightsAcquired();
 
         record.setYear(rs.getInt("DER_ANT"));

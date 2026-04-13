@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 23
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Insert information on table system_configuration_user_profiles
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: system_configuration_user_profiles
+            columns:
+              - column: { name: user_id, value: 19 }
+              - column: { name: profile_id, value: 20 }
+              - column: { name: assigned_by, value: 1 }
+              - column:
+                  { name: assigned_at, valueComputed: "CURRENT_TIMESTAMP" }
+              - column: { name: active, value: 1 }
+
+        - insert:
+            tableName: system_configuration_user_profiles
+            columns:
+              - column: { name: user_id, value: 20 }
+              - column: { name: profile_id, value: 20 }
+              - column: { name: assigned_by, value: 1 }
+              - column:
+                  { name: assigned_at, valueComputed: "CURRENT_TIMESTAMP" }
+              - column: { name: active, value: 1 }
+
+        - insert:
+            tableName: system_configuration_user_profiles
+            columns:
+              - column: { name: user_id, value: 21 }
+              - column: { name: profile_id, value: 20 }
+              - column: { name: assigned_by, value: 1 }
+              - column:
+                  { name: assigned_at, valueComputed: "CURRENT_TIMESTAMP" }
+              - column: { name: active, value: 1 }
+
+        - insert:
+            tableName: system_configuration_user_profiles
+            columns:
+              - column: { name: user_id, value: 21 }
+              - column: { name: profile_id, value: 21 }
+              - column: { name: assigned_by, value: 1 }
+              - column:
+                  { name: assigned_at, valueComputed: "CURRENT_TIMESTAMP" }
+              - column: { name: active, value: 1 }

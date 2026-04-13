@@ -13,33 +13,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bcb.trust.front.model.trusts.enums.StatusEnum;
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.request.model.entity.catalog.BusinessTypeEntity;
 import com.bcb.trust.front.modules.request.model.repository.RequestEntityRepository;
+import com.bcb.trust.front.modules.request.model.repository.catalog.BusinessTypeRepository;
 import com.bcb.trust.front.modules.trust.model.entity.TrustCatalogTrustTypeEntity;
 import com.bcb.trust.front.modules.trust.model.repository.TrustTrustTypeRepository;
 
 @Controller
 @RequestMapping("/request")
-public class RequestController {
+public class RequestFrontController {
 
     @Autowired
     private TrustTrustTypeRepository trustTypeRepository;
 
     @Autowired
+    private BusinessTypeRepository businessTypeRepository;
+
+    @Autowired
     private RequestEntityRepository requestEntityRepository;
 
     @GetMapping("/request")
-    public String queryForm(@RequestParam(required = false) String param, Model model) {
+    public String index(@RequestParam(required = false) String param, Model model) {
         List<RequestRequestEntity> requestList = new ArrayList<>();
+        List<BusinessTypeEntity> businessTypeList = new ArrayList<>();
+
         try {
+            businessTypeList = businessTypeRepository.findByStatus(CommonEntity.STATUS_ENABLED);
             requestList = requestEntityRepository.findAll();
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
 
         model.addAttribute("requestList", requestList);
+        model.addAttribute("businessTypeList", businessTypeList);
 
         return "request/request/index";
     }
@@ -48,13 +56,6 @@ public class RequestController {
     public String detail(@PathVariable Long id) {
 
         return "request/request/detail";
-    }
-
-    @PostMapping("/request")
-    public String querySubmit(@RequestBody(required = false) String entity) {
-        // TODO: process POST request
-
-        return "request/request/index";
     }
 
     @GetMapping("/request/create")

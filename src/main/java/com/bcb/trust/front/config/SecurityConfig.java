@@ -35,9 +35,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+            .cors(Customizer.withDefaults())
             .csrf(csrf -> csrf.disable())
             .addFilterAfter(dynamicAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/v3/api-docs",
+                    "/v3/api-docs/**",
+                    "/swagger-resources",
+                    "/swagger-resources/**"
+                ).permitAll()
                 .requestMatchers("/public/**", "/landing/**", "/login").permitAll()
                 .anyRequest().authenticated()
             ).formLogin(f -> f

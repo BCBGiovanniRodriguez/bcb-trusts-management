@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import com.bcb.trust.front.model.dto.WorkerForProcess;
@@ -12,7 +13,7 @@ public class WorkersForProcessMapper implements RowMapper<WorkerForProcess> {
 
     @Override
     @Nullable
-    public WorkerForProcess mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public WorkerForProcess mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
         WorkerForProcess record = new WorkerForProcess();
 
         record.setSubaccount(rs.getString("subaccount"));

@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: 17
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Insert data on table request_catalog_business_types
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Fideicomiso de Administración"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Fideicomiso de Inversión"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Fideicomiso de Garantía"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Fideicomiso de Planeación Patrimonial"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Fideicomiso de Previsión Social"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Fideicomiso de Medio de Pago"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Fideicomiso de Control Accionario"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Mandato"}
+        - insert:
+            tableName: request_catalog_business_types
+            columns:
+              - column: {name: name, value: "Depósito"}

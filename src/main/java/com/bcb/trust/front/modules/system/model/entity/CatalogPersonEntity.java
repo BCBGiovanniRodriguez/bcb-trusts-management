@@ -2,6 +2,7 @@ package com.bcb.trust.front.modules.system.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.request.model.entity.UniquePerson;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrusteeEntity;
 import com.bcb.trust.front.modules.trust.model.entity.TrustTrustorEntity;
 
@@ -70,6 +72,9 @@ public class CatalogPersonEntity {
 
     @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrustTrusteeEntity> trusteeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UniquePerson> uniquePersonList = new ArrayList<>();
 
     public static final Integer GENDER_FEMALE = 1;
 
@@ -239,6 +244,8 @@ public class CatalogPersonEntity {
     }
 
     public Map<String, Object> toMap() {
+        DateTimeFormatter isoFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         Map<String, Object> map = new HashMap<>();
         map.put("person_id", this.personId);
         map.put("first_name", this.firstName);
@@ -247,13 +254,13 @@ public class CatalogPersonEntity {
         map.put("second_last_name", this.secondLastName);
         map.put("full_name", this.fullName);
         map.put("gender", this.gender);
-        map.put("birth_date", this.birthdate);
+        map.put("birth_date", this.birthdate != null ? this.birthdate.format(DateTimeFormatter.ISO_DATE) : null);
         map.put("curp", this.curp);
         map.put("rfc", this.rfc);
         map.put("foreign_status", this.foreignStatus);
         map.put("type", this.type);
         map.put("marital_status", this.maritalStatus);
-        map.put("created_at", this.createdAt);
+        map.put("created_at", this.createdAt != null ? this.createdAt.format(isoFormatter) : null);
 
         return map;
     }

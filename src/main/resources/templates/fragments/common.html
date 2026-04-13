@@ -20,7 +20,43 @@
             }*/
         </style>
         <script>
-            const baseUrl = '/';
+            const ENV_PRD = 1,
+                ENV_QA = 2,
+                ENV_DEV = 3,
+                baseUrl = '/',
+                requestEndpoint = '/api/request',
+                systemEndpoint = '/api/system';
+
+            let devUrl = 'http://localhost',
+                qaUrl = 'http://10.20.50.132',
+                prdUrl = 'http://10.10.50.1',
+                currentEnvironment = 3,
+                defaultNationalityId = 73,
+                bcbApiSisburEndpoint = 'http://10.20.50.132:9001/api/sisbur',
+                bcbApiLocationEndpoint = 'http://10.20.50.132:9002/api/location',
+                bcbApiMindsEndpoint = 'http://10.10.50.24//WS_Minds/Consulta.asmx';
+
+                switch (currentEnvironment) {
+                    case ENV_PRD:
+                        bcbApiSisburEndpoint = prdUrl + ':9001/api/sisbur';
+                        bcbApiLocationEndpoint = prdUrl + ':9002/api/location';
+                        bcbApiNationalityEndpoint = prdUrl + ':9002/api/nationality';
+                        bcbApiMindsEndpoint = 'http://10.10.50.24//WS_Minds/Consulta.asmx';
+                        break;
+                    case ENV_QA:
+                        bcbApiSisburEndpoint = qaUrl + ':9001/api/sisbur';
+                        bcbApiLocationEndpoint = qaUrl + ':9002/api/location';
+                        bcbApiNationalityEndpoint = qaUrl + ':9002/api/nationality';
+                        bcbApiMindsEndpoint = 'http://10.20.50.204//WS_Minds/Consulta.asmx';
+                        break;
+                    case ENV_DEV:
+                    default:
+                        bcbApiSisburEndpoint = devUrl + ':9001/api/sisbur';
+                        bcbApiLocationEndpoint = devUrl + ':9002/api/location';
+                        bcbApiNationalityEndpoint = devUrl + ':9002/api/nationality';
+                        break;
+                }
+
         </script>
         <script th:src="@{/public/adminlte/plugins/jquery/jquery-3.7.1.min.js}"></script>
     </head>
@@ -84,14 +120,14 @@
 
         <aside th:fragment="aside" class="app-sidebar bg-primary-subtle shadow" data-bs-theme="dark">
             <!-- Sidebar Brand-->
-             <div class="sidebar-brand">
+            <div class="sidebar-brand">
                 <a th:href="@{/}" class="brand-link">
                     <img th:src="@{/public/img/BCB-logo-whitev2.svg}" alt="Logo Admin" class="brand-image shadow" style="width: 100%; height: 100%;" />
                 </a>
-             </div>
+            </div>
             <!-- Sidebar Brand -->
             <!-- Sidebar Wrapper -->
-             <div class="sidebar-wrapper">
+            <div class="sidebar-wrapper">
                 <div class="mt-2">
                     <!-- Sidebar Menu -->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
@@ -104,6 +140,75 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon bi bi-person-fill-add"></i>
+                                            <p>
+                                                Catálogos
+                                                <i class="nav-arrow bi bi-chevron-right"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a th:href="@{/request/catalog/business-type-front}" class="nav-link">
+                                                    <i class="nav-icon bi bi-person-fill-check"></i>
+                                                    <p>
+                                                        Tipos de Negocio
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a th:href="@{/request/catalog/business-member-front}" class="nav-link">
+                                                    <i class="nav-icon bi bi-person-fill-check"></i>
+                                                    <p>
+                                                        Miembros del Negocio
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a th:href="@{/request/catalog/business-consultant-front}" class="nav-link">
+                                                    <i class="nav-icon bi bi-person-fill-check"></i>
+                                                    <p>
+                                                        Asesores
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a th:href="@{/request/catalog/business-sponsor-front}" class="nav-link">
+                                                    <i class="nav-icon bi bi-person-fill-check"></i>
+                                                    <p>
+                                                        Promotores
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a th:href="@{/request/catalog/risk-activity-front}" class="nav-link">
+                                                    <i class="nav-icon bi bi-person-fill-check"></i>
+                                                    <p>
+                                                        Actividades Vulnerables
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a th:href="@{/request/catalog/resource-origin-front}" class="nav-link">
+                                                    <i class="nav-icon bi bi-person-fill-check"></i>
+                                                    <p>
+                                                        Origen de los Recursos
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </li>
+                                <li class="nav-item">
+                                    <a th:href="@{/request/person-id-front}" class="nav-link">
+                                        <i class="nav-icon bi bi-person-fill-add"></i>
+                                        <p>
+                                            ID Persona Única
+                                        </p>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a th:href="@{/request/request}" class="nav-link">
                                         <i class="nav-icon bi bi-person-fill-add"></i>
@@ -413,6 +518,21 @@
 
         <!-- Common Modals -->
         <div th:fragment="commonModals">
+
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-modal="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-body-tertiary bg-primary-subtle text-center" data-bs-theme="dark">
+                            <h5 class="modal-title text-white" id="confirmModalLabel">¿Desea confirmar la operación?</h5>
+                        </div>
+                        <div class="modal-body text-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button id="btnModalConfirm" type="button" class="btn btn-primary">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModalLabel" aria-modal="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

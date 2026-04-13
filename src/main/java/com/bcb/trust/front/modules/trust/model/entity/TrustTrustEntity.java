@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.bcb.trust.front.modules.common.model.CommonEntity;
 import com.bcb.trust.front.modules.request.model.entity.RequestRequestEntity;
+import com.bcb.trust.front.modules.request.model.entity.catalog.BusinessTypeEntity;
 import com.bcb.trust.front.modules.system.model.entity.CatalogUserEntity;
 
 import jakarta.persistence.CascadeType;
@@ -37,8 +38,8 @@ public class TrustTrustEntity extends CommonEntity {
     private RequestRequestEntity requestEntity;
 
     @ManyToOne
-    @JoinColumn(name = "trustTypeId", nullable = false)
-    private TrustCatalogTrustTypeEntity trustTypeEntity;
+    @JoinColumn(name = "business_type_id", nullable = false)
+    private BusinessTypeEntity businessTypeEntity;
 
     @Column(columnDefinition = "TINYINT(1)")
     private Integer state;
@@ -63,6 +64,15 @@ public class TrustTrustEntity extends CommonEntity {
 
     @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrustWorkerMovementType> workerMovementTypeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustSpecialWorkerEntity> specialWorkerList = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustSpecialYearEntity> specialYearList = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "trustEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrustSpecialPeriodEntity> specialPeriodList = new ArrayList<>();
 
     public static final Integer STATE_STARTED = 1;
 
@@ -104,14 +114,6 @@ public class TrustTrustEntity extends CommonEntity {
         this.name = name;
     }
 
-    public TrustCatalogTrustTypeEntity getTrustTypeEntity() {
-        return trustTypeEntity;
-    }
-
-    public void setTrustTypeEntity(TrustCatalogTrustTypeEntity trustTypeEntity) {
-        this.trustTypeEntity = trustTypeEntity;
-    }
-
     public Integer getState() {
         return state;
     }
@@ -138,8 +140,7 @@ public class TrustTrustEntity extends CommonEntity {
 
     @Override
     public String toString() {
-        return "TrustTrustEntity [trustId=" + trustId + ", number=" + number + ", name=" + name + ", trustTypeEntity="
-                + trustTypeEntity + ", state=" + state + ", status=" + status + ", created=" + createdAt + "]";
+        return "TrustTrustEntity [trustId=" + trustId + ", number=" + number + ", name=" + name + ", state=" + state + ", status=" + status + ", created=" + createdAt + "]";
     }
 
     @Override
@@ -187,4 +188,11 @@ public class TrustTrustEntity extends CommonEntity {
         this.registeredBy = registeredBy;
     }
 
+    public BusinessTypeEntity getBusinessTypeEntity() {
+        return businessTypeEntity;
+    }
+
+    public void setBusinessTypeEntity(BusinessTypeEntity businessTypeEntity) {
+        this.businessTypeEntity = businessTypeEntity;
+    }
 }

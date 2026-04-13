@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 26
+      author: grodriguez@bcbcasadebolsa.com
+      context: user
+      labels: InitialSetup
+      comments: Create table request_catalog_resource_origins
+      changes:
+        - tagDatabase:
+            tag: saf-0.0.1
+
+        - createTable:
+            tableName: request_catalog_resource_origins
+            columns:
+              - column: { name: resource_origin_id, type: BIGINT, autoIncrement: true, constraints: { primaryKey: true }, remarks: "Identificador único para el origen del recurso" }
+              - column: { name: name, type: VARCHAR(255), constraints: { nullable: false }, remarks: "Nombre del origen del recurso" }
+              - column: { name: status, type: TINYINT, defaultValue: 1, constraints: { nullable: false }, remarks: "Habilitado = 1, Deshabilitado = 2" }
+              - column: { name: created_at, type: DATETIME, defaultValueComputed: "CURRENT_TIMESTAMP", constraints: { nullable: false } }

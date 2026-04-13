@@ -12,6 +12,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -61,7 +62,7 @@ public class TrustsDBConfiguration {
 
     @Primary
     @Bean(name = "trustsTransactionManager")
-    public PlatformTransactionManager transactionManager(
+    public PlatformTransactionManager transactionManager(@NonNull
             @Qualifier("trustsEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
@@ -69,7 +70,7 @@ public class TrustsDBConfiguration {
     @Primary
     @Bean(name = "trustNamedParameterJdbcTemplate")
     @DependsOn("trustsDatasource")
-    public NamedParameterJdbcTemplate trustNamedParameterJdbcTemplate(
+    public NamedParameterJdbcTemplate trustNamedParameterJdbcTemplate( @NonNull
             @Qualifier("trustsDatasource") DataSource trustDataSource) {
         return new NamedParameterJdbcTemplate(trustDataSource);
     }

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/system/configuration")
+@RequestMapping("/api/system/configuration")
 public class EndpointRestController {
 
     @Autowired

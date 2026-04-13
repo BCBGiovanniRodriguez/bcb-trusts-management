@@ -5,13 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.NonNull;
 
 import com.bcb.trust.front.model.dto.RepCtaInd;
 
 public class RepCtaIndRowMapper implements RowMapper<RepCtaInd> {
 
     @Override
-    public RepCtaInd mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public RepCtaInd mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
         RepCtaInd record = new RepCtaInd();
         record.setRciFecha(rs.getString("RCI_FECHA"));
         record.setRciNomInvers(rs.getString("RCI_NOM_INVERS"));

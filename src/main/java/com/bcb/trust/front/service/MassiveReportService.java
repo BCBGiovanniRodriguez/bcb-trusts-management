@@ -1,7 +1,6 @@
 package com.bcb.trust.front.service;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,7 +8,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +15,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
-import com.bcb.trust.front.entity.IndividualReportAcount;
-import com.bcb.trust.front.entity.enums.ProcessDetailStateEnum;
-import com.bcb.trust.front.model.bmtkfweb.dto.PercentageRightsAcquired;
 import com.bcb.trust.front.model.dto.WorkerDetail;
 import com.bcb.trust.front.model.trusts.entity.ProcessDetailEntity;
 import com.bcb.trust.front.model.trusts.entity.ProcessEntity;
@@ -53,7 +47,7 @@ public class MassiveReportService {
     @Autowired
     private IndividualReportService individualReportService;
 
-    private int RECORDS_PER_CYCLE = 500;
+    private int RECORDS_PER_CYCLE = 5;
 
     private String primaryOutputPath = "./trusts/trust";
 
@@ -84,7 +78,8 @@ public class MassiveReportService {
             // JasperReport jasperReport =
             // JasperCompileManager.compileReport(reportTemplate.getAbsolutePath());
 
-            totalWorkers = legacyService.getTotalWorkers(trustNumber); // Uncomment
+            //totalWorkers = legacyService.getTotalWorkers(trustNumber); // Uncomment
+            totalWorkers = 5;
             System.out.println("Workers for process: " + totalWorkers);
             String account = ""; // null or empty on first iteration
             List<WorkerDetail> workerList = legacyService.getWorkerList(trustNumber, account, RECORDS_PER_CYCLE);
@@ -105,7 +100,6 @@ public class MassiveReportService {
             processRepository.saveAndFlush(process);
 
             if (!workerList.isEmpty()) {
-
                 while (workersProcessed < totalWorkers) {
                     for (WorkerDetail workerDetail : workerList) {
                         JSONObject jsonObject = new JSONObject();

@@ -4,13 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.NonNull;
 
 import com.bcb.trust.front.entity.IndividualReportAcount;
 
 public class IndividualReportAccountRowMapper implements RowMapper<IndividualReportAcount> {
 
     @Override
-    public IndividualReportAcount mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public IndividualReportAcount mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
         IndividualReportAcount individualReportAcount = new IndividualReportAcount();
 
         individualReportAcount.setSecuentialIra(rs.getInt("RCI_SECUENCIAL"));

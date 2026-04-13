@@ -19,7 +19,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @RestController
 @RequestMapping("/api/request")
-public class RequestRequestController {
+public class RequestRestController {
 
     @Autowired
     private RequestRequestService requestRequestService;
@@ -42,9 +42,9 @@ public class RequestRequestController {
             jsonResponse = mapper.writeValueAsString(resultMap);
             
         } catch (Exception e) {
-            System.out.println("Error en RequestRequestController::create[" + e.getLocalizedMessage() + "]");
+            System.out.println("Error en RequestRestController::create[" + e.getLocalizedMessage() + "]");
             resultMap.put("status", 0);
-            resultMap.put("message", "Error en RequestRequestController::create[" + e.getLocalizedMessage() + "]");
+            resultMap.put("message", "Error en RequestRestController::create[" + e.getLocalizedMessage() + "]");
             resultMap.put("data", null);
 
             jsonResponse = mapper.writeValueAsString(resultMap);
